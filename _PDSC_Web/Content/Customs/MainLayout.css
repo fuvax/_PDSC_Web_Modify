@@ -1,0 +1,263 @@
+﻿.disable_btn {
+	color: gray !important;
+	border: 1px dashed gray;
+	cursor: not-allowed;
+}
+
+.vertical-nav-menu ul > li > a {
+	color: blue;	
+}
+
+.focus_sidebar {
+	/*border: 1px dashed blue;*/
+	box-shadow: 2px 2px 3px #6698FF;
+	background-color: #50EBEC;
+	width: 217px;
+}
+
+.float {
+	position: fixed;
+	width: 60px;
+	height: 60px;
+	/*bottom: 50px;*/
+	top: 100px;
+	right: 40px;
+	background-color: #f00;
+	color: #FFF;
+	border-radius: 50px;
+	text-align: center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+	.float:hover {
+		box-shadow: 3px 3px 4px #000000;
+		color: #FFF;
+	}
+
+.B-icon 
+{
+	margin-top: 15px;
+	font-size: 30px;
+}
+
+	/*th
+	{
+		width: 100px;
+	}
+	td 
+	{
+		max-width: 100px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+*/
+
+
+h1,h2,h3 
+{
+	color:black;
+	font-weight:bold;
+}
+.text-font {
+	color: black;
+	font-size: 25px;
+}
+
+textarea {
+	resize: none;
+}
+
+.text-font-20 {
+	color: black;
+	font-size: 20px;
+}
+
+.text-font-18 {
+	color: black;
+	font-size: 18px;
+}
+.text-font-12 {
+	color: black;
+	font-size: 12px;
+}
+
+.text-font-13 {
+	color: black;
+	font-size: 13px;
+}
+
+.line {
+	border: 0;
+	clear: both;
+	display: block;
+	width: 96%;
+	background-color: black;
+	height: 1px;
+}
+
+.bg-img {
+	background-image: url('../Tempage/ArchitectUI/assets/images/Bg/bg_login.jpg');
+	background-repeat: no-repeat;
+	background-size: 650px 700px;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.wh {
+	color: white;
+}
+table {
+	color: black;
+	font-size: 13px;
+	text-align: center;
+	/*table-layout: fixed;
+	word-wrap:break-word;*/
+}
+.r-5 {
+	margin: 5px;
+}
+.block-Red {
+	width: 60px;
+	height: 30px;
+	border: 1px solid black;
+	background-color: red;
+	color: red;
+}
+
+	.block-Red:hover {
+		color: white;
+		font-size: 18px;
+		font-weight: bold;
+		cursor: help;
+	}
+
+.block-Green {
+	width: 60px;
+	height: 30px;
+	border: 1px solid black;
+	background-color: lime;
+	color: lime;
+}
+
+	.block-Green:hover {
+		color: white;
+		font-size: 18px;
+		font-weight: bold;
+		cursor: help;
+	}
+
+.block-Orange {
+	width: 60px;
+	height: 30px;
+	border: 1px solid black;
+	background-color: orange;
+	color: orange;
+}
+
+	.block-Orange:hover {
+		color: white;
+		font-size: 18px;
+		font-weight: bold;
+		cursor: help;
+	}
+
+.block-Yellow {
+	width: 60px;
+	height: 30px;
+	border: 1px solid black;
+	background-color: yellow;
+	color: yellow;
+}
+
+	.block-Yellow:hover {
+		color: white;
+		font-size: 18px;
+		font-weight: bold;
+		cursor: help;
+	}
+
+.block-Blue {
+	width: 60px;
+	height: 30px;
+	border: 1px solid black;
+	background-color: blue;
+	color: blue;
+}
+
+	.block-Blue:hover {
+		color: white;
+		font-size: 18px;
+		font-weight: bold;
+		cursor: help;
+	}
+
+	.border-img {
+		cursor: pointer;
+		transition: 0.3s ease-out;
+		border: 1px dashed #ddd;
+	}
+
+	.border-img:hover {
+		box-shadow: 0 0 15px rgba(33,33,33,.9);
+	}
+   .footer-magin 
+    {
+	   margin-top:35px;
+    }
+.width-set 
+{
+	width: 200px;
+}
+
+
+
+.PreviewImg:hover {
+	-webkit-filter: blur(5px);
+}
+
+.container {
+	position: relative;
+	width: 50%;
+}
+
+.image {
+	opacity: 1;
+	display: block;
+	width: 100%;
+	height: auto;
+	transition: .5s ease;
+	backface-visibility: hidden;
+}
+
+.middle {
+	transition: .5s ease;
+	opacity: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	text-align: center;
+}
+
+.container:hover .image {
+	opacity: 0.3;
+}
+
+.container:hover .middle {
+	opacity: 1;
+}
+
+.btn-remove 
+{
+	 padding: 8px 16px;
+}
+
+.img_size {
+	width: 100%;
+	height: 100%;
+}
+	

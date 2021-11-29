@@ -1,0 +1,637 @@
+﻿
+@{
+    ViewBag.Title = "Unit On Hand Status Report";
+}
+
+@if (ViewBag.GetRoles == "Role_RP11" && ViewBag.GetMNRoles == "PDSCPAGE005")
+{
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h3 style="color:black">Units On Hand Status Report</h3>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">DM Project : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <select onchange="Auto_Gen_DropDoen_Leader();" id="DM" class="form-control">
+                            <option value="">----Select----</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <label class="text-font-13">Leader : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <select id="Leader" class="form-control">
+                            <option value="">----All----</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="text-right">
+                <button onclick="Gen_Table_Unit();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">
+                    <i class="fas fa-print"></i>
+                    Report
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-hover-shadow-2x card-border card" style="margin-top:35px;">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="Table-Unit" class="table table-bordered table-hover table-striped" width="100%">
+                    <thead>
+                        <tr>
+                            <th>DM Project</th>
+                            <th>Leader</th>
+                            <th>Project Engineer</th>
+                            <th>Green(Units)</th>
+                            <th>Yellow(Units)</th>
+                            <th>Orange(Units)</th>
+                            <th>Red(Units)</th>
+                            <th>Grand Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card-hover-shadow-2x card-border card" style="margin-bottom:35px;margin-top:35px;">
+        <div class="card-header">
+            <h3 style="color:black">Units On Hand Status Graph</h3>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-6 text-left">
+                        <label class="text-font-13" style="font-weight:bold;color:black;margin-right:35px;">DM Name : </label>
+                        <label id="DMtxt" class="text-font-13" style="font-weight:bold;color:red;"></label>
+                        <input id="DMlbID" type="text" hidden />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2 text-left">
+                        <div class="form-group">
+                            <span style="white-space: nowrap">
+                                <label id="" class="text-font-13" style="font-weight:bold;color:black;margin-right:35px;">Leader : </label>
+                                <select onchange="Render_Chart();" id="Leaderlb" class="form-control" style="display: inline-block">
+                                    <option value="">--All--</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            @*<button onclick="ExportBar();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">
+                    <i class="fas fa-file-download"></i>
+                    Export Bar
+                </button>*@
+            <div id="bar" style="border:1px solid black;margin:35px;">
+                <canvas id="stacked-chart"></canvas>
+            </div>
+            @*<img id="imgshow" src=""  />*@
+        </div>
+    </div>
+}
+else
+{
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h3 style="color:black">Units On Hand Status Report</h3>
+        </div>
+        <div class="card-body">
+            <label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/moment.js/moment.min.js"></script>
+<script src="~/Scripts/Customs/html2canvas.min.js"></script>
+<script>
+	$.fn.select2.defaults.set("theme", "bootstrap");
+
+	$('#DM').select2();
+	$('#Leader').select2();
+
+	var list = [];
+
+	var green = [];
+	var yellow = [];
+	var orange = [];
+	var red = [];
+
+	var labelText1 = "";
+	var labelText2 = "";
+	var labelText3 = "";
+	var labelText4 = "";
+
+	$(document).ready(() =>
+	{
+
+		On_Loading();
+		Get_DropDown_DM();
+		//Get_Chart();
+
+	});
+
+	function ExportBar()
+	{
+		var canvas = document.getElementById("stacked-chart");
+		var img = canvas.toDataURL("image/png");
+
+		//document.write('<img src="' + img + '" hidden/>');
+		$('#imgshow').attr('src', img);
+	}
+
+	function Render_Chart()
+	{
+		var DM = $('#DMlbID').val();
+		var Leader = $('#Leaderlb').val();
+
+		list = [];
+		green = [];
+		yellow = [];
+		orange = [];
+		red = [];
+
+		$.ajax({
+			type: "POST",
+			url: "/RP_UnitOnHand/About_Chart",
+			data: { DM : DM, Leader: Leader },
+			dataType: "json",
+			success: function (response)
+			{
+				response.forEach((obj) =>
+				{
+					let _eng_name = obj.Engineer_Name;
+					_eng_name = _eng_name.split(" ");
+                    //let _eng_name1 = _eng_name[0];
+                    list.push(_eng_name);
+                    //list.push(obj.Engineer_Name);
+					green.push(obj.Green);
+					yellow.push(obj.Yellow);
+					orange.push(obj.Orange);
+					red.push(obj.Red);
+				});
+				//console.log(list);
+				Get_Chart();
+
+			},
+			failure: function (response)
+			{
+			},
+			error: function (response)
+			{
+			}
+
+		});
+        Off_Loading();
+	}
+
+	function Get_Chart()
+	{
+		// list = ["Nipong", "Thanapat", "Ukrit"];
+
+		@* green = [19, 42, 19];
+		 yellow = [0, 0, 1];
+		 orange = [10, 4, 0];
+		 red = [9, 12, 36];*@
+
+		labelText1 = "HO Contract Expired";
+		labelText2 = "Remain Day < HO Contract";
+		labelText3 = "Remain Day ~ HO Contract (+0-25%)";
+		labelText4 = "Remain Day > HO Contract (+>25%)";
+
+
+		var barChartData = {
+			labels: list,
+			datasets: [
+				{
+					label: labelText1,
+					backgroundColor: 'red',
+					borderColor: 'black',
+					borderWidth: 1,
+					data: red ,
+				},
+				{
+					label: labelText2,
+					backgroundColor: 'orange',
+					borderColor: 'black',
+					borderWidth: 1,
+					data: orange,
+				},
+				{
+					label: labelText3,
+					backgroundColor: 'yellow',
+					borderColor: 'black',
+					borderWidth: 1,
+					data: yellow,
+				},
+				{
+					label: labelText4,
+					backgroundColor: 'green',
+					borderColor: 'black',
+					borderWidth: 1,
+					data: green,
+				},
+			],
+		};
+
+
+
+		var ctx7 = document.getElementById("stacked-chart").getContext("2d");
+
+		if (window.myChart instanceof Chart)
+		{
+			window.myChart.destroy();
+		}
+
+		window.myChart = new Chart(ctx7, {
+				type: "bar",
+				data: barChartData,
+				options: {
+					title: {
+						display: true,
+						text: "Unit On Hand",
+					},
+					tooltips: {
+						mode: "index",
+						intersect: false,
+					},
+					responsive: true,
+					scales: {
+						xAxes: [
+							{
+								stacked: true,
+							},
+						],
+						yAxes: [
+							{
+								stacked: true,
+							},
+						],
+					},
+				},
+		   });
+
+
+
+	}
+
+	function Get_DropDown_DM()
+	{
+		ClearDM();
+		$.ajax({
+			type: "POST",
+			url: "/RP_UnitOnHand/Get_DropDown_DM",
+			data: "",
+			dataType: "json",
+			success: function (response) {
+
+
+				response.forEach((obj) => {
+
+					optionValue = obj.PEM_DM_Code;
+					optionText = obj.Name;
+					$('#DM').append(`<option value="${optionValue}">
+											 ${optionText}
+									  </option>`);
+				});
+				Off_Loading();
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+
+		});
+	}
+	function Auto_Gen_DropDoen_Leader()
+	{
+		ClearLeader();
+		On_Loading();
+		var DM = $('#DM').val();
+
+        if (DM != "" && DM != null)
+		{
+			$.ajax({
+				type: "POST",
+				url: "/RP_UnitOnHand/Get_DropDown_Leader",
+				data: { DMCode : DM },
+				dataType: "json",
+				success: function (response) {
+
+
+					response.forEach((obj) => {
+
+						optionValue = obj.PEM_Leader_Code;
+						optionText = obj.Name;
+						$('#Leader').append(`<option value="${optionValue}">
+											 ${optionText}
+									  </option>`);
+					});
+					Off_Loading();
+				},
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+
+			});
+		}
+		else
+		{
+            Alert_Error("", "Please you select DM Project.");
+            
+			Off_Loading();
+			//
+			ClearDM();
+			ClearLeader();
+			Get_DropDown_DM();
+			//Alert_Error("Alert Message !!!", "Plase select DM before search !");
+		}
+
+	}
+
+	function Gen_Table_Unit()
+	{
+		var DM = $('#DM').val();
+		var Leader = $('#Leader').val();
+
+
+		$('#Leaderlb').prop('disabled', false);
+
+		$('#DMtxt').text($('#DM option:selected').text());
+		$('#DMlbID').val($('#DM').val());
+
+		//alert(` Leader : ${Leader}`);
+        On_Loading();
+
+		ClearLeaderlb();
+		///// gen dropdown Leader for chart //////////////
+		if (Leader != null && Leader != "")
+		{
+			//Leaderlb
+
+			$.ajax({
+				type: "POST",
+				url: "/RP_UnitOnHand/Get_DropDown_Leader",
+				data: { DMCode: DM },
+				dataType: "json",
+				success: function (response)
+				{
+
+					if (response != null && response != "")
+					{
+						if (Leader != null && Leader != "")
+						{
+							response.forEach((obj) =>
+							{
+
+								optionValue = obj.PEM_Leader_Code;
+								optionText = obj.Name;
+								$('#Leaderlb').append(`<option value="${optionValue}">
+											 ${optionText}
+									  </option>`);
+
+								if (Leader == optionValue)
+								{
+
+									$("#Leaderlb option[value=\"" + optionValue + "\"]").prop("selected", "selected");
+								}
+							});
+
+							$('#Leaderlb').prop('disabled', true);
+						}
+						else
+						{
+
+							response.forEach((obj) =>
+							{
+
+								optionValue = obj.PEM_Leader_Code;
+								optionText = obj.Name;
+								$('#Leaderlb').append(`<option value="${optionValue}">
+											 ${optionText}
+									  </option>`);
+							});
+						}
+					}
+				},
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+
+			});
+		}
+		else
+		{
+			
+			$.ajax({
+				type: "POST",
+				url: "/RP_UnitOnHand/Get_DropDown_Leader",
+				data: { DMCode: DM },
+				dataType: "json",
+				success: function (response) {
+
+
+					response.forEach((obj) => {
+
+						optionValue = obj.PEM_Leader_Code;
+						optionText = obj.Name;
+						$('#Leaderlb').append(`<option value="${optionValue}">
+											${optionText}
+									</option>`);
+					});
+				},
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+
+			});
+			
+		}
+		//////////////////////////////////////////////////
+
+
+		if ((DM != "" && DM != null))
+		{
+			$.ajax({
+				type: "POST",
+				url: "/RP_UnitOnHand/Get_Table_Unit",
+				data: { DMCode: DM, LeaderCode: Leader },
+				dataType: "json",
+				success: function (response)
+				{
+
+					OnSuccess(response);
+
+				},
+				failure: function (response) {
+				},
+				error: function (response) {
+				}
+			});
+		}
+		else
+		{
+            Off_Loading();
+			Alert_Error("", "Plase select DM and Leader before search !");
+			//ClearDM();
+			//ClearLeader();
+
+		}
+	}
+
+	function OnSuccess(response)
+	{
+		if ($.fn.dataTable.isDataTable('#Table-Unit'))
+		{
+			$('#Table-Unit').DataTable().destroy();
+			RenderTable(response);
+		}
+		else
+		{
+			RenderTable(response);
+		}
+	}
+
+	function RenderTable(response)
+	{
+        //On_Loading();
+		var olddata = "aaaaa";
+		var oldlead = "rrrrr";
+		var i = 0;
+		var table = $("#Table-Unit").DataTable(
+			{
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						extend: 'excel',
+						text: 'Export excel',
+						className: 'btn btn-success',
+						filename: `Unit_On_Hand`,
+						exportOptions: {							
+							modifier: {
+								page: 'all'
+							}
+						}
+					}
+				],
+				searching: false,
+				info: false,
+				paging: false,
+				data: response,
+				columns: [
+					{						
+						data: null,
+						render: function (data, type, row)
+						{
+							@*i++;
+							return '<lable id="'+i+'" hidden>' + data.DM_Name + '</lable>';	*@
+							if (data.DM_Name == olddata)
+							{
+
+								return '';
+							}
+							else
+							{								
+								olddata = data.DM_Name;
+								return '<lable>' + data.DM_Name + '</lable>';							
+							}
+
+						}
+
+						
+					},
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							if (data.Leader_Name == oldlead) {
+
+								return '';
+							}
+							else
+							{
+								oldlead = data.Leader_Name;
+
+								return data.Leader_Name;
+							}
+						}
+					},
+					{ 'data': 'Engineer_Name' },
+					{ 'data': 'Green' },
+					{ 'data': 'Yellow' },
+					{ 'data': 'Orange' },
+					{ 'data': 'Red' },
+					{ 'data': 'Grand_Total' }
+				]
+
+
+			});
+		Render_Chart();
+		$('#1').removeAttr('hidden');
+		olddata = "";
+       
+	}
+
+	function ClearDM() {
+		$('#DM')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">----Select----</option>')
+			.val('')
+			;
+	}
+	function ClearLeader() {
+		$('#Leader')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">----All----</option>')
+			.val('')
+			;
+	}
+
+	function ClearLeaderlb()
+	{
+		$('#Leaderlb')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">----All----</option>')
+			.val('')
+			;
+	}
+
+
+</script>
+

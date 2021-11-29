@@ -1,0 +1,245 @@
+﻿
+@{
+    ViewBag.Title = "PowerSupply_Transaction";
+}
+
+@if ((ViewBag.GetRoles == "Role_IN11") && (ViewBag.GetMNRoles == "PDSCPAGE004"))
+{
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h2 style="color:black;">Transaction : Power Supply </h2>
+        </div>
+        <div class="card-body">
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label class="text-font-13">Task Name : </label>
+                        </div>
+                        <div class="col-sm-6">
+                            <label id="TaskName" class="text-font-12"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label class="text-font-13">Plan Start Date : </label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label id="planstart" class="text-font-12"></label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="text-font-13">Plan Finish Date : </label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label id="finishdate" class="text-font-12"></label>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-hover-shadow-2x card-border card" style="margin-bottom:35px;margin-top:35px;">
+        <div class="card-body">
+
+            <table id="PowerSupply-Transection" class="table table-striped table-bordered table-hover" width="100%">
+                <thead class="success">
+					<tr>
+						<th>No.</th>
+						<th>Working Date</th>
+						<th>Result</th>
+						<th>Problem</th>
+						<th>Problem Note</th>
+						<th>Create Date</th>
+						<th>Picture</th>
+						<th>Files</th>
+					</tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+    <a href="@Url.Action("PowerSupply", "IN_Progreass_View")" class="float pointer" style="color:white;">
+        <i class="fas fa-arrow-left B-icon"></i>
+    </a>
+    <script src="~/ThridParty/Theam/ArchitectUI-Pro/assets/core/jquery.min.js" type="text/javascript"></script>
+    <script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/moment.js/moment.min.js"></script>
+    <script>
+
+	$(document).ready(() =>
+	{
+        On_Loading();
+		var TaskName = '@Session["TaskName"]';
+		$('#TaskName').text(TaskName);
+		GetPlateDate();
+		TableTransection();
+
+	});
+	function GetPlateDate() {
+
+		$.ajax({
+			type: "POST",
+			url: "/IN_Progreass_View/GetPlateDate_PowerSupply",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+				if (response.length > 0) {
+                    if (moment(response[0].Plan_Start_Date).format("DD-MM-YYYY") == "01-01-9999") {
+                        $('#planstart').text('N/A');
+                    }
+                    else {
+                        $('#planstart').text(moment(response[0].Plan_Start_Date).format("DD-MMM-YYYY"));
+                    }
+                    if (moment(response[0].Plan_Finish_Date).format("DD-MM-YYYY") == "01-01-9999") {
+                        $('#finishdate').text('N/A');
+                    }
+                    else {
+                        $('#finishdate').text(moment(response[0].Plan_Finish_Date).format("DD-MMM-YYYY"));
+                    }
+					//$('#planstart').text(moment(response[0].Plan_Start_Date).format("DD-MMM-YYYY HH:mm"));
+					//$('#finishdate').text(moment(response[0].Plan_Finish_Date).format("DD-MMM-YYYY HH:mm"));
+				}
+
+				//Plan_Finish_Date,Percent_Progress
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+	function TableTransection()
+	{
+		var TaskNo = '@Session["TaskNo"]';
+		$.ajax({
+			type: "POST",
+			url: "/IN_Progreass_View/GetTable_Transection",
+			data: { TransectionNo: TaskNo},
+			@*contentType: "application/json; charset=utf-8",*@
+			dataType: "json",
+			success: function (response)
+			{
+				if (response.length > 0)
+				{
+					$('#TaskName').text(response[0].Task_Name);
+
+
+				}
+				OnSuccess(response);
+			},
+			failure: function (response) {
+                Off_Loading();
+			},
+			error: function (response) {
+                Off_Loading();
+			}
+		});
+	}
+	function OnSuccess(response) {
+
+		var table = $("#PowerSupply-Transection").DataTable(
+			{
+
+				searching: false,
+				info: true,
+				paging: true,
+				data: response,
+				columns: [
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+                            if (moment(data.TT_Working_Date).format("DD-MM-YYYY") == "01-01-9999") {
+                                return '<lable class="text-font-12" style="color:red;font-weight:bold;">N/A</lable>';
+                            }
+                            else {
+                                return '<lable class="text-font-12" style="color:red;font-weight:bold;">' + moment(data.TT_Working_Date).format("DD-MMM-YYYY") + '</lable>';
+                            }
+							//return moment(data.TT_Working_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{ 'data': 'Result_Name' },
+					{ 'data': 'Problem_Name' },
+					{ 'data': 'TT_Problem_Note' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							return moment(data.TT_Create_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<button onclick="View_Img(\'' + data.TT_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">' +
+								'<i class="fas fa-images"></i>' +
+								'</button>';
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<button onclick="View_PDF(\'' + data.TT_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">' +
+								'<i class="fas fa-file-pdf"></i>' +
+								'</button>';
+						}
+					}
+
+
+
+				]
+			});
+        Off_Loading();
+	}
+
+	function View_Img(TT_Code) {
+		$.ajax({
+			type: "POST",
+			url: "/IN_Progreass_View/ToPowerSupply_View",
+			data: { TT_Code: TT_Code },
+			dataType: "json",
+			success: function (response) {
+				if (response.result == 'Redirect') {
+					window.location = response.url;
+				}
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+		}
+		function View_PDF(TT_Code) {
+			$.ajax({
+				type: "POST",
+				url: "/IN_Progreass_View/ToPowerSupply_PDF",
+				data: { TT_Code: TT_Code },
+				dataType: "json",
+				success: function (response) {
+					if (response.result == 'Redirect') {
+						window.location = response.url;
+					}
+				},
+				failure: function (response) {
+				},
+				error: function (response) {
+				}
+			});
+		}
+    </script>
+
+
+

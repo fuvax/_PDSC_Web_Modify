@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (ViewBag.GetRoles == "Role_RP11" && ViewBag.GetMNRoles == "PDSCPAGE005")
+{
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h3 style="color:black">Master File Report</h3>
+        </div>
+		<div class="card-body">
+			<button class="btn btn-info btn-lg" onclick="Export();">Export Master File</button>
+			<a id="download-files" href="~/MasterFileReport/Master_File [11-10-2021 16_05_33].xlsx" download></a>
+		</div>
+
+    </div>
+}
+else
+{
+<div class="card-hover-shadow-2x card-border card">
+    <div class="card-header">
+        <h3 style="color:black">Master File Report</h3>
+    </div>
+	<div class="card-body">
+		<label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+		<a id="download-files" href="~/MasterFileReport/Master_File [11-10-2021 16_05_33].xlsx" download> Download</a>
+	</div>
+</div>
+}
+<script src="~/ThridParty/Theam/ArchitectUI-Pro/assets/core/jquery.min.js" type="text/javascript"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/moment.js/moment.min.js"></script>
+<script>
+
+	function Export() {
+
+		//loading
+		$('#loading').attr("hidden", false);
+
+		$.ajax({
+			type: "POST",
+			url: "/RP_ExportExcel/Export_Excel",
+			data: "",
+				@* contentType: "application/json; charset=utf-8",*@
+		dataType: "json",
+			success: function (response) {
+
+				$('#loading').attr("hidden", true);
+
+				//$('#download-files')[0].click();
+				//swal("", "File excel success", "success");
+
+				console.log(response);
+
+				if ((response != null && response != "")) {
+
+					if (response[0]) {
+
+						swal("", "File excel success", "success");
+
+						$('#download-files').attr('href', '');
+
+						$('#download-files').attr('href', "/MasterFileReport/"+response[1]+".xlsx");
+
+						$('#download-files')[0].click();
+
+					} else {
+
+						swal("", "File excel fail", "error");
+					}
+
+				} else {
+
+				}
+				
+				
+				
+
+		},
+		failure: function (response) {
+		},
+		error: function (response) {
+		}
+	});
+
+	}
+
+</script>
+

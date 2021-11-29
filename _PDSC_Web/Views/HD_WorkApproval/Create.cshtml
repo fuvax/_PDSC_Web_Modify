@@ -1,0 +1,684 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+@if ((ViewBag.GetRoles != "") && (ViewBag.GetMNRoles != null))
+{
+    if ((ViewBag.GetRoles == "Role_HD13" || ViewBag.GetRoles == "Role_HD14") && (ViewBag.GetMNRoles == "PDSCPAGE002"))
+    {
+        <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;">
+            <div class="card-header">
+                <h2 style="color:black;">Search</h2>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="form-group row">
+
+                        <div class="col-sm-3 text-right">
+                            <label class="text-font-13">Sale Order : </label>
+                        </div>
+                        <div class="col-sm-3 text-left">
+                            <select id="saleorder" class="form-control">
+                                <option value="">--All--</option>
+                                @foreach (var obj in ViewBag.listSaleOrder)
+                                {
+                                    <option value="@obj.SaleOrder">@obj.SaleOrder</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button Onclick="Search();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                                <i class="fas fa-search"></i>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;">
+            <div class="card-header">
+                <h2 style="color:black;">Please Select MFG and Work Approval Limit</h2>
+            </div>
+            <div class="card-body">
+                <table id="WorkApp_table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">
+                                <center>
+                                    @if (ViewBag.GetRoles == "Role_HD13")
+                                    {
+
+                                        <input type="checkbox" id="TopCB" onclick="CheckAll_coluam1();" />
+
+                                    }
+                                    else if (ViewBag.GetRoles == "Role_HD14")
+                                    {
+                                        <input disabled type="checkbox" id="TopCB" onclick="CheckAll_coluam1();" />
+                                    }
+                                </center>
+                            </th>
+                            <th rowspan="2">No.</th>
+                            <th rowspan="2">MFG No.</th>
+                            <th rowspan="2">EQ. No.</th>
+                            <th rowspan="2">Spec No.</th>
+                            <th colspan="4"><center>Work Approval</center></th>
+                            <th rowspan="2">Note</th>
+
+
+
+                        </tr>
+                        <tr>
+                            @if (ViewBag.GetRoles == "Role_HD13")
+                            {
+                                <th><center><input type="checkbox" id="DeliveryCB" onclick="CheckAll_Delivery();" /> Delivery</center></th>
+                                <th><center><input type="checkbox" id="InstallCB" onclick="CheckAll_Install();" /> Install</center></th>
+                                <th><center><input type="checkbox" id="TestingCB" onclick="CheckAll_Testing();" /> Testing</center></th>
+                                <th><center><input type="checkbox" id="HandOverCB" onclick="CheckAll_HandOver();" /> H/O</center></th>
+                            }
+                            else if (ViewBag.GetRoles == "Role_HD14")
+                            {
+                                <th><center><input disabled type="checkbox" id="DeliveryCB" onclick="CheckAll_Delivery();" /> Delivery</center></th>
+                                <th><center><input disabled type="checkbox" id="InstallCB" onclick="CheckAll_Install();" /> Install</center></th>
+                                <th><center><input disabled type="checkbox" id="TestingCB" onclick="CheckAll_Testing();" /> Testing</center></th>
+                                <th><center><input disabled type="checkbox" id="HandOverCB" onclick="CheckAll_HandOver();" /> H/O</center></th>
+                            }
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="col-md-12 text-center">
+                    @if (ViewBag.GetRoles == "Role_HD13")
+                    {
+                        <button type="submit" id="btn_Save" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                            <i class="fas fa-save"></i>
+                            SAVE
+                        </button>
+                    }
+                    else if (ViewBag.GetRoles == "Role_HD14")
+                    {
+                        <button disabled type="submit" id="btn_Save" class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn-lg btn btn-outline-success disable_btn">
+                            <i class="fas fa-save"></i>
+                            SAVE
+                        </button>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @*<label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>*@
+    }
+}
+else
+{
+    @*<label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>*@
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript">
+
+    var table;
+
+    $(document).ready(function () {
+        Hide_backbtn();
+
+    });
+
+    $("#btn_Save").on('click', function (event) {
+        swal({
+            title: "",
+            text: "Are you sure? Do you want to save it?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+            function (isConfirm) {
+                if (isConfirm) {
+                    if ($('.CheckboxC1').is(':checked') == true) {
+
+                        var DataList = [];
+
+                        var oTable = $("#WorkApp_table").dataTable();
+
+
+                        $(".CheckboxC1", oTable.fnGetNodes()).each(function () { //loop every class="CheckboxC1"
+                            var tuisre = $(this).is(":checked"); // get cb checked only
+                            if (tuisre) {
+
+                                var mfg = $(this).val();
+
+
+                                DataList.push({
+                                    Id: mfg,
+                                    Delivery: $('#Delivery_' + mfg).is(":checked"),
+                                    Install: $('#Install_' + mfg).is(":checked"),
+                                    Testing: $('#Testing_' + mfg).is(":checked"),
+                                    HandOver: $('#HandOver_' + mfg).is(":checked"),
+									WAL_Remark : $('#note_'+mfg).val()
+                                });
+
+                            }
+
+
+                        })
+                        SaveData(DataList);
+
+
+                    }
+                    else {
+                        Alert_Error("", "Plase Checked in checkbox 1 more");
+
+                    }
+                }
+                else {
+                    swal("", "Cancelled", "error");
+                }
+            });
+
+
+
+
+    });
+
+    function SaveData(Datalist) {
+        var mfg = "";
+        $.ajax({
+            type: "POST",
+            url: "/HD_WorkApproval/SaveData",
+            data: { list: Datalist },
+            dataType: "json",
+            success: function (response) {
+
+                if (response.code === 1) {
+                    window.location = '/Login/Logout';
+                }
+                else {
+                    if (response.length == 0) {
+                        setTimeout(function () {
+                            swal({
+                                title: "",
+                                text: "Successful",
+                                type: "success"
+                            },
+                                function () {
+
+                                    Search();
+                                    AllClear_Head_Checkbox();
+                                });
+                        }, 500);
+                    }
+                    else {
+
+                        for (var i = 0; i < response.length; i++) {
+                            mfg = mfg + '  ' + response[i];
+                        }
+
+                        setTimeout(function () {
+                            swal({
+                                title: "warning",
+                                text: "Data is save Success, but MFG : " + mfg + "   Unsuccess because wrong condition",
+                                type: "warning"
+                            },
+                                function () {
+
+                                    Search();
+                                    AllClear_Head_Checkbox();
+                                });
+                        }, 500);
+                    }
+                }
+            },
+            failure: function (response) {
+            },
+            error: function (response) {
+            }
+        });
+    }
+
+    function AllClear_Head_Checkbox()
+    {
+        $('#DeliveryCB').prop('checked', false);
+		$('#InstallCB').prop('checked', false);
+		$('#TestingCB').prop('checked', false);
+		$('#HandOverCB').prop('checked', false);
+		
+    }
+
+    function CheckAll_coluam1() {
+
+        if ($('#TopCB').is(':checked') == true) {
+            $('.CheckboxC1').prop('checked', true);
+        }
+        else {
+            $('.CheckboxC1').prop('checked', false);
+        }
+
+
+    }
+
+    function CheckAll_Delivery() {
+
+        if ($('#DeliveryCB').is(':checked') == true) {
+            $('.Delivery').prop('checked', true);
+        }
+        else {
+            $('.Delivery').prop('checked', false);
+        }
+    }
+    function CheckAll_Install() {
+
+        if ($('#InstallCB').is(':checked') == true) {
+            $('.Install').prop('checked', true);
+            $('.Delivery').prop('checked', true);
+
+            //Checked
+            $('#DeliveryCB').prop('checked', true);
+
+
+            //disable
+            $('#DeliveryCB').prop('disabled', 'disabled');
+
+
+        }
+        else {
+            $('.Install').prop('checked', false);
+            $('.Delivery').prop('checked', false);
+
+            //Checked
+            $('#DeliveryCB').prop('checked', false);
+
+
+            //disable
+            $('#DeliveryCB').prop('disabled', false);
+
+        }
+    }
+    function CheckAll_Testing() {
+
+        if ($('#TestingCB').is(':checked') == true) {
+            $('.Testing').prop('checked', true);
+            $('.Install').prop('checked', true);
+            $('.Delivery').prop('checked', true);
+
+            //Checked
+            $('#DeliveryCB').prop('checked', true);
+            $('#InstallCB').prop('checked', true);
+
+            //disable
+            $('#DeliveryCB').prop('disabled', 'disabled');
+            $('#InstallCB').prop('disabled', 'disabled');
+
+        }
+        else {
+            $('.Testing').prop('checked', false);
+            $('.Install').prop('checked', false);
+            $('.Delivery').prop('checked', false);
+
+            //Checked
+            $('#DeliveryCB').prop('checked', false);
+            $('#InstallCB').prop('checked', false);
+
+            //disable
+            $('#DeliveryCB').prop('disabled', false);
+            $('#InstallCB').prop('disabled', false);
+
+        }
+    }
+    function CheckAll_HandOver() {
+
+        if ($('#HandOverCB').is(':checked') == true) {
+            $('.HandOver').prop('checked', true);
+            $('.Testing').prop('checked', true);
+            $('.Install').prop('checked', true);
+            $('.Delivery').prop('checked', true);
+            //Checked
+            $('#DeliveryCB').prop('checked', true);
+            $('#InstallCB').prop('checked', true);
+            $('#TestingCB').prop('checked', true);
+            //disable
+            $('#DeliveryCB').prop('disabled', 'disabled');
+            $('#InstallCB').prop('disabled', 'disabled');
+            $('#TestingCB').prop('disabled', 'disabled');
+        }
+        else {
+            $('.HandOver').prop('checked', false);
+            $('.Testing').prop('checked', false);
+            $('.Install').prop('checked', false);
+            $('.Delivery').prop('checked', false);
+            //Checked
+            $('#DeliveryCB').prop('checked', false);
+            $('#InstallCB').prop('checked', false);
+            $('#TestingCB').prop('checked', false);
+            //disable
+            $('#DeliveryCB').prop('disabled', false);
+            $('#InstallCB').prop('disabled', false);
+            $('#TestingCB').prop('disabled', false);
+        }
+
+    }
+
+
+
+    function CheckedHO(id) {
+        var DD_HO_ID = "HandOver_" + id;
+        var DD_Test_ID = "Testing_" + id;
+        var DD_Install_ID = "Install_" + id;
+        var DD_Delivery_ID = "Delivery_" + id;
+
+
+        $('#' + DD_HO_ID).on('change', function (e) {
+
+            if ($('#' + DD_HO_ID).is(':checked') == true) {
+                $("#" + DD_Test_ID).prop("checked", true);
+                $("#" + DD_Install_ID).prop("checked", true);
+                $("#" + DD_Delivery_ID).prop("checked", true);
+            }
+            else {
+
+            }
+
+        });
+    }
+
+    function CheckedTesting(id) {
+
+        var DD_HO_ID = "HandOver_" + id;
+        var DD_Test_ID = "Testing_" + id;
+        var DD_Install_ID = "Install_" + id;
+        var DD_Delivery_ID = "Delivery_" + id;
+
+
+        $("#" + DD_Test_ID).on('change', function (e) {
+
+            if ($("#" + DD_Test_ID).is(':checked') == true) {
+
+                $("#" + DD_Install_ID).prop("checked", true);
+                $("#" + DD_Delivery_ID).prop("checked", true);
+            }
+            else {
+
+
+                $("#" + DD_HO_ID).prop("checked", false);
+
+            }
+
+        });
+    }
+
+    function CheckedInstall(id) {
+
+        var DD_HO_ID = "HandOver_" + id;
+        var DD_Test_ID = "Testing_" + id;
+        var DD_Install_ID = "Install_" + id;
+        var DD_Delivery_ID = "Delivery_" + id;
+
+
+        $("#" + DD_Install_ID).on('change', function (e) {
+
+            if ($("#" + DD_Install_ID).is(':checked') == true) {
+
+
+                $("#" + DD_Delivery_ID).prop("checked", true);
+            }
+            else {
+
+
+
+                $("#" + DD_Test_ID).prop("checked", false);
+                $("#" + DD_HO_ID).prop("checked", false);
+            }
+
+        });
+    }
+
+    function CheckedDelivery(id) {
+        var DD_HO_ID = "HandOver_" + id;
+        var DD_Test_ID = "Testing_" + id;
+        var DD_Install_ID = "Install_" + id;
+        var DD_Delivery_ID = "Delivery_" + id;
+
+
+        $('#' + DD_Delivery_ID).on('change', function (e) {
+
+            if ($('#' + DD_Delivery_ID).is(':checked') == true) {
+
+            }
+            else {
+                $("#" + DD_HO_ID).prop("checked", false);
+                $("#" + DD_Test_ID).prop("checked", false);
+                $("#" + DD_Install_ID).prop("checked", false);
+                $("#" + DD_Delivery_ID).prop("checked", false);
+            }
+
+        });
+    }
+
+    function Search() {
+        On_Loading();
+        var saleorder = $('#saleorder').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/HD_WorkApproval/CreateTableBySearch",
+            data: { SaleOrderCode: saleorder },
+            dataType: "json",
+            success: OnSuccess,
+            failure: function (response) {
+            },
+            error: function (response) {
+            }
+        });
+    }
+
+    function OnSuccess(response) {
+
+        if (response.code === 1) {
+            window.location = '/Login/Logout';
+        }
+        else {
+            if ($.fn.dataTable.isDataTable('#WorkApp_table')) {
+                $('#WorkApp_table').DataTable().destroy();
+                RenderTable(response);
+                Off_Loading();
+            }
+            else {
+                RenderTable(response);
+                Off_Loading();
+            }
+        }
+
+    }
+
+    function RenderTable(response) {
+
+        table = $("#WorkApp_table").DataTable(
+            {
+                language: {
+                    loadingRecords: '<span style="width:100%;"><img src="~/Resoure/gif/Gear_loading.gif"></span>'
+                },
+                searching: false,
+                info: true,
+                paging: false,
+
+                data: response,
+                columns: [
+
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if ('@ViewBag.GetRoles' == "Role_HD13") {
+                                return '<center>' +
+                                    '<input id="cb_' + data.MFG_No + '" value="' + data.MFG_No + '" class="CheckboxC1" type="checkbox" />' +
+                                    '</center>'
+                                    ;
+                            }
+                            else if ('@ViewBag.GetRoles' == "Role_HD14") {
+                                return '<center>' +
+                                    '<input disabled id="cb_' + data.MFG_No + '" value="' + data.MFG_No + '" class="CheckboxC1" type="checkbox" />' +
+                                    '</center>'
+                                    ;
+                            }
+
+                        }
+                    },
+                    {
+                        'data': 'id',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    { 'data': 'MFG_No' },
+                    { 'data': 'EQ_No' },
+                    { 'data': 'Item_Description' },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if ('@ViewBag.GetRoles' == "Role_HD13") {
+                                if (data.WAL_Delivery) {
+                                    return '<center>' +
+                                        '<input class="Delivery" id="Delivery_' + data.MFG_No + '" value="FFFF" type="checkbox" onclick="CheckedDelivery(' + "'" + data.MFG_No + "'" + ');" checked />' +
+                                        '</center>';
+                                }
+                                else {
+                                    return '<center>' +
+                                        '<input class="Delivery" id="Delivery_' + data.MFG_No + '" value="FFFF" type="checkbox" onclick="CheckedDelivery(' + "'" + data.MFG_No + "'" + ');" />' +
+                                        '</center>';
+                                }
+                            }
+
+                            else if ('@ViewBag.GetRoles' == "Role_HD14") {
+                                if (data.WAL_Delivery) {
+                                    return '<center>' +
+                                        '<input disabled class="Delivery" id="Delivery_' + data.MFG_No + '" value="FFFF" type="checkbox" onclick="CheckedDelivery(' + "'" + data.MFG_No + "'" + ');" checked />' +
+                                        '</center>';
+                                }
+                                else {
+                                    return '<center>' +
+                                        '<input disabled class="Delivery" id="Delivery_' + data.MFG_No + '" value="FFFF" type="checkbox" onclick="CheckedDelivery(' + "'" + data.MFG_No + "'" + ');" />' +
+                                        '</center>';
+                                }
+                            }
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if ('@ViewBag.GetRoles' == "Role_HD13") {
+                                if (data.WAL_Install) {
+                                    return '<center>' +
+                                        '<input class="Install" id="Install_' + data.MFG_No + '" type="checkbox" onclick="CheckedInstall(' + "'" + data.MFG_No + "'" + ');" checked />' +
+                                        '</center>';
+                                }
+                                else {
+                                    return '<center>' +
+                                        '<input class="Install" id="Install_' + data.MFG_No + '" type="checkbox" onclick="CheckedInstall(' + "'" + data.MFG_No + "'" + ');" />' +
+                                        '</center>';
+                                }
+                            }
+                            else if ('@ViewBag.GetRoles' == "Role_HD14") {
+                                if (data.WAL_Install) {
+                                    return '<center>' +
+                                        '<input disabled class="Install" id="Install_' + data.MFG_No + '" type="checkbox" onclick="CheckedInstall(' + "'" + data.MFG_No + "'" + ');" checked />' +
+                                        '</center>';
+                                }
+                                else {
+                                    return '<center>' +
+                                        '<input disabled class="Install" id="Install_' + data.MFG_No + '" type="checkbox" onclick="CheckedInstall(' + "'" + data.MFG_No + "'" + ');" />' +
+                                        '</center>';
+                                }
+                            }
+
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if ('@ViewBag.GetRoles' == "Role_HD13") {
+                                if (data.WAL_Testing) {
+                                    return '<center>' +
+                                        '<input class="Testing" id="Testing_' + data.MFG_No + '" type="checkbox" onclick="CheckedTesting(' + "'" + data.MFG_No + "'" + ');" checked />' +
+                                        '</center>';
+                                }
+                                else {
+                                    return '<center>' +
+                                        '<input class="Testing" id="Testing_' + data.MFG_No + '" type="checkbox" onclick="CheckedTesting(' + "'" + data.MFG_No + "'" + ');" />' +
+                                        '</center>';
+                                }
+                            }
+                            else if ('@ViewBag.GetRoles' == "Role_HD14") {
+                                if (data.WAL_Testing) {
+                                    return '<center>' +
+                                        '<input disabled class="Testing" id="Testing_' + data.MFG_No + '" type="checkbox" onclick="CheckedTesting(' + "'" + data.MFG_No + "'" + ');" checked />' +
+                                        '</center>';
+                                }
+                                else {
+                                    return '<center>' +
+                                        '<input disabled class="Testing" id="Testing_' + data.MFG_No + '" type="checkbox" onclick="CheckedTesting(' + "'" + data.MFG_No + "'" + ');" />' +
+                                        '</center>';
+                                }
+                            }
+
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            if ('@ViewBag.GetRoles' == "Role_HD13") {
+                                if (data.WAL_HandOver) {
+                                    return '<center>' +
+                                        '<input class="HandOver" id="HandOver_' + data.MFG_No + '" type="checkbox" onclick="CheckedHO(' + "'" + data.MFG_No + "'" + ');" checked />' +
+                                        '</center>';
+                                }
+                                else {
+                                    return '<center>' +
+                                        '<input class="HandOver" id="HandOver_' + data.MFG_No + '" type="checkbox" onclick="CheckedHO(' + "'" + data.MFG_No + "'" + ');" />' +
+                                        '</center>';
+                                }
+                            }
+                            else if ('@ViewBag.GetRoles' == "Role_HD14") {
+                                if (data.WAL_HandOver) {
+                                    return '<center>' +
+                                        '<input disabled class="HandOver" id="HandOver_' + data.MFG_No + '" type="checkbox" onclick="CheckedHO(' + "'" + data.MFG_No + "'" + ');" checked />' +
+                                        '</center>';
+                                }
+                                else {
+                                    return '<center>' +
+                                        '<input disabled class="HandOver" id="HandOver_' + data.MFG_No + '" type="checkbox" onclick="CheckedHO(' + "'" + data.MFG_No + "'" + ');" />' +
+                                        '</center>';
+                                }
+                            }
+
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data,type,row)
+                        {
+                            return `<textarea class="form-control" id='note_${data.MFG_No}' rows="4" cols="70" style="resize:none;" maxlength="500" >${data.WAL_Remark}</textarea>`;
+                        }
+                    }
+
+                ]
+            });
+
+
+
+    }
+
+
+</script>
+

@@ -1,0 +1,390 @@
+﻿
+@{
+	ViewBag.Title = "Create";
+}
+
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h2>Create Engineer Master</h2>
+        </div>
+        @if (ViewBag.GetRoles == "Role_MM11" && ViewBag.GetMNRoles == "PDSCPAGE001")
+        {
+            using (Html.BeginForm("CreateEngineerMaster", "ProjectEngineerMaster", FormMethod.Post, new { id = "CreatePEForm" }))
+            {
+                <div class="card-body" style="margin-top:50px;">
+
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3 text-left">
+                                <label class="text-font-13">In Charge Person : </label>
+                            </div>
+                            <div class="col-sm-3">
+                                <select id="PE" name="PE" onchange="AutoGenLeaderAndDM();" class="form-control" required>
+                                    <option value="">--Selected--</option>
+                                </select>                                
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label style="color:red;font-weight:bold;font-size:20px;">****</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="text-font-13">Leader : </label>
+                            </div>
+                            <div class="col-sm-3">
+                                <select id="Leader" name="Leader" class="form-control">
+                                    <option value="">--Selected--</option>
+                                </select>
+                                
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label style="color:red;font-weight:bold;font-size:20px;">****</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label class="text-font-13">DM  : </label>
+                            </div>
+                            <div class="col-sm-3 ">
+                                <select id="DM" name="DM" class="form-control">
+                                    <option value="">--Selected--</option>
+                                </select>
+                                
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label style="color:red;font-weight:bold;font-size:20px;">****</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label class="text-font-13">Phone  : </label>
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input id="phone" name="phone" class="form-control" disabled />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input id="phoneh" name="phoneh" class="form-control" hidden />
+                            </div>
+                            <div class="col-sm-3 ">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label class="text-font-13">E-Mail  : </label>
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input id="mail" name="mail" class="form-control" disabled />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input id="mailh" name="mailh" class="form-control" hidden />
+                            </div>
+                            <div class="col-sm-3 ">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button id="SaveBtn" type="submit" hidden>save</button>
+                    </div>
+
+                </div>
+            }
+            <div class="col-md-12 text-center" style="margin-bottom:25px;">
+                <button onclick="Save();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+                    <i class="fas fa-save"></i>
+                    SAVE
+                </button>
+            </div>
+        }
+        else
+        {
+            <div class="card-body">
+                <label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+            </div>
+
+        }
+    </div>
+	<a id="btn_back" onclick="Back_Button();" class="float pointer" style="color:white;">
+		<i class="fas fa-arrow-left B-icon"></i>
+	</a>
+	<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+	<script src="~/lib/select2/js/select2.min.js"></script>
+	<script>
+
+	//onload
+	$.fn.select2.defaults.set("theme", "bootstrap");
+
+	$('#PE').select2();
+	$('#DM').select2();
+	$('#Leader').select2();
+
+	function Save()
+	{
+		var msg = "Please enter ";
+
+		if (($('#PE').val() == "" || $('#PE').val() == null))
+		{
+			msg = msg + " Engineer ";
+		}
+
+		if (($('#Leader').val() == "" || $('#Leader').val() == null))
+		{
+			msg = msg + " Leader ";
+		}
+
+		if (($('#DM').val() == "" || $('#DM').val() == null))
+		{
+			msg = msg + " DM ";
+		}
+
+
+
+        $('#phoneh').val($('#phone').val());
+        $('#mailh').val($('#mail').val());
+
+		swal({
+			title: "",
+            text: "Are you sure? Do you want to save it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm)
+			{
+				if (isConfirm)
+				{
+					if (($('#PE').val() != "" && $('#PE').val() != null) &&
+						($('#Leader').val() != "" && $('#Leader').val() != null) &&
+						($('#DM').val() != "" && $('#DM').val() != null))
+					{
+						$('#SaveBtn').trigger('click');		
+					}
+					else
+					{
+						swal("", msg, "error");
+					}
+					
+				}
+				else {
+
+					swal("", "Cancelled", "error");
+				  }
+			});
+		
+	}
+
+	function ClearDDPE() {
+		$('#PE')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">--Selected--</option>')
+			.val('')
+			;
+	}
+	function ClearDDLeader() {
+		$('#Leader')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">--Selected--</option>')
+			.val('')
+			;
+	}
+	function ClearDDDM() {
+		$('#DM')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">--Selected--</option>')
+			.val('')
+			;
+	}
+
+	function AutoGenLeaderAndDM()
+	{
+		On_Loading();
+		ClearDDLeader();
+		ClearDDDM();
+		var p_code = $('#PE').val();
+
+
+
+		if (p_code == "" || p_code == null)
+		{
+			Off_Loading();
+			swal("", "Plase you choose PE", "error");
+		}
+		else
+		{
+			GetMailAndPhote(p_code);
+			//Leader
+			$.ajax({
+				type: "POST",
+				url: "/ProjectEngineerMaster/Get_Leader",
+				data: { Position_Code: p_code },
+				@*contentType: "application/json; charset=utf-8",*@
+				dataType: "json",
+				success: function (response) {
+
+
+					response.forEach((obj) => {
+
+						optionValue = obj.Employee_Code;
+						optionText = obj.Name;
+						optionType = obj.Position_Group;
+						$('#Leader').append(`<option value="${optionValue}">
+									   [${optionType}] ${optionValue}-${optionText}
+								  </option>`);
+					});
+
+				},
+				failure: function (response) {
+					alert("failure :"+response.responseText);
+				},
+				error: function (response) {
+					alert("error :" +response.responseText);
+				}
+			});
+
+			// DM
+			AutoGenDM(p_code);
+		}
+
+
+	}
+
+	function GetMailAndPhote(code)
+	{
+		$.ajax({
+			type: "POST",
+			url: "/ProjectEngineerMaster/Get_EngineerByCode",
+			data: { Code : code},
+			@*contentType: "application/json; charset=utf-8",*@
+			dataType: "json",
+			success: function (response) {
+
+
+				response.forEach((obj) => {
+					 $('#phone').val(obj.Mobile_no);
+					 $('#mail').val(obj.Email);
+				});
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function AutoGenDM(p_code)
+	{
+
+		ClearDDDM();
+		$.ajax({
+			type: "POST",
+			url: "/ProjectEngineerMaster/Get_DM",
+			data: { Position_Code: p_code },
+			@*contentType: "application/json; charset=utf-8",*@
+			dataType: "json",
+			success: function (response) {
+
+
+				response.forEach((obj) => {
+
+					optionValue = obj.Employee_Code;
+					optionText = obj.Name;
+					optionType = obj.Position_Group;
+					$('#DM').append(`<option value="${optionValue}">
+									  [${optionType}] ${optionValue}-${optionText}
+								  </option>`);
+				});
+				Off_Loading();
+			},
+			failure: function (response) {
+				alert(response.responseText);
+                Off_Loading();
+			},
+			error: function (response) {
+				alert(response.responseText);
+                Off_Loading();
+			}
+			
+		});
+		
+	}
+
+		$(document).ready(function ()
+		{
+			On_Loading();
+		$('#liEngineer').attr('class', 'mm-active');
+
+		$.ajax({
+			type: "POST",
+			url: "/ProjectEngineerMaster/Get_Engineer",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+
+				response.forEach((obj) => {
+
+
+					optionValue = obj.Employee_Code;
+					optionText = obj.Name;
+					optionType = obj.Position_Group;
+					$('#PE').append(`<option value="${optionValue}">
+									 [${optionType}] ${optionValue}-${optionText}
+								  </option>`);
+				});
+				Off_Loading();
+			},
+			failure: function (response) {
+				alert(response.responseText);
+                Off_Loading();
+			},
+			error: function (response) {
+				alert(response.responseText);
+                Off_Loading();
+			}
+		});
+		
+
+	});
+
+
+
+
+
+</script>

@@ -1,0 +1,425 @@
+﻿
+@{
+    ViewBag.Title = "Create-AssignProjectEngineer";
+}
+
+@if ((ViewBag.GetRoles == "Role_HD19") && (ViewBag.GetMNRoles == "PDSCPAGE002"))
+{
+    <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;">
+        <div class="card-body">
+            <label style="color:red;font-weight:bold;" class="text-font-20">** กรุณาเลือก Project Enigneer **</label>
+            <div class="col-md-12">
+                <div class="form-group row">
+
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Project Engineer : </label>
+                    </div>
+                    <div class="col-sm-3 text-left">
+                        <select id="PE_DD" name="PE_DD" onchange="AutoGen();" class="form-control">
+                            <option value="">--seleted--</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3 text-right">
+						<label class="text-font-13">Project Manager : </label>
+                    </div>
+                    <div class="col-sm-3 text-left">
+                        <input id="leader" type="text" class="form-control" disabled />
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group row">
+
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">DM Project: </label>
+                    </div>
+                    <div class="col-sm-3 text-left">
+                        <input id="dm" type="text" class="form-control" disabled />
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Phone : </label>
+                    </div>
+                    <div class="col-sm-3 text-left">
+                        <input id="phone" type="text" class="form-control" disabled />
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group row">
+
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">E-mail : </label>
+                    </div>
+                    <div class="col-sm-3 text-left">
+                        <input id="email" type="text" class="form-control" disabled />
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="card-table" class="card-hover-shadow-2x card-border card" style="margin-top:25px;display:none">
+        <div class="card-body">
+            <h3>Please Select MFG</h3>
+            <div class="table-responsive">
+                <table id="MFG" class="table table-striped table-bordered table-hover" width="100%">
+                    <thead>
+                        <tr>
+                            <th><center><input id="TopCB" onclick="CheckAll_coluam1();" type="checkbox" /></center></th>
+                            <th>No.</th>
+                            <th>MFG No.</th>
+                            <th>EQ.No.</th>
+                            <th>Spec No</th>
+                            <th>Project Engineer</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-md-12 text-center">
+                <button id="btn_Save" type="submit" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                    <i class="fas fa-save"></i>
+                    SAVE
+                </button>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card-body">
+        <label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+    </div>
+
+}
+<a id="btn_back" onclick="Back_Button();" class="float pointer" style="color:white;">
+    <i class="fas fa-arrow-left B-icon"></i>
+</a>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script type="text/javascript">
+
+
+		$.fn.select2.defaults.set("theme", "bootstrap");
+
+		$('#PE_DD').select2();
+		$(document).ready(function ()
+		{
+            On_Loading();
+
+			LoadDropDoenPE();
+			LoadTable();
+            
+		});
+
+	function AutoGen()
+	{
+		On_Loading();
+			var seleted = $('#PE_DD').val();
+
+
+
+			if (seleted != "" && seleted != null)
+			{
+				$("#card-table").css("display", "block");
+				GetDataDateil(seleted);
+
+			}
+			else
+			{
+				$("#card-table").css("display", "none");
+				ClearInput();
+				Off_Loading();
+			}
+		}
+		function ClearInput() {
+			$('#leader').val('');
+			$('#dm').val('');
+			$('#phone').val('');
+			$('#email').val('');
+		}
+
+	$("#btn_Save").on('click', function (event)
+	{
+		var seleted = $('#PE_DD').val();
+
+
+		swal({
+			title: "",
+			text: "Are you sure? Do you want to save it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm) {
+				if (isConfirm)
+				{
+
+					if (seleted != "" && seleted != null) {
+
+
+						if ($('.CheckboxC1').is(':checked') == true) {
+
+							var DataList = [];
+
+							var oTable = $("#MFG").dataTable();
+
+
+							$(".CheckboxC1", oTable.fnGetNodes()).each(function () { //loop every class="CheckboxC1"
+								var tuisre = $(this).is(":checked"); // get cb checked only
+								if (tuisre) {
+
+									var mfg = $(this).val();
+
+									DataList.push({
+										MFG_No: $('#MFG_' + mfg).text()
+									});
+
+								}
+
+
+							})
+							SaveData(DataList, seleted);
+
+
+						}
+						else {
+							swal("", "Plase Checked in checkbox 1 more", "error");
+
+						}
+
+
+					}
+					else {
+						swal("", "Plase Select Project Engineer", "error");
+
+					}
+
+				}
+				else
+				{
+
+					swal("", "Cancelled", "error");
+				}
+			});
+
+
+	});
+
+
+		function SaveData(Datalist, PECODE) {
+
+			$.ajax({
+				type: "POST",
+				url: "/HD_AssignProjectEngineer/SaveData",
+				data: { list: Datalist, PE_Code : PECODE },
+
+			dataType: "json",
+				success: function (response)
+				{
+					if (response.code === 1) {
+						window.location = '/Login/Logout';
+					}
+					else {
+						if (response) {
+							setTimeout(function () {
+								swal({
+									title: "",
+									text: "Successful",
+									type: "success"
+								},
+									function () {
+										window.location.href = "/HD_AssignProjectEngineer/Index";
+									@*if ($.fn.dataTable.isDataTable('#MFG')) {
+										$('#MFG').DataTable().destroy();
+										LoadDropDoenPE();
+										LoadTable();
+									}
+									else
+									{
+										LoadDropDoenPE();
+										LoadTable();
+									}*@
+
+									});
+							}, 500);
+
+						}
+						else {
+							Alert_Error("", "It can't be saved. Please Try again");
+						}
+					}
+				},
+				failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+	function GetDataDateil(PE_Code)
+	{
+			$.ajax({
+				type: "POST",
+				url: "/HD_AssignProjectEngineer/AutoGenPE_Detail",
+				data: { PECode: PE_Code },
+
+				dataType: "json",
+				success: function (response) {
+
+					if (response.length > 0) {
+
+						for (var i = 0; i < response.length; i++) {
+
+							$('#leader').val(response[i].Leader_Name);
+							$('#dm').val(response[i].DM_Name);
+							$('#phone').val(response[i].Phone);
+							$('#email').val(response[i].Email);
+						}
+					}
+
+				},
+				failure: function (response) {
+					alert("fail :"+response.responseText);
+				},
+				error: function (response) {
+					alert("error :" +response.responseText);
+				}
+			});
+		Off_Loading();
+		}
+
+	function LoadTable()
+	{
+			On_Loading();
+			var Site_Code = $('#SiteCode').text();
+
+			$.ajax({
+				type: "POST",
+				url: "/HD_AssignProjectEngineer/LoadTable",
+				data: { SiteCode: Site_Code },
+
+				dataType: "json",
+				success: OnSuccess,
+				failure: function (response) {
+					//alert(response.d);
+				},
+				error: function (response) {
+					//alert(response.d);
+				}
+			});
+		}
+		function LoadDropDoenPE() {
+			$.ajax({
+				type: "POST",
+				url: "/HD_AssignProjectEngineer/Load_ListPE",
+				data: "",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (response) {
+
+					if (response.code === 1) {
+						window.location = '/Login/Logout';
+					}
+					else {
+						if (response != null && response != "") {
+							for (var i = 0; i < response.length; i++) {
+
+								optionValue = response[i].PE_Code;
+								optionText = response[i].PE_Name;
+								$('#PE_DD').append(`<option value="${optionValue}">
+										   ${optionValue}-${optionText}
+									  </option>`);
+
+							}
+						}
+					}
+                    Off_Loading();
+				},
+				failure: function (response) {
+					alert(response.responseText);
+                    Off_Loading();
+				},
+				error: function (response) {
+					alert(response.responseText);
+                    Off_Loading();
+				}
+			});
+			
+		}
+
+		function CheckAll_coluam1() {
+
+			if ($('#TopCB').is(':checked') == true) {
+				$('.CheckboxC1').prop('checked', true);
+			}
+			else {
+				$('.CheckboxC1').prop('checked', false);
+			}
+
+
+		}
+
+		function OnSuccess(response)
+		{
+			if (response.code === 1) {
+                Off_Loading();
+				window.location = '/Login/Logout';
+			}
+			else {
+				var table = $("#MFG").DataTable(
+					{
+
+						searching: false,
+						info: true,
+						paging: false,
+						data: response,
+						columns: [
+							{
+								data: null,
+								render: function (data, type, row) {
+									return '<center>' +
+										'<center><input class="CheckboxC1" value="' + data.MFG_No + '" id="' + data.MFG_No + '"  type="checkbox" /></center>'
+									'</center>';
+								}
+							},
+							{
+								'data': 'id',
+								render: function (data, type, row, meta) {
+									return meta.row + meta.settings._iDisplayStart + 1;
+								}
+							},
+							{
+								data: null,
+								render: function (data, type, row) {
+									return '<lable id="MFG_' + data.MFG_No + '">' + data.MFG_No + '</lable>';
+								}
+							},
+							{ 'data': 'EQ_No' },
+							{ 'data': 'Item_Description' },
+							{
+								data: null,
+								render: function (data, type, row) {
+									return data.PE_Code + '-' + data.PE_Name;
+								}
+							},
+
+						]
+					});
+
+			
+			Off_Loading();
+            }
+		};
+
+
+
+</script>
+

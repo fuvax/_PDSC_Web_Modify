@@ -1,0 +1,510 @@
+﻿
+@{
+	ViewBag.Title = "Create Plan Rectify Finish";
+}
+
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h2 style="color:black;">Plan Rectify Finish</h2>
+        </div>
+        @if ((ViewBag.GetRoles == "Role_US34") && (ViewBag.GetMNRoles == "PDSCPAGE003"))
+        {
+            using (Html.BeginForm("Edit_Plan_Rectify_Finish", "ProjectUpdateStatus", FormMethod.Post, new { }))
+            {
+                <div class="card-body">
+
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Defect Item : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <input id="DT_Code" name="DT_Code" type="text" hidden />
+
+                                <input type="text" id="DefectItem" name="DefectItem" class="text-font-12" hidden />
+                                <label id="DefectItemText" class="text-font-13"></label>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Rank : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <input id="Rank" name="Rank" class="text-font-12" hidden />
+                                <label id="RankText" class="text-font-13"></label>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Issue Date : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <input type="text" id="IssueDate" name="IssueDate" class="text-font-12" hidden />
+                                <label id="IssueDateText" class="text-font-13"></label>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Issue By : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <input type="text" id="IssueBy" name="IssueBy" class="text-font-12" hidden />
+                                <label id="IssueByText" class="text-font-13"></label>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">In Charge Person : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <label id="InChargePersonText" class="text-font-12"></label>
+                                <input type="text" id="InChargePerson" name="InChargePerson" hidden />
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Responsibility : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <label id="ResponsibilityText" class="text-font-12"></label>
+                                <input type="text" id="Responsibility" name="Responsibility" hidden />
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Cause : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <label id="CaseText" class="text-font-12"></label>
+                                <input type="text" id="Case" name="Case" hidden />
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Note Defect : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <input type="text" id="NoteDefect" name="NoteDefect" class="text-font-12" hidden />
+                                <label id="NoteDefectText" class="text-font-13"></label>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Plan Rectify Finish : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <input  id="PlanRectify" name="PlanRectify" type="date" class="form-control" />
+                            </div>
+							<div class="col sm-3">
+								<label style="color:red;font-weight:bold;font-size:20px;">****</label>
+							</div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13" style="font-weight:bold;color:black;">Rectify Result : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13" style="font-weight:bold;color:black;">Rectify Complete Date : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13" style="font-weight:bold;color:black;">Note Rectify Result : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <label class="text-font-12"></label>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13" style="font-weight:bold;color:red;">Rectify by : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <label class="text-font-12"></label>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col md-12 text-center">
+                        <button id="SaveBtn" type="submit" hidden>save</button>
+                    </div>
+
+                </div>
+            }
+            <div class="col-md-12 text-center" style="margin-bottom:25px;">
+                <button onclick="Save();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+                    <i class="fas fa-save"></i>
+                    SAVE
+                </button>
+            </div>
+        }
+        else
+        {
+            
+            <div class="card-body">
+                <label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+            </div>
+        }
+    </div>
+	@*<a id="btn_back" onclick="Back_Button();" class="float pointer" style="color:white;">
+		<i class="fas fa-arrow-left B-icon"></i>
+	</a>*@
+    <a href="@Url.Action("Defect", "ProjectUpdateStatus")" class="float pointer" style="color:white;">
+        <i class="fas fa-arrow-left B-icon"></i>
+    </a>
+<script src="~/ThridParty/Theam/ArchitectUI-Pro/assets/core/jquery.min.js" type="text/javascript"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/moment.js/moment.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script>
+	$(document).ready(() =>
+	{
+		On_Loading();
+		SetUp();
+
+	});
+
+	function SetUp()
+	{
+		Get_DefectItem();
+		Get_Data();
+    }
+
+	function CheckDate() {
+		let workingdate = new Date($('#PlanRectify').val());
+		
+		let dateNow = new Date();
+
+        if (workingdate > dateNow)
+        {
+			swal("", "You can't choose Working Date more than today.", "error");
+			$('#PlanRectify').val('');
+		}
+
+	}
+
+    function Save()
+    {
+
+		
+      
+		swal({
+			title: "",
+            text: "Are you sure? Do you want to save it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm) {
+				if (isConfirm) {
+					if (($('#PlanRectify').val() != "" && $('#PlanRectify').val() != null))
+					{
+						$('#SaveBtn').trigger('click');
+					}
+					else {
+						swal("", "Please Enter Plan Rectify Finish ", "error");
+					}
+
+				}
+				else {
+
+					swal("", "Cancelled", "error");
+				}
+			});
+
+	}
+
+	function Get_Data()
+	{
+		var DT_Code = "@Session["DT_Code"]";
+		$('#DT_Code').val(DT_Code);
+
+
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/Get_Data_By_DT_Code",
+			data: { DT_Code: DT_Code },
+			dataType: "json",
+			success: function (response)
+			{
+                if (response.code === 1) {
+                    window.location = '/Login/Logout';
+                }
+                else {
+                    $('#Rank').val(response[0].DT_Rank);
+                    $('#RankText').text(response[0].DT_Rank);
+                    $('#IssueDate').val(moment(response[0].DT_Issue_Date).format("DD-MMM-YYYY"));
+                    $('#IssueDateText').text(moment(response[0].DT_Issue_Date).format("DD-MMM-YYYY"));
+                    $('#IssueBy').text(response[0].DT_Issue_by);
+                    $('#IssueByText').text(response[0].DT_Issue_by);
+                    $('#NoteDefect').val(response[0].DT_Note_Defect);
+                    $('#NoteDefectText').text(response[0].DT_Note_Defect);
+
+                    if (moment(response[0].DT_Plan_Rectify_Finish).format("yyyy-MM-DD") == "N/A") {
+                        $('#PlanRectify').val(moment(response[0].DT_Plan_Rectify_Finish).format("yyyy-MM-DD"));
+                    }
+
+
+
+                    GetDropDown_InChargePerson(response[0].DICP_Code);
+                    GetDropDown_Responsibility(response[0].DResp_Code, response[0].DCause_Code);
+
+                }
+
+			},
+			failure: function (response) {
+				console.log(response.responseText);
+			},
+			error: function (response) {
+				console.log(response.responseText);
+			}
+
+		});
+
+
+	}
+
+	function Get_DefectItem()
+	{
+		var item_Code = "@Session["Item_Code"]"
+	//	On_Loading();
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/Get_DefectItem",
+			data: { Defect_Item_Code: item_Code },
+				dataType: "json",
+				success: function (response)
+				{
+                    if (response.code === 1) {
+                        window.location = '/Login/Logout';
+                    }
+                    else {
+                        $('#DefectItem').val(response[0].Item_No);
+                        $('#DefectItemText').text(response[0].Item_Description);
+                    }
+				},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+
+		});
+	}
+
+	function GetDropDown_InChargePerson(DICP_Code) {
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/GetDropDown_InChargePerson",
+			data: "",
+			dataType: "json",
+			success: function (response) {
+
+
+				if (response != null && DICP_Code != "") {
+
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].DICP_Code;
+						optionText = response[i].DICP_Description;
+					
+
+						if (DICP_Code == optionValue) {
+
+							$('#InChargePerson').val(optionValue);
+							$('#InChargePersonText').text(optionText);
+						}
+					}
+
+
+				}
+				
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+
+		});
+	}
+	function GetDropDown_Responsibility(Resp_Code, Case_Code) {
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/GetDropDown_Responsibility",
+			data: "",
+			dataType: "json",
+			success: function (response)
+			{
+
+				if (response != null && response != "") {
+
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].DResp_Code;
+						optionText = response[i].DResp_Description;
+						@*$('#Responsibility').append(`<option value="${optionValue}">
+									   ${optionText}
+								  </option>`);*@
+
+						if (Resp_Code == optionValue)
+						{
+							$('#Responsibility').val(optionValue);
+							$('#ResponsibilityText').text(optionText);
+						}
+					}
+
+
+				}
+				
+				//Case_Code
+				GetDropDown_Case(Case_Code);
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+
+		});
+		Off_Loading();
+	}
+	function GetDropDown_Case(Case_Code)
+	{
+		//On_Loading();
+		
+		var dresp_code = $('#Responsibility').val();
+
+		
+			$.ajax({
+				type: "POST",
+				url: "/ProjectUpdateStatus/GetDropDown_Case",
+				data: { DResp_Code: dresp_code },
+				dataType: "json",
+				success: function (response) {
+
+
+
+					if (response != null && response != "") {
+
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].DCause_Code;
+							optionText = response[i].DCause_Description;
+							
+
+							if (Case_Code == optionValue) {
+
+							
+								$("#Case").val(optionValue);
+								$("#CaseText").text(optionText);
+							}
+						}
+
+
+					}					
+
+				},
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+
+			});
+			Off_Loading();
+				
+	}
+</script>
+
+

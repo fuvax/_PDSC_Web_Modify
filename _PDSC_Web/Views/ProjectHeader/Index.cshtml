@@ -1,0 +1,148 @@
+﻿@{
+    ViewBag.Title = "Project Header";
+}
+
+
+@if ((ViewBag.GetMNRoles != null) && (ViewBag.GetMNRoles == "PDSCPAGE002"))
+{
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <!--Head-->
+            <h2 style="color:black;">Project Header</h2>
+        </div>
+        <div class="card-body">
+
+
+            <table id="Project_table" class="table table-responsive table-striped table-bordered table-hover" width="100%">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Site Code</th>
+                        <th>Site Name</th>
+                        <th>Province</th>
+                        <th>PE</th>
+                        <th>Test</th>
+                        <th>QC</th>
+                        <th>Sub Con</th>
+                        <th><center>Action</center></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}
+    <script src="~/ThridParty/Theam/ArchitectUI-Pro/assets/core/jquery.min.js"></script>
+    <script type="text/javascript">
+
+
+
+	function ManuFactuing(site_code) {
+		$.ajax({
+			type: "POST",
+			url: "/ProjectHeader/ToManufacuring",
+			data: { code: site_code },
+			dataType: "json",
+			success: function (response) {
+
+				if (response.result == 'Redirect') {
+					window.location = response.url;
+				}
+			},
+			failure: function (response) {
+
+				alert("failure" + response.responseText);
+			},
+			error: function (response) {
+
+				alert("error" + response.responseText);
+			}
+		});
+	}
+
+
+
+	$(document).ready(function () {
+
+		$('#liHeader').attr('class', 'mm-active');
+		Hide_backbtn();
+		On_Loading();
+
+
+
+		$(function () {
+			$.ajax({
+				type: "POST",
+				url: '@Url.Action("LoadPage", "ProjectHeader")',
+				data: '{}',
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: OnSuccess,
+				failure: function (response) {
+					//alert(response.d);
+				},
+				error: function (response) {
+					//alert(response.d);
+				}
+			});
+		});
+
+		function OnSuccess(response) {
+
+			if (response.code === 1) {
+				window.location = '/Login/Logout';
+			}
+			else {
+				var table = $("#Project_table").DataTable(
+					{
+						//fixedColumns: {
+						//	leftColumns: 4,
+						//	rightColumns: 1
+						//},				
+						scrollX: true,
+						searching: true,
+						info: true,
+						paging: true,
+						data: response,
+						columns: [
+							{
+								'data': 'id',
+								render: function (data, type, row, meta) {
+									return meta.row + meta.settings._iDisplayStart + 1;
+								}
+							},
+							{ 'data': 'Site_code' },
+							{
+								data: null,
+								render: function (data, type, row) {
+									return '<lable class="text-font-11" style="font-weight:bold">' + data.Site_Name + '</lable><br/>' +
+										'<lable class="text-font-11">' + data.Site_Name2 + '</lable>'
+								}
+							},
+							{ 'data': 'Site_Address' },
+							{ 'data': 'PE' },
+							{ 'data': 'Test' },
+							{ 'data': 'QC' },
+							{ 'data': 'Sub_Con' },
+							{
+								data: null,
+								render: function (data, type, row) {
+									return '<center>' +
+										'<button Onclick="ManuFactuing(' + "'" + data.Site_code + "'" + ')"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">' +
+										'<i class="fas fa-eye"></i>' +
+										'</button>' +
+										'</center>'
+										;
+								}
+							}
+						]
+					});
+                Off_Loading();
+			}
+			
+		};
+
+	});
+    </script>

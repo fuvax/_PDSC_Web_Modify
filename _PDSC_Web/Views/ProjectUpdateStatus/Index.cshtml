@@ -1,0 +1,310 @@
+﻿
+@{
+	ViewBag.Title = "Index-ProjectUpdateStatus";
+}
+
+<div class="card-hover-shadow-2x card-border card">
+	<div class="card-header">
+		<h2 style="color:black;">Project Update Status</h2>
+	</div>
+    <div class="card-body">
+        @if (ViewBag.GetMNRoles == "PDSCPAGE003")
+        {
+            <div class="d-flex justify-content-end">
+                <div class="col-sm-7">
+                    <div class="input-group">
+                        <label class="text-font-18" style="margin:5px;">Search : </label>
+                        <select id="color" name="color" class="form-control" style="margin:5px;">
+                            <option value="">--All,Color--</option>
+                            <option value="CS_001">Red</option>
+                            <option value="CS_002">Orange</option>
+                            <option value="CS_003">Yellow</option>
+                            <option value="CS_004">Green</option>
+							<option value="CS_005">Blue</option>
+
+                        </select>
+                        <select id="Stage" class="form-control" style="margin:5px;">
+                            <option value="">--All,Stage--</option>
+                        </select>
+                        <input id="lbText" type="text" class="form-control" placeholder="Enter Your Seacrh" style="margin:5px;" />
+                    </div>
+                </div>
+            </div>
+            <div class="text-right" style="margin:5px;">
+                <button onclick="loadTable();" type="submit" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
+            </div>
+
+
+            <table id="Table_AllProject_UpdateStatus" class="table table-striped table-bordered " width="100%">
+                <thead>
+					<tr>
+						<th rowspan="2">No.</th>
+						<th rowspan="2">Site Code</th>
+						<th rowspan="2">Site Name</th>
+						<th rowspan="2">Province</th>
+						<th rowspan="2">PE</th>
+						<th rowspan="2">Test</th>
+						<th rowspan="2">QC</th>
+						<th rowspan="2">Sub Con</th>
+						<th colspan="4">
+							<center>
+								Project Status
+							</center>
+						</th>
+						<th  rowspan="2">View</th>
+					</tr>
+                    <tr>
+
+                        <th>Progress (%)</th>
+                        <th>Remain ( Day )</th>
+                        <th>Status</th>
+                        <th>Lowest Stage</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+
+        }
+    </div>
+</div>
+<a href="@Url.Action("Dashboard", "ProjectUpdateStatus")" class="float pointer" style="color:white;">
+	<i class="fas fa-arrow-left B-icon"></i>
+</a>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+	//Table_AllProject_UpdateStatus
+
+	$(document).ready(function ()
+	{
+		On_Loading();
+		$('#liUpdateStatus').attr('class', 'mm-active');		
+		Get_DropDown_Stage();
+		loadTable();
+		color_lock();
+		ResiveData();
+	});
+
+	function color_lock()
+	{
+		let color_search = '@Session["Color"]';
+		if (color_search != null && color_search !="")
+		{
+			//$('#color')
+			$("#color option[value=\"" + color_search + "\"]").prop("selected", "selected");
+			$('#color').attr('disabled', 'disabled');
+		}
+		
+	}
+
+	function ResiveData() {
+		$.ajax({
+			type: "POST",
+			url: "/ProjectInformation/ResiveDataFromSearch",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				@*if (response.Color != null && response.Color != "") {
+
+					$("#color").val(response.Color).change();
+					$("#color").attr('readonly', true);
+
+
+
+				}*@
+
+				if (response.Value != null && response.Value != "") {
+					$('#lbText').val(response.Value);
+					//$('#Stage').Val(response.Type).change();
+				}
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+
+	function Get_DropDown_Stage() {
+
+		$.ajax({
+			type: "POST",
+			url: "/ProjectInformation/Get_DropDown_Stage",
+			data: "",
+			dataType: "json",
+			success: function (response) {
+				response.forEach((obj) => {
+
+					optionValue = obj.SM_Code;
+					optionText = obj.SM_Name;
+
+					$('#Stage').append(`<option value="${optionText}">
+									   ${optionText}
+								  </option>`);
+				});
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+
+	function ToMain(sitecode)
+	{
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/ToMain",
+			data: { code : sitecode},
+			@*contentType: "application/json; charset=utf-8",*@
+			dataType: "json",
+			success: function (response) {
+				if (response.code === 1) {
+					window.location = '/Login/Logout';
+				}
+				else {
+					if (response.result == 'Redirect') {
+						window.location = response.url;
+					}
+				}
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+	
+
+	function loadTable()
+	{
+
+
+		var colorcode = $('#color').val();
+		var stage = $('#Stage').val();
+		var text = $('#lbText').val();
+
+
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/LoadProjectTable",
+			data: { Color: colorcode, Stage: stage, value: text },
+			@* contentType: "application/json; charset=utf-8",*@
+			dataType: "json",
+			success: function (response)
+			{
+				if (response.code === 1) {
+					window.location = '/Login/Logout';
+				}
+				else {
+					OnSuccess(response);
+				}
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+	function OnSuccess(response)
+	{
+		//	refreshTable();
+
+		if ($.fn.dataTable.isDataTable('#Table_AllProject_UpdateStatus'))
+		{
+			$('#Table_AllProject_UpdateStatus').DataTable().destroy();
+			RenderTableProject(response);
+		}
+		else {
+			RenderTableProject(response);
+		}
+		
+		
+	}
+	function RenderTableProject(response)
+	{
+		var table = $("#Table_AllProject_UpdateStatus").DataTable(
+			{
+				fixedColumns: {
+					leftColumns: 4,
+					rightColumns: 1
+				},
+				scrollX: true,
+				searching: false,
+				info: true,
+				paging: true,
+				data: response,
+				columns: [
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Site_Code' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<lable class="text-font-11" style="font-weight:bold">' + data.Site_Name + '</lable><br/>' +
+								'<lable class="text-font-11">' + data.Site_Name2 + '</lable>'
+						}
+					},
+					{ 'data': 'Site_Address' },
+					{ 'data': 'PE' },
+					{ 'data': 'Test' },
+					{ 'data': 'QC' },
+					{ 'data': 'Sub_Con' },
+					{
+						'data': 'Progress'
+					},
+					{
+						'data': 'Remain_Day'
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+							return '<center><div class="block-' + data.Color_Status + '"></div></center>';
+						}
+					},
+					{
+						'data': 'Stage'
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<center>' +
+								'<button onclick="ToMain(\'' + data.Site_Code + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">' +
+								'<i class="fas fa-eye"></i>' +
+								'</button>' +
+								'</center>'
+								;
+						}
+					}
+
+
+				]
+			});
+		Off_Loading();
+	}
+
+	function refreshTable() {
+		$('#ProjectUpdateStatus').each(function () {
+			dt = $(this).dataTable();
+			dt.fnDraw();
+		})
+	}
+</script>

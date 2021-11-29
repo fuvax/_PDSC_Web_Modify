@@ -1,0 +1,612 @@
+﻿
+@{
+	ViewBag.Title = "CreateQCDeect";
+}
+
+<style>	
+
+	.select2-container--bootstrap .select2-results__option[aria-disabled=true] 
+	{
+		font-weight:bold;
+		color:black;
+		background-color:lightgray;
+	}
+</style>
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h2 style="color:black;">QC Final Defect</h2>
+        </div>
+        @if ((ViewBag.GetRoles == "Role_US32") && (ViewBag.GetMNRoles == "PDSCPAGE003"))
+        {
+            using (Html.BeginForm("CreateDefect_QC", "ProjectUpdateStatus", FormMethod.Post, new { }))
+            {
+                <div class="card-body">
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Defect Item : </label>
+                            </div>
+                            <div class="col sm-6 text-left">
+                                <select onchange="GetRank();" id="DefectItem" name="DefectItem" class="form-control ">
+                                    <option value="">--Seleted--</option>
+                                </select>
+                            </div>
+							<div class="col sm-3">
+								<label  style="color:red;font-weight:bold;font-size:20px;" >****</label>
+							</div>
+                            
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Rank : </label>
+                            </div>
+                            <div class="col sm-6 text-left">
+                                <select id="Rank" name="Rank" class="form-control">
+                                    <option value="">--Selected--</option>
+                                </select>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Issue Date : </label>
+                            </div>
+                            <div class="col sm-6 text-left">
+                                <input onchange="CheckIssueDate();" id="IssueDate" name="IssueDate" type="date" class="form-control" />
+                            </div>
+							<div class="col sm-3">
+                                <label style="color:red;font-weight:bold;font-size:20px;">****</label>
+							</div>
+                           
+                        </div>
+                    </div>
+					 <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+
+                            </div>
+                            <div class="col sm-6 text-left">
+                                <label style="color:red;font-weight:initial;font-size:13px;">(Issue Date <= Today)</label>
+                            </div>
+                            <div class="col sm-2">
+
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                    @*<div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Issue By : </label>
+                            </div>
+                            <div class="col sm-3 text-left">
+                                <label class="text-font-12"></label>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">In Charge Person : </label>
+                            </div>
+                            <div class="col sm-6 text-left">
+                                <select id="InChargePerson" name="InChargePerson" class="form-control">
+                                    <option value="">--Seleted--</option>
+                                </select>
+                            </div>
+							<div class="col sm-3">
+								<label style="color:red;font-weight:bold;font-size:20px;">****</label>
+							</div>
+                            
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Responsibility : </label>
+                            </div>
+                            <div class="col sm-6 text-left">
+                                <select onchange="GetDropDown_Case();" id="Responsibility" name="Responsibility" class="form-control">
+                                    <option value="">--Seleted--</option>
+                                </select>
+                            </div>
+							<div class="col sm-3">
+								<label style="color:red;font-weight:bold;font-size:20px;">****</label>
+							</div>
+                            
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Cause : </label>
+                            </div>
+                            <div class="col sm-6 text-left">
+                                <select id="Case" name="Case" class="form-control">
+                                    <option value="">--Seleted--</option>
+                                </select>
+                            </div>
+							<div class="col sm-3">
+								<label style="color:red;font-weight:bold;font-size:20px;">****</label>
+							</div>
+                           
+                        </div>
+                    </div>
+
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Note Defect : </label>
+                            </div>
+                            <div class="col sm-6 text-left">
+                                <textarea id="NoteDefect" name="NoteDefect" class="form-control" rows="4"></textarea>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col md-12">
+                        <div class="row form-group">
+                            <div class="col sm-3 text-right">
+                                <label class="text-font-13">Plan Rectify Finish : </label>
+                            </div>
+                            <div class="col sm-6 text-left">
+                                <label class="text-font-12"></label>
+                            </div>
+                            <div class="col sm-3">
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                    <div class="col md-12 text-center">
+                        <button id="SaveBtn" type="submit" hidden>save</button>
+                    </div>
+
+                </div>
+            }
+            <div class="col-md-12 text-center" style="margin-bottom:25px;">
+                <button onclick="Save();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+                    <i class="fas fa-save"></i>
+                    SAVE
+                </button>
+            </div>
+        }
+        else
+        {
+			<div class="card-body">
+				<label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+			</div>
+        }
+    </div>
+	@*<a id="btn_back" onclick="Back_Button();" class="float pointer" style="color:white;">
+		<i class="fas fa-arrow-left B-icon"></i>
+	</a>*@
+<a href="@Url.Action("Defect", "ProjectUpdateStatus")" class="float pointer" style="color:white;">
+    <i class="fas fa-arrow-left B-icon"></i>
+</a>
+<script src="~/ThridParty/Theam/ArchitectUI-Pro/assets/core/jquery.min.js" type="text/javascript"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/moment.js/moment.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script>
+
+	$.fn.select2.defaults.set("theme", "bootstrap");
+
+	$('#DefectItem').select2();
+	$('#InChargePerson').select2()
+	$('#Responsibility').select2();
+	$('#Case').select2();
+	$('#Rank').select2();
+
+	$(document).ready(() =>
+	{
+        On_Loading();
+		SetUp();
+        
+
+	});
+
+	function CheckIssueDate() {
+		let workingdate = new Date($('#IssueDate').val());
+		let dateNow = new Date();
+
+		if (workingdate > dateNow) {
+			swal("", "You must choose Issue date < or = today.", "error");
+			$('#IssueDate').val('');
+		}
+
+	}
+
+	function Save()
+	{
+		var msg = "Please Enter ";
+
+		if ($('#DefectItem').val() == "" || $('#DefectItem').val() == null)
+		{
+			msg = msg + " DefectItem ";
+		}
+
+		if ($('#InChargePerson').val() == "" || $('#InChargePerson').val() == null) {
+			msg = msg + " InChargePerson ";
+		}
+
+		if ($('#Responsibility').val() == "" || $('#Responsibility').val() == null) {
+			msg = msg + " Responsiblity ";
+		}
+
+		if ($('#Case').val() == "" || $('#Case').val() == null) {
+			msg = msg + " Cause ";
+		}
+
+		if ($('#IssueDate').val() == "" || $('#IssueDate').val() == null) {
+			msg = msg + " IssueDate ";
+		}
+
+		///////////////////////////////////////////////////////////////////////
+
+		swal({
+			title: "",
+            text: "Are you sure? Do you want to save it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm) {
+				if (isConfirm) {
+					if (($('#DefectItem').val() != "" && $('#DefectItem').val() != null) &&
+						($('InChargePerson').val() != "" && $('#InChargePerson').val() != null) &&
+						($('#Responsibility').val() != "" && $('#Responsibility').val() != null) &&
+						($('#Case').val() != "" && $('#Case').val() != null) &&
+						($('#IssueDate').val() != "" && $('#IssueDate').val() != null))
+					{
+						 $('#SaveBtn').trigger('click');
+					}
+					else
+					{
+						swal("", msg, "error");
+					}
+
+				}
+				else {
+
+					swal("", "Cancelled", "error");
+				}
+			});
+
+	}
+
+	function SetUp()
+	{
+		GetDropDown_DefectItem();
+		GetDropDown_InChargePerson();
+		GetDropDown_Responsibility();
+		GetDropDownRank();
+
+	}
+
+	function GetDropDownRank()
+	{
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/GetDropDownRank",
+			data: "",
+			dataType: "json",
+			success: function (response) {
+
+
+				response.forEach((obj) => {
+
+					optionValue = obj.DR_Code;
+					optionText = obj.DR_Description;
+
+					$('#Rank').append(`<option value="${optionValue}">
+										  ${optionText}
+									  </option>`);
+				});
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+
+		});
+	}
+
+	function GetDropDown_DefectItem()
+	{
+		On_Loading();
+			$.ajax({
+				type: "POST",
+				url: "/ProjectUpdateStatus/GetDropDown_DefectItem",
+				data: "",		
+				dataType: "json",
+				success: function (response) {
+
+					if (response.code === 1) {
+						window.location = '/Login/Logout';
+					}
+					else {
+						response.forEach((obj) => {
+
+							optionValue = obj.Item_No;
+							optionText = obj.Item_Description;
+							optionChild = obj.Type_for_Select;
+
+							if (optionChild == "L") {
+								//$('#DefectItem').append(`<option value="${optionValue}">
+								//			     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${optionText} 
+								//		  </option>`);
+								$('#DefectItem').append(`<option value="${optionValue}">
+										     ${optionText} 
+									  </option>`);
+							}
+							else if (optionChild == "H") {
+								$('#DefectItem').append(`<option  value="${optionValue}" disabled>
+										   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${optionText} 
+									  </option>`);
+							}
+							else if (optionChild == "M") {
+								$('#DefectItem').append(`<option  value="${optionValue}" disabled>
+										  ${optionText} 
+									  </option>`);
+							}
+
+						});
+
+					}
+				},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+
+		});
+	}
+	function GetDropDown_InChargePerson()
+	{
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/GetDropDown_InChargePerson",
+			data: "",
+			dataType: "json",
+			success: function (response) {
+
+
+				response.forEach((obj) => {
+
+					optionValue = obj.DICP_Code;
+					optionText = obj.DICP_Description;
+
+					$('#InChargePerson').append(`<option value="${optionValue}">
+										  ${optionText}
+									  </option>`);
+				});
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+
+		});
+	}
+	function GetDropDown_Responsibility() {
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/GetDropDown_Responsibility",
+			data: "",
+			dataType: "json",
+			success: function (response) {
+
+
+				response.forEach((obj) => {
+
+					optionValue = obj.DResp_Code;
+					optionText = obj.DResp_Description;
+
+					$('#Responsibility').append(`<option value="${optionValue}">
+										  ${optionText}
+									  </option>`);
+				});
+                Off_Loading();
+			},
+			failure: function (response) {
+				alert(response.responseText);
+                Off_Loading();
+			},
+			error: function (response) {
+				alert(response.responseText);
+                Off_Loading();
+			}
+
+		});
+		//Off_Loading();
+	}
+	function GetDropDown_Case()
+	{
+		On_Loading();
+		ClearCase();
+		var dresp_code = $('#Responsibility').val();
+
+		if (dresp_code != "" && dresp_code!=null)
+		{
+			$.ajax({
+				type: "POST",
+				url: "/ProjectUpdateStatus/GetDropDown_Case",
+				data: { DResp_Code: dresp_code },
+				dataType: "json",
+				success: function (response) {
+
+
+					response.forEach((obj) => {
+
+						optionValue = obj.DCause_Code;
+						optionText = obj.DCause_Description;
+
+						$('#Case').append(`<option value="${optionValue}">
+										  ${optionText}
+									  </option>`);
+					});
+				},
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+
+			});
+			Off_Loading();
+		}
+		else
+		{
+			Off_Loading();
+			swal("", "Plase Select Responsibility ", "error");
+		}
+	}
+
+	function ClearCase()
+	{
+		$('#Case')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">--Selected--</option>')
+			.val('')
+			;
+	}
+
+
+	function ClearRank()
+	{
+		$('#Rank')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">--Selected--</option>')
+			.val('')
+			;
+	}
+	function GetRank()
+	{
+		
+		On_Loading();
+		
+		var Defect_Code = $('#DefectItem').val();
+		
+
+		if (Defect_Code != "" && Defect_Code != null)
+		{
+			$.ajax({
+				type: "POST",
+				url: "/ProjectUpdateStatus/GetRank",
+				data: { Defect_Code: Defect_Code },
+				dataType: "json",
+				success: function (response)
+				{			
+					if (response.code === 1) {
+						window.location = '/Login/Logout';
+					}
+					else {
+						GetSeleted_Rank(response[0]);
+					}
+				},
+				failure: function (response)
+				{
+					console.log(response.responseText);
+				},
+				error: function (response)
+				{
+					console.log(response.responseText);
+				}
+
+			});
+			Off_Loading();
+		}
+		else
+		{
+			Off_Loading();
+			swal("", "Plase Select Defect Item ", "error");
+		}
+	}
+
+	function GetSeleted_Rank(RankID)
+	{
+			ClearRank();
+
+			$.ajax({
+				type: "POST",
+				url: "/ProjectUpdateStatus/GetDropDownRank",
+				data: "",
+				dataType: "json",
+				success: function (response) {
+
+					if (response != null && RankID != "")
+					{
+
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].DR_Code;
+							optionText = response[i].DR_Description;
+							$('#Rank').append(`<option value="${optionValue}">
+									   ${optionText}
+								  </option>`);
+
+							if (RankID == optionValue) {
+
+								$("#Rank option[value=\"" + optionValue + "\"]").prop("selected", "selected");
+							}
+						}
+
+
+					}
+					else {
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].DR_Code;
+							optionText = response[i].DR_Description;
+							$('#Rank').append(`<option value="${optionValue}">
+										   ${optionText}
+									  </option>`);
+						}
+					}
+				},
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+
+			});
+			Off_Loading();
+	}
+
+	
+
+
+	
+</script>
+

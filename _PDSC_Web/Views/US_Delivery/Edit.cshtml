@@ -1,0 +1,1270 @@
+﻿
+@{
+	ViewBag.Title = "Edit-Delivery_UpdateStatus";
+}
+
+<div class="card">
+	<div class="card-header">
+		<h3 style="color:black;">Stage: Delivery</h3>
+	</div>
+
+	<div class="card-body">
+		@if ((ViewBag.GetRoles == "Role_US15") && (ViewBag.GetMNRoles == "PDSCPAGE003"))
+		{
+			using (Html.BeginForm("EditDelivery", "US_Delivery", FormMethod.Post, new
+			{
+				enctype = "multipart/form-data"
+			}))
+
+			{
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-3 text-right">
+								<label class="text-font-13">Task Name : </label>
+							</div>
+							<div class="col-sm-3 ">
+								<label id="TaskName" style="color:red;font-weight:bold;font-size:16px;" class="text-font-12"></label>
+							</div>
+							<input id="TT_Code" name="TT_Code" type="text" hidden />
+
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-3 text-right">
+								<label class="text-font-13">Working Date : </label>
+							</div>
+							<div class="col-sm-3 ">
+								<input onchange="CheckDate();" id="workingDate" name="workingDate" class="form-control" type="date" />
+							</div>
+							<div class="col-sm-3 ">
+								<label style="color:red;font-weight:bold;font-size:20px;">****</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-3 text-right">
+								<label class="text-font-13">Result : </label>
+							</div>
+							<div class="col-sm-3 ">
+								<select id="result" name="result" class="form-control">
+									<option value="">--Selected--</option>
+								</select>
+							</div>
+							<div class="col-sm-3 ">
+								<label style="color:red;font-weight:bold;font-size:20px;">****</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-3 text-right">
+								<label class="text-font-13">Problem : </label>
+							</div>
+							<div class="col-sm-3 ">
+								<select id="problem" name="problem" class="form-control">
+									<option value="">--Selected--</option>
+								</select>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-3 text-right">
+								<label class="text-font-13">Problem Note : </label>
+							</div>
+							<div class="col-sm-3 ">
+								<textarea id="ProblemNote" name="ProblemNote" class="form-control" rows="3"></textarea>
+							</div>
+
+						</div>
+					</div>
+
+					@* <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-3 text-right">
+								<label class="text-font-13">file Image : </label>
+							</div>
+							<div class="col-sm-3">
+
+								<input id="uploadfile" type="file" accept="image/png,image/jpeg,.jpg" />
+								<label class="text-font-13" style="color:red;font-weight:bold;">(**Max 5 images**) </label>
+
+							</div>
+
+						</div>
+					</div>*@
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-3 text-right">
+
+							</div>
+							<div class="col-sm-3">
+
+								@*for resize*@
+								<img id="input1" name="input1" src="" hidden>
+								<input type="text" id="input1_src" name="input1_src" hidden />
+								<img id="output" name="output" src="" hidden>
+								<input type="text" id="output_src" name="output_src" hidden />
+							</div>
+
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-2">
+
+							</div>
+							<div class="col-sm-7">
+
+
+								<table>
+									<tr>
+										<td>
+											<div id="Div_0" class="container" style=" width:200px; height:140px;" hidden>
+												<img id="img_0" name="img_0" src="" class="image img_size" style="border: 1px solid black; margin: 0px;" />
+												<input type="text" id="img_file_0" name="img_file_0" hidden />
+												<div class="middle">
+													<a onclick="ModalPreviewPhoto(0);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+														<i class="fas fa-eye"></i>
+													</a>
+													@*   <a onclick="removePhoto(0);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-danger">
+														<i class="fas fa-trash"></i>
+													</a>*@
+
+												</div>
+											</div>
+										</td>
+										<td>
+											<div id="Div_1" class="container" style=" width:200px; height:140px;" hidden>
+												<img id="img_1" name="img_1" src="" class="image img_size" style="border: 1px solid black; margin: 0px;">
+												<input type="text" id="img_file_1" name="img_file_1" hidden />
+												<div class="middle">
+													<a onclick="ModalPreviewPhoto(1);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+														<i class="fas fa-eye"></i>
+													</a>
+													@* <a onclick="removePhoto(1);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-danger">
+														<i class="fas fa-trash"></i>
+													</a>*@
+
+												</div>
+											</div>
+										</td>
+										<td>
+											<div id="Div_2" class="container" style=" width:200px; height:140px;" hidden>
+												<img id="img_2" name="img_2" src="" class="image img_size" style="border: 1px solid black; margin: 0px;">
+												<input type="text" id="img_file_2" name="img_file_2" hidden />
+												<div class="middle">
+													<a onclick="ModalPreviewPhoto(2);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+														<i class="fas fa-eye"></i>
+													</a>
+													@* <a onclick="removePhoto(2);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-danger">
+														<i class="fas fa-trash"></i>
+													</a>*@
+
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div id="Div_3" class="container" style=" width:200px; height:140px;" hidden>
+												<img id="img_3" name="img_3" src="" class="image img_size" style="border: 1px solid black; margin: 0px;">
+												<input type="text" id="img_file_3" name="img_file_3" hidden />
+												<div class="middle">
+													<a onclick="ModalPreviewPhoto(3);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+														<i class="fas fa-eye"></i>
+													</a>
+													@* <a onclick="removePhoto(3);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-danger">
+														<i class="fas fa-trash"></i>
+													</a>*@
+
+												</div>
+											</div>
+										</td>
+										<td>
+											<div id="Div_4" class="container" style=" width:200px; height:140px;" hidden>
+												<img id="img_4" name="img_4" src="" class="image img_size" style="border: 1px solid black; margin: 0px;">
+												<input type="text" id="img_file_4" name="img_file_4" hidden />
+												<div class="middle">
+													<a onclick="ModalPreviewPhoto(4);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+														<i class="fas fa-eye"></i>
+													</a>
+													@* <a onclick="removePhoto(4);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-danger">
+														<i class="fas fa-trash"></i>
+													</a>*@
+
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+
+							</div>
+							<div class="col-sm-3">
+
+							</div>
+						</div>
+					</div>
+
+					@*  <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-3 text-right">
+								<label class="text-font-13">file PDF : </label>
+							</div>
+							<div class="col-sm-3">
+
+								<input id="uploadfilePDF" type="file" accept=".pdf" />
+								<label class="text-font-13" style="color:red;font-weight:bold;">(**Max 5 files**) </label>
+							</div>
+
+						</div>
+					</div>*@
+
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-2">
+
+							</div>
+							<div class="col-sm-7">
+
+
+
+								<div id="DIV_PDF_0" hidden>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+											</span>
+											<div class="text-center" style="border:1px dashed grey;width:300px;margin-left:2px;">
+												<a id="filenamePDF_0" href=""
+												   style="font-weight:bold;color:black;font-size:20px;" download></a>
+												<input id="file_0" name="file_0" type="text" hidden />
+												<input id="filename_0" name="filename_0" type="text" hidden />
+											</div>
+
+										</div>
+										<div style="border:0px solid black;width:40px;">
+											@* <a onclick="removefile(0);" class="btn-sm btn btn-outline-danger btn-shadow btn-outline-2x" style="margin-left:2px;">
+												<i class="fas fa-times" style="margin:7px;"></i>
+											</a>*@
+										</div>
+									</div>
+								</div><br />
+								<div id="DIV_PDF_1" hidden>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+											</span>
+											<div class="text-center" style="border:1px dashed grey;width:300px;margin-left:2px;">
+												<a id="filenamePDF_1" href=""
+												   style="font-weight:bold;color:black;font-size:20px;" download></a>
+												<input id="file_1" name="file_1" type="text" hidden />
+												<input id="filename_1" name="filename_1" type="text" hidden />
+											</div>
+
+										</div>
+										<div style="border:0px solid black;width:40px;">
+											@* <a onclick="removefile(1);" class="btn-sm btn btn-outline-danger btn-shadow btn-outline-2x" style="margin-left:2px;">
+												<i class="fas fa-times" style="margin:7px;"></i>
+											</a>*@
+										</div>
+									</div>
+								</div><br />
+								<div id="DIV_PDF_2" hidden>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+											</span>
+											<div class="text-center" style="border:1px dashed grey;width:300px;margin-left:2px;">
+												<a id="filenamePDF_2" href=""
+												   style="font-weight:bold;color:black;font-size:20px;" download></a>
+												<input id="file_2" name="file_2" type="text" hidden />
+												<input id="filename_2" name="filename_2" type="text" hidden />
+											</div>
+
+										</div>
+										<div style="border:0px solid black;width:40px;">
+											@*  <a onclick="removefile(2);" class="btn-sm btn btn-outline-danger btn-shadow btn-outline-2x" style="margin-left:2px;">
+												<i class="fas fa-times" style="margin:7px;"></i>
+											</a>*@
+										</div>
+									</div>
+								</div><br />
+								<div id="DIV_PDF_3" hidden>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+											</span>
+											<div class="text-center" style="border:1px dashed grey;width:300px;margin-left:2px;">
+												<a id="filenamePDF_3" href=""
+												   style="font-weight:bold;color:black;font-size:20px;" download></a>
+												<input id="file_3" name="file_3" type="text" hidden />
+												<input id="filename_3" name="filename_3" type="text" hidden />
+											</div>
+
+										</div>
+										<div style="border:0px solid black;width:40px;">
+											@*  <a onclick="removefile(3);" class="btn-sm btn btn-outline-danger btn-shadow btn-outline-2x" style="margin-left:2px;">
+												<i class="fas fa-times" style="margin:7px;"></i>
+											</a>*@
+										</div>
+									</div>
+								</div><br />
+								<div id="DIV_PDF_4" hidden>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+											</span>
+											<div class="text-center" style="border:1px dashed grey;max-height:50px;width:300px;margin-left:2px;">
+												<a id="filenamePDF_4" href=""
+												   style="font-weight:bold;color:black;font-size:20px;" download></a>
+												<input id="file_4" name="file_4" type="text" hidden />
+												<input id="filename_4" name="filename_4" type="text" hidden />
+											</div>
+
+										</div>
+										<div style="border:0px solid black;width:40px;">
+											@*  <a onclick="removefile(4);" class="btn-sm btn btn-outline-danger btn-shadow btn-outline-2x" style="margin-left:2px;">
+												<i class="fas fa-times" style="margin:7px;"></i>
+											</a>*@
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-3">
+
+							</div>
+							<div class="col-md-12 text-center">
+								<button id="SaveBtn" type="submit" hidden>save</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			}
+
+			<div class="col-md-12 text-center" style="margin-bottom:25px;">
+				<button onclick="Save();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+					<i class="fas fa-save"></i>
+					SAVE
+				</button>
+			</div>
+		}
+		else
+		{
+			<label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+		}
+	</div>
+</div>
+<script src="~/ThridParty/Theam/ArchitectUI-Pro/assets/core/jquery.min.js" type="text/javascript"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/moment.js/moment.min.js"></script>
+<script>
+	$.fn.select2.defaults.set("theme", "bootstrap");
+
+	$('#problem').select2();
+	$('#result').select2();
+
+	$(document).ready(() =>
+	{
+        On_Loading();
+		Show_backbtn();
+		var Taskname = '@Session["TaskName"]';
+		$('#TaskName').text(Taskname);
+
+		GetData();
+		@*GetDD_ResultDate();
+		GetDD_Problem();*@
+		lockButton();
+
+	});
+
+	function CheckDate() {
+		let workingdate = new Date($('#workingDate').val());
+		let dateNow = new Date();
+
+		if (workingdate > dateNow) {
+			swal("", "You can't choose Working Date more than today.", "error");
+			$('#workingDate').val('');
+		}
+
+	}
+
+	function lockButton() {
+		var Stage = '@Session["Stage"]';
+        var IsRole = '@Session["GoSubmit"]';
+
+        disable_stage(Stage, IsRole);
+
+	}
+
+
+	function Save() {
+		var msg = "Please Enter ";
+
+		if ($('#workingDate').val() == "" || $('#workingDate').val() == null) {
+			msg = msg + " Working Date  ";
+		}
+
+		if ($('#result').val() == "" || $('#result').val() == null) {
+			msg = msg + "  Result";
+		}
+
+		swal({
+			title: "",
+            text: "Are you sure? Do you want to save it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm) {
+				if (isConfirm) {
+					//working date , result,problem
+					if (($('#workingDate').val() != "" && $('#workingDate').val() != null) &&
+						($('#result').val() != "" && $('#result').val() != null)) {
+						$('#SaveBtn').trigger('click');
+					}
+					else {
+						swal("", msg, "error");
+					}
+
+				}
+				else {
+
+					swal("", "Cancelled", "error");
+				}
+			});
+
+	}
+
+	$("#uploadfilePDF").change(function () {
+		PDF_Preview(this);
+	});
+
+	function PDF_Preview(input) {
+		var name = input.files[0].name;
+
+		if (name.endsWith(".pdf")) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+					if ($('#filenamePDF_0').attr('href') == "") {
+
+						$('#filenamePDF_0').attr('href', e.target.result);
+						$('#filenamePDF_0').text(name);
+						$('#filenamePDF_0').attr('download', name);
+						$('#DIV_PDF_0').removeAttr('hidden');
+
+						$('#file_0').val(e.target.result);
+						$('#filename_0').val(name);
+					}
+					else if ($('#filenamePDF_1').attr('href') == "") {
+						$('#filenamePDF_1').attr('href', e.target.result);
+						$('#filenamePDF_1').text(name);
+						$('#filenamePDF_1').attr('download', name);
+						$('#DIV_PDF_1').removeAttr('hidden');
+
+						$('#file_1').val(e.target.result);
+						$('#filename_1').val(name);
+					}
+					else if ($('#filenamePDF_2').attr('href') == "") {
+						$('#filenamePDF_2').attr('href', e.target.result);
+						$('#filenamePDF_2').text(name);
+						$('#filenamePDF_2').attr('download', name);
+						$('#DIV_PDF_2').removeAttr('hidden');
+
+						$('#file_2').val(e.target.result);
+						$('#filename_2').val(name);
+					}
+					else if ($('#filenamePDF_3').attr('href') == "") {
+						$('#filenamePDF_3').attr('href', e.target.result);
+						$('#filenamePDF_3').text(name);
+						$('#filenamePDF_3').attr('download', name);
+						$('#DIV_PDF_3').removeAttr('hidden');
+
+						$('#file_3').val(e.target.result);
+						$('#filename_3').val(name);
+					}
+					else if ($('#filenamePDF_4').attr('href') == "") {
+						$('#filenamePDF_4').attr('href', e.target.result);
+						$('#filenamePDF_4').text(name);
+						$('#filenamePDF_4').attr('download', name);
+						$('#DIV_PDF_4').removeAttr('hidden');
+
+						$('#file_4').val(e.target.result);
+						$('#filename_4').val(name);
+					}
+					else {
+						alert("You can only upload a maximum of 5 images");
+					}
+				}
+
+				reader.readAsDataURL(input.files[0]); // convert to base64 string
+			}
+		}
+		else {
+			swal("", "The file format not support, Please you choose file pdf type only", "error");
+		}
+
+
+		$("#uploadfilePDF").val("");
+	}
+
+	function removefile(id)
+	{
+
+		var MainUrl = new Array();
+		var listname = new Array();
+
+		var ListID = new Array();
+		var List_souru = new Array();
+
+
+		var ListDelete = new Array();
+		var ListDelete_name = new Array();
+
+		for (var i = 0; i < 5; i++)
+		{
+
+			if ($('#filenamePDF_' + i).attr('href') != "")
+			{
+				MainUrl.push($('#filenamePDF_' + i).attr('href'));
+				listname.push($('#filenamePDF_' + i).text());
+
+				if ($('#fileID_' + i).val() != "" && $('#fileID_' + i).val() != null)
+				{
+					ListID.push($('#fileID_' + i).val());
+					List_souru.push($('#filenamePDF_' + i).attr('href'));
+
+
+					if (i == id)
+					{
+						ListDelete.push($('#fileID_' + i).val());
+						ListDelete_name.push($('#filename_' + i).val());
+					}
+
+
+				}
+
+			}
+		}
+
+		//hide last index
+		var LastIndexDiv = MainUrl.length - 1;
+
+		$('#DIV_PDF_' + LastIndexDiv).attr('hidden', 'hidden');
+
+
+		var model =
+		{
+			ID: id,
+			List_source: MainUrl,
+			List_name: listname,
+			List_source_text: List_souru ,
+			ListDelete: ListDelete,
+			ListDelete_name: ListDelete_name,
+			List_ID: ListID
+		};
+
+		$.ajax({
+			type: "POST",
+			url: "/US_Delivery/RemoveFile_From_Database",
+			data: model,
+			dataType: "json",
+			success: function (response) {
+
+				if (response.code === 1) {
+					window.location = '/Login/Logout';
+				}
+				else {
+					ClearSrcFile();
+
+					for (var i = 0; i < response[0].List_source.length; i++) {
+
+						$('#filenamePDF_' + i).attr('href', response[0].List_source[i]);
+						//$('#filenamePDF_' + i).text(response[0].List_name[i]);
+						$('#file_' + i).val(response[0].List_source[i]);
+					}
+
+
+
+					for (var i = 0; i < response[0].List_ID.length; i++) {
+
+						$('#fileID_' + i).val(response[0].List_ID[i]);
+						$('#file_' + i).val("");
+
+					}
+
+					for (var i = 0; i < response[0].List_name.length; i++) {
+
+						$('#filename_' + i).val(response[0].List_name[i]);
+
+						$('#filenamePDF_' + i).text(response[0].List_name[i]);
+
+						//$('#img_file_' + i).val("");
+					}
+
+					//Delete image from DB
+					for (var i = 0; (i < 5 && response[0].ListDelete.length != null); i++) {
+
+						if ($('#filedelete_' + i).val() == null || $('#filedelete_' + i).val() == "") {
+							$('#filedelete_' + i).val(response[0].ListDelete[0]);
+							break;
+						}
+
+					}
+
+					for (var i = 0; (i < 5 && response[0].ListDelete_name.length != null); i++) {
+
+						if ($('#filedeletename_' + i).val() == null || $('#filedeletename_' + i).val() == "") {
+							$('#filedeletename_' + i).val(response[0].ListDelete_name[0]);
+							break;
+						}
+
+					}
+				}
+
+			},
+			failure: function (response)
+			{
+				alert(response);
+			},
+			error: function (response) {
+				alert(response);
+			}
+		});
+	}
+
+	function GetFileData()
+	{
+		var TT_Code = '@Session["TT_Code"]';
+		$.ajax({
+			type: "POST",
+			url: "/US_Delivery/Edit_GetFile",
+			data: JSON.stringify({ 'TransectionCode': TT_Code }),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response)
+			{
+				if ((response != null && response != "")) {
+
+					for (var i = 0; i < response.length; i++)
+					{
+							var file = "file_" + i;
+							var filename = `filename_` + i;
+
+							var fileID = `fileID_`+i;
+
+							var filenamePDF = "filenamePDF_" + i;
+
+							$('#DIV_PDF_' + i).removeAttr('hidden');
+
+							document.getElementById(filenamePDF).href = response[i].ImgT_FileData;
+						document.getElementById(filenamePDF).innerHTML = response[i].ImgT_FileName;
+
+						$('#filenamePDF_' + i).attr('download', response[i].ImgT_FileName);
+
+							//document.getElementById(file).value = response[i].ImgT_FileData;
+							//document.getElementById(filename).value = response[i].ImgT_FileName;
+
+						//	document.getElementById(fileID).value = response[i].ImgT_Code;
+
+					}
+
+
+
+				}
+                Off_Loading();
+			},
+			failure: function (response) {
+                Off_Loading();
+				//alert("failure" + response.responseText);
+			},
+			error: function (response) {
+                Off_Loading();
+				//alert("error" + response.responseText);
+			}
+		});
+		Off_Loading();
+
+	}
+
+	function GetImgData()
+	{
+		var TT_Code = '@Session["TT_Code"]';
+		$.ajax({
+			type: "POST",
+			url: "/US_Delivery/Edit_GetImg",
+			data: JSON.stringify({ 'TransectionCode': TT_Code }),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response)
+			{
+				if ((response != null && response != ""))
+				{
+
+					for (var i = 0; i < response.length;i++)
+					{
+						var img = "img_" + i;
+						var img_file = "img_file_" + i;
+						var Img_ID = "Img_ID_" + i;
+
+						$('#Div_' + i).removeAttr('hidden');
+
+						//console.log(response);
+						document.getElementById(img).src = response[i].ImgT_FileData;
+						//document.getElementById(Img_ID).value  = response[i].ImgT_Code;
+
+
+
+					}
+
+				}
+			},
+			failure: function (response) {
+				//alert("failure" + response.responseText);
+			},
+			error: function (response) {
+				//alert("error" + response.responseText);
+			}
+		});
+	}
+
+	function GetData()
+	{
+		var TT_Code = '@Session["TT_Code"]';
+		$('#TT_Code').val(TT_Code);
+		//alert("TT_Code :"+TT_Code);
+		$.ajax({
+			type: "POST",
+			url: "/US_Delivery/Edit_GetData",
+			data: JSON.stringify({ 'TransectionCode': TT_Code }) ,
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response)
+			{
+
+				if ((response != null && response != "" ))
+				{
+					$('#workingDate').val(moment(response[0].TT_Working_Date).format("yyyy-MM-DD"));
+					$('#ProblemNote').val(response[0].TT_Problem_Note);
+					GetData_DDResult(response[0].TT_Result,response);
+					GetData_DDProblem(response[0].TT_Problem,response);
+					//response[0].TT_Code
+					//response[0].Task_Code
+
+					//get Img data
+					GetImgData();
+					GetFileData();
+
+				}
+			},
+			failure: function (response)
+			{
+                Off_Loading();
+				//alert("failure" + response.responseText);
+			},
+			error: function (response)
+			{
+                Off_Loading();
+				//alert("error" + response.responseText);
+			}
+		});
+
+	}
+
+	function GetData_DDResult(ResultCode)
+	{
+
+		$.ajax({
+			type: "POST",
+			url: "/US_Delivery/GetDropDownResult",
+			data: "",
+		   dataType: "json",
+			success: function (response)
+			{
+
+				if (ResultCode != null && ResultCode != "") {
+
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].Result_Code;
+						optionText = response[i].Result_Name;
+
+
+
+						$('#result').append(`<option  value="${optionValue}">
+									   ${optionText}
+								  </option>`);
+
+
+						if (ResultCode == optionValue)
+						{
+							$("#result option[value=\"" + optionValue + "\"]").prop("selected", "selected");
+						}
+
+
+					}
+				}
+				else {
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].Result_Code;
+						optionText = response[i].Result_Name;
+						$('#result').append(`<option value="${optionValue}">
+									  ${optionText}
+								  </option>`);
+
+					}
+				}
+
+
+		},
+		failure: function (response) {
+		},
+		error: function (response) {
+		}
+	});
+
+
+	}
+	function GetData_DDProblem(ProblemCode)
+	{
+
+		$.ajax({
+			type: "POST",
+			url: "/US_Delivery/GetDropDownProblem",
+			data: "",
+		    dataType: "json",
+			success: function (response)
+			{
+
+				if (ProblemCode != null && ProblemCode != "") {
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].Problem_Code ;
+						optionText = response[i].Problem_Name;
+
+
+						$('#problem ').append(`<option  value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+						if (ProblemCode == optionValue) {
+
+							$("#problem  option[value=\"" + optionValue + "\"]").prop("selected", "selected");
+						}
+
+
+					}
+				}
+				else {
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].Problem_Code ;
+						optionText = response[i].Problem_Name;
+						$('#problem ').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+					}
+				}
+
+
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+	    });
+
+	}
+
+	function ModalPreviewPhoto(id)
+	{
+		var ResoreUrl;
+		var url = "";
+		if (url == null || url == "" || url == "null")
+		{
+			ResoreUrl = "/Resoure/Picture/_NoImg.png";
+		}
+		else {
+			ResoreUrl = url;
+		}
+
+		switch (id)
+		{
+			case 0: ResoreUrl = $('#img_0').attr('src');  ; break;
+			case 1: ResoreUrl = $('#img_1').attr('src'); ; break;
+			case 2: ResoreUrl = $('#img_2').attr('src'); ; break;
+			case 3: ResoreUrl = $('#img_3').attr('src'); ; break;
+			case 4: ResoreUrl = $('#img_4').attr('src'); ; break;
+		}
+
+
+		$('#PreviewImg').attr('src', ResoreUrl);
+		$('#ViewPicture').modal('show');
+
+	}
+
+    function resizeImage() {
+        var filesToUploads = document.getElementById("uploadfile").files;
+        var file = filesToUploads[0];
+        var out_img = $('#output_src').val('');
+        if (file) {
+            var reader = new FileReader();
+
+            // Set the image for the FileReader
+            reader.onload = function (e) {
+                var img = document.createElement("img");
+                img.src = e.target.result;
+
+                // Create your canvas
+                var canvas = document.createElement("canvas");
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+
+                var MAX_WIDTH = 250;
+                var MAX_HEIGHT = 300;
+                var width = img.width;
+                var height = img.height;
+
+                // Add the resizing logic
+                if (width > height) {
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                } else {
+                    if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                    }
+                }
+
+                //Specify the resizing result
+                canvas.width = width;
+                canvas.height = height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
+
+                dataurl = canvas.toDataURL(file.type);
+                document.getElementById("output").src = dataurl;
+                $('#output_src').val(dataurl);
+                out_img = $('#output_src').val();
+                console.log("reimg: " + out_img);
+
+                if ($('#img_0').attr('src') == "") {
+
+                    $('#img_0').attr('src', out_img);
+                    $('#Div_0').removeAttr('hidden');
+
+                    $('#img_file_0').val(out_img);
+                }
+                else if ($('#img_1').attr('src') == "") {
+                    $('#img_1').attr('src', out_img);
+                    $('#Div_1').removeAttr('hidden');
+
+                    $('#img_file_1').val(out_img);
+                }
+                else if ($('#img_2').attr('src') == "") {
+                    $('#img_2').attr('src', out_img);
+                    $('#Div_2').removeAttr('hidden');
+
+                    $('#img_file_2').val(out_img);
+                }
+                else if ($('#img_3').attr('src') == "") {
+                    $('#img_3').attr('src', out_img);
+                    $('#Div_3').removeAttr('hidden');
+
+                    $('#img_file_3').val(out_img);
+                }
+                else if ($('#img_4').attr('src') == "") {
+                    $('#img_4').attr('src', out_img);
+                    $('#Div_4').removeAttr('hidden');
+
+                    $('#img_file_4').val(out_img);
+                }
+                else {
+                    alert("You can only upload a maximum of 5 images");
+                }
+
+            };
+            reader.readAsDataURL(file);
+
+        }
+        else {
+            swal("", "The file format not support, Please you choose file type is png, jpg or jpeg only", "error");
+        }
+
+        $('#input1').attr('src', '');
+        $('#output').attr('src', '');
+        $('#input1_src').val("");
+        $('#output_src').val("");
+        $("#uploadfile").val("");
+    }
+
+    $("#uploadfile").change(function () {
+        //1048576 byte = 1 MB
+        if (this.files[0].size > 1048576) {
+            //alert("File is too big!");
+            //this.value = "";
+            var files = event.target.files;
+            var file = files[0];
+
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("input1").src = e.target.result;
+                    $('#input1_src').val(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+            resizeImage();
+
+        }
+
+        else {
+
+            Preview(this);
+        }
+
+    });
+
+    function removePhoto(id)      //id ---> index
+    {
+
+        var myList = new Array();
+        var ListID = new Array();
+        var ListDelete = new Array();
+
+        for (var i = 0; i < 5; i++) {
+            //var index = i + 1;
+            if ($('#img_' + i).attr('src') != "") {
+                myList.push($('#img_' + i).attr('src'));
+
+                if ($('#Img_ID_' + i).val() != "" && $('#Img_ID_' + i).val() != null) {
+                    ListID.push($('#Img_ID_' + i).val());
+                    if (i == id) {
+                        ListDelete.push($('#Img_ID_' + i).val());
+                    }
+
+
+                }
+
+            }
+        }
+
+        //hide last index
+        var LastIndexDiv = myList.length - 1;
+        //alert("LastIndexDiv : " + LastIndexDiv);
+        $('#Div_' + LastIndexDiv).attr('hidden', 'hidden');
+
+
+        $.ajax({
+            type: "POST",
+            url: "/US_Delivery/RemovePhoto_From_Database",
+            data: { ID: id, List: myList, ListID: ListID, ListDelete: ListDelete },
+            dataType: "json",
+            success: function (response) {
+
+				if (response.code === 1) {
+					window.location = '/Login/Logout';
+				}
+				else {
+					ClearSrcPhoto();
+
+
+					for (var i = 0; i < response[0].List.length; i++) {
+
+						$('#img_' + i).attr('src', response[0].List[i]);
+						$('#img_file_' + i).val(response[0].List[i]);
+					}
+
+					for (var i = 0; i < response[0].ListID.length; i++) {
+						$('#Img_ID_' + i).val(response[0].ListID[i]);
+						$('#img_file_' + i).val("");
+					}
+
+					//Delete image from DB
+					for (var i = 0; (i < 5 && response[0].ListDelete != null); i++) {
+						if ($('#img_delete_' + i).val() == null || $('#img_delete_' + i).val() == "") {
+							$('#img_delete_' + i).val(response[0].ListDelete[0]);
+							break;
+						}
+
+					}
+				}
+
+            },
+            failure: function (response) {
+            },
+            error: function (response) {
+            }
+        });
+
+
+    }
+
+	function ClearSrcPhoto() {
+		$('#img_0').attr('src', '');
+		$('#Img_ID_0').val("");
+		$('#img_1').attr('src', '');
+		$('#Img_ID_1').val("");
+		$('#img_2').attr('src', '');
+		$('#Img_ID_2').val("");
+		$('#img_3').attr('src', '');
+		$('#Img_ID_3').val("");
+		$('#img_4').attr('src', '');
+		$('#Img_ID_4').val("");
+
+        $('#img_file_0').val("");
+        $('#img_file_1').val("");
+        $('#img_file_2').val("");
+        $('#img_file_3').val("");
+        $('#img_file_4').val("");
+	}
+
+	function Preview(input) // add
+	{
+
+
+		if (input.files && input.files[0])
+		{
+			var reader = new FileReader();
+
+			reader.onload = function (e)
+			{
+				if ($('#img_0').attr('src')=="")
+				{
+					$('#img_0').attr('src', e.target.result);
+					$('#Div_0').removeAttr('hidden');
+
+
+					$('#img_file_0').val(e.target.result);
+				}
+				else if ($('#img_1').attr('src') == "")
+				{
+					$('#img_1').attr('src', e.target.result);
+					$('#Div_1').removeAttr('hidden');
+
+					$('#img_file_1').val(e.target.result);
+				}
+				else if ($('#img_2').attr('src') == "")
+				{
+					$('#img_2').attr('src', e.target.result);
+					$('#Div_2').removeAttr('hidden');
+
+					$('#img_file_2').val(e.target.result);
+				}
+				else if ($('#img_3').attr('src') == "")
+				{
+					$('#img_3').attr('src', e.target.result);
+					$('#Div_3').removeAttr('hidden');
+
+					$('#img_file_3').val(e.target.result);
+				}
+				else if ($('#img_4').attr('src') == "")
+				{
+					$('#img_4').attr('src', e.target.result);
+					$('#Div_4').removeAttr('hidden');
+
+					$('#img_file_4').val(e.target.result);
+				}
+                else {
+                    alert("You can only upload a maximum of 5 images");
+                }
+
+			}
+
+			reader.readAsDataURL(input.files[0]); // convert to base64 string
+		}
+		$("#uploadfile").val("") ;
+	}
+
+
+
+	function CloseModal()
+	{
+		$('#ViewPicture').modal('hide');
+	}
+
+	function GetDD_ResultDate()
+	{
+			$.ajax({
+				type: "POST",
+				url: "/US_Delivery/GetDropDownResult",
+				data: "",
+				@*contentType: "application/json; charset=utf-8",*@
+				dataType: "json",
+				success: function (response)
+				{
+
+					response.forEach((obj) => {
+
+						optionValue = obj.Result_Code;
+						optionText = obj.Result_Name;
+						$('#result').append(`<option value="${optionValue}">
+									   ${optionText}
+								  </option>`);
+					});
+
+				},
+				failure: function (response) {
+				},
+				error: function (response) {
+				}
+			});
+
+	}
+	function GetDD_Problem()
+	{
+		$.ajax({
+			type: "POST",
+			url: "/US_Delivery/GetDropDownProblem",
+			data: "",
+			dataType: "json",
+			success: function (response)
+			{
+				response.forEach((obj) => {
+
+					optionValue = obj.Problem_Code;
+					optionText = obj.Problem_Name;
+					$('#problem').append(`<option value="${optionValue}">
+									  ${optionText}
+								  </option>`);
+				});
+
+
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+</script>
+
+

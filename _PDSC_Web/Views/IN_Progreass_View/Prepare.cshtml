@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "Prepare";
+}
+
+@if ((ViewBag.GetRoles == "Role_IN11") && (ViewBag.GetMNRoles == "PDSCPAGE004"))
+{
+
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h3 style="color:black;">Stage: Prepare (Hoist Way)</h3>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label class="text-font-13 text-right">Plan Start Date : </label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label id="planstart" style="font-weight:bold;" class="text-font-12"></label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-hover-shadow-2x card-border card" style="margin-top:15px; margin-bottom:35px;">
+
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <table id="Prepare_View_Table" class="table table-bordered table-striped table-hover" width="100%">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Task Name</th>
+                                <th>Working Date</th>
+                                <th>Result</th>
+                                <th>Problem</th>
+                                <th>Problem Note</th>
+                                <th>View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+        <a href="@Url.Action("Index", "IN_Progress")" class="float pointer" style="color:white;">
+            <i class="fas fa-arrow-left B-icon"></i>
+        </a>
+   
+        <script src="~/ThridParty/Theam/ArchitectUI-Pro/assets/core/jquery.min.js" type="text/javascript"></script>
+        <script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/moment.js/moment.min.js"></script>
+        <script>
+            $(document).ready(() => {
+                On_Loading();
+                GetPlateDate();
+                GetTable_Prepare();
+
+            });
+            function GetPlateDate() {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/IN_Progreass_View/GetPlateDate_Prepare",
+                    data: "",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.length > 0) {
+                            if (moment(response[0].Plan_Start_Date).format("DD-MM-YYYY") == "01-01-9999") {
+                                $('#planstart').text('N/A');
+                            }
+                            else {
+                                $('#planstart').text(moment(response[0].Plan_Start_Date).format("DD-MMM-YYYY"));
+                            }
+                            //$('#planstart').text(moment(response[0].Plan_Start_Date).format("DD-MMM-YYYY"));
+
+                        }
+
+                        //Plan_Finish_Date,Percent_Progress
+                    },
+                    failure: function (response) {
+                    },
+                    error: function (response) {
+                    }
+                });
+            }
+            function GetTable_Prepare() {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/IN_Progreass_View/GetTable_Prepare",
+                    data: "",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess,
+                    failure: function (response) {
+                        Off_Loading();
+                    },
+                    error: function (response) {
+                        Off_Loading();
+                    }
+                });
+            }
+            function OnSuccess(response) {
+                var table = $("#Prepare_View_Table").DataTable(
+                    {
+
+                        searching: false,
+                        info: true,
+                        paging: true,
+                        data: response,
+                        columns: [
+                            {
+                                'data': 'id',
+                                render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                }
+                            },
+                            { 'data': 'Task_Name' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    if (moment(data.TT_Working_Date).format("DD-MM-YYYY") == "01-01-9999") {
+                                        return '<lable class="text-font-12" style="color:red;font-weight:bold;">N/A</lable>';
+                                    }
+                                    else {
+                                        return '<lable class="text-font-12" style="color:red;font-weight:bold;">' + moment(data.TT_Working_Date).format("DD-MMM-YYYY") + '</lable>';
+                                    }
+                                    //return moment(data.TT_Working_Date).format("DD-MMM-YYYY HH:mm");
+                                }
+                            },
+
+                            { 'data': 'Result_Name' },
+                            { 'data': 'Problem_Name' },
+                            { 'data': 'TT_Problem_Note' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    return '<button onclick="View_Transaction(\'' + data.Task_Code + '\',\'' + data.Task_Name + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">' +
+                                        '<i class="fas fa-eye"></i>' +
+                                        '</button>';
+                                }
+                            },
+
+
+                        ]
+                    });
+                Off_Loading();
+            }
+
+            function View_Transaction(TaskCode, taskname) {
+                //ToTransection
+                $.ajax({
+                    type: "POST",
+                    url: "/IN_Progreass_View/ToPrepare_Transection",
+                    data: { tranNo: TaskCode, TaskName: taskname },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.result == 'Redirect') {
+                            window.location = response.url;
+                        }
+                    },
+                    failure: function (response) {
+                    },
+                    error: function (response) {
+                    }
+                });
+            }
+
+
+        </script>

@@ -1,0 +1,936 @@
+﻿
+@{
+    ViewBag.Title = "Index-ContactPerson";
+}
+<style>
+    .datatable-scroll {
+        overflow-x: auto;
+        overflow-y: visible;
+    }
+</style>
+
+@if ((ViewBag.GetRoles != "") && (ViewBag.GetMNRoles != null))
+{
+    if ((ViewBag.GetRoles == "Role_HD17" || ViewBag.GetRoles == "Role_HD18") && (ViewBag.GetMNRoles == "PDSCPAGE002"))
+    {
+        <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;">
+            <div class="card-header-tab card-header">
+                <div class="card-header-title">
+                    <h2 style="color:black;">Contact Person</h2>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item"><a id="tab_0" data-toggle="tab" href="#tab-eg5-0" class="nav-link">HET</a></li>
+                    <li class="nav-item"><a id="tab_1" data-toggle="tab" href="#tab-eg5-1" class="nav-link">Customer</a></li>
+                    <li class="nav-item"><a id="tab_2" data-toggle="tab" href="#tab-eg5-2" class="nav-link">Supplier</a></li>
+                    <li class="nav-item"><a id="tab_3" data-toggle="tab" href="#tab-eg5-3" class="nav-link">Sub Contact</a></li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    
+                    <div class="tab-pane" id="tab-eg5-0" role="tabpanel">
+                        @if (ViewBag.GetRoles == "Role_HD17")
+                        {
+                            <button onclick="Create('HET');" class="mb-2 mr-2 btn-icon btn-lg btn-shadow btn-outline-2x btn btn-outline-success">
+                                <i class="fas fa-plus"></i>
+                                Create HET
+                            </button>
+                        }
+                        else if (ViewBag.GetRoles == "Role_HD18")
+                        {
+                            <button disabled onclick="Create('HET');" class="mb-2 mr-2 btn-icon btn-lg btn-outline-2x btn btn-outline-success disable_btn">
+                                <i class="fas fa-plus"></i>
+                                Create HET
+                            </button>
+                        }
+
+                        <h3 style="color:black;">HET Contact</h3>
+
+
+                        <table id="table_HET" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Phone</th>
+                                    <th>E-mail</th>
+                                    <th>Line ID</th>
+                                    <th>Note</th>
+                                    <th>Employee Picture</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    
+                    <div class="tab-pane" id="tab-eg5-1" role="tabpanel">
+                        @if (ViewBag.GetRoles == "Role_HD17")
+                        {
+
+                            <button onclick="Create('Customer');" class="mb-2 mr-2 btn-icon btn-lg btn-shadow btn-outline-2x btn btn-outline-success">
+                                <i class="fas fa-plus"></i>
+                                Create Customer
+                            </button>
+                        }
+                        else if (ViewBag.GetRoles == "Role_HD18")
+                        {
+                            <button disabled onclick="Create('Customer');" class="mb-2 mr-2 btn-icon btn-lg btn-outline-2x btn btn-outline-success disable_btn">
+                                <i class="fas fa-plus"></i>
+                                Create Customer
+                            </button>
+                        }
+
+
+                        <h3 style="color:black;">Customer Contact</h3>
+                        <table id="table_customer" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>Phone</th>
+                                    <th>E-mail</th>
+                                    <th>Line ID</th>
+                                    <th>Note</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-2" role="tabpanel">
+                        @if (ViewBag.GetRoles == "Role_HD17")
+                        {
+
+                            <button onclick="Create('Supplier');" class="mb-2 mr-2 btn-icon btn-lg btn-shadow btn-outline-2x btn btn-outline-success">
+                                <i class="fas fa-plus"></i>
+                                Create Supplier
+                            </button>
+                        }
+                        else if (ViewBag.GetRoles == "Role_HD18")
+                        {
+                            <button disabled onclick="Create('Supplier');" class="mb-2 mr-2 btn-icon btn-lg btn-outline-2x btn btn-outline-success disable_btn">
+                                <i class="fas fa-plus"></i>
+                                Create Supplier
+                            </button>
+                        }
+
+                        <h3 style="color:black;">Supplier Contact</h3>
+
+                        <table id="table_supplier" class="table  table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>Phone</th>
+                                    <th>E-mail</th>
+                                    <th>Line ID</th>
+                                    <th>Group</th>
+                                    <th>Note</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-3" role="tabpanel">
+                        @if (ViewBag.GetRoles == "Role_HD17")
+                        {
+
+                            <button onclick="Create('Sub Con');" class="mb-2 mr-2 btn-icon btn-lg btn-shadow btn-outline-2x btn btn-outline-success">
+                                <i class="fas fa-plus"></i>
+                                Create Sub Contact
+                            </button>
+                        }
+                        else if (ViewBag.GetRoles == "Role_HD18")
+                        {
+                            <button disabled onclick="Create('Sub Con');" class="mb-2 mr-2 btn-icon btn-lg btn-outline-2x btn btn-outline-success disable_btn">
+                                <i class="fas fa-plus"></i>
+                                Create Sub Contact
+                            </button>
+                        }
+
+                        <h3 style="color:black;">Sub Contact</h3>
+
+
+                        <table id="table_sub_con" class="table  table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>Phone</th>
+                                    <th>E-mail</th>
+                                    <th>Line ID</th>
+                                    <th>Group</th>
+                                    <th>Note</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript">
+
+
+
+	$(document).ready(function ()
+
+	{
+        On_Loading();
+		SetTab();
+
+         load_HET();
+
+         Hide_backbtn();
+
+         load_customer();
+         load_supplier();
+		load_sub_con();
+
+
+
+     });
+
+	
+	$('a[data-toggle="tab"]').click(function ()
+	{
+
+		On_Loading();
+
+		@*if ($.fn.dataTable.isDataTable('#table_HET'))
+		{
+
+			load_HET();
+		}
+		else
+		{
+			load_HET();
+		}*@
+
+		if ($.fn.dataTable.isDataTable('#table_customer'))
+		{
+			$('#table_customer').DataTable().destroy();
+			load_customer();
+		}
+		else
+		{
+			load_customer();
+		}
+
+		if ($.fn.dataTable.isDataTable('#table_supplier'))
+		{
+			$('#table_supplier').DataTable().destroy();
+			load_supplier();
+		}
+		else
+		{
+			load_supplier();
+		}
+
+		if ($.fn.dataTable.isDataTable('#table_sub_con'))
+		{
+			$('#table_sub_con').DataTable().destroy();
+			load_sub_con();
+		}
+		else
+		{
+			load_sub_con();
+		}
+
+		
+		
+		
+	});
+
+
+	function PictureProfile(id,url)
+	{
+		var ResoreUrl;
+
+		if (url == null || url == "" || url == "null")
+		{
+			ResoreUrl = "/Resoure/Picture/_NoImg.png";
+		}
+		else
+		{
+			ResoreUrl = url;
+		}
+
+		$('#ProfileImg').attr('src', ResoreUrl);
+		$('#ConteactPicture').modal('show');
+	}
+	function CloseModal()
+	{
+		$('#ConteactPicture').modal('hide');
+	}
+
+	function SetTab()
+	{
+		var get_type = '@Session["PersonType"]';
+	
+		//console.log("Person_type: " + get_type);
+        if (get_type == "PType_001" || get_type == "" || get_type == "HET") {
+            if ($("#tab_1").hasClass( 'active' )) {
+			    $("#tab_1").removeClass( 'active' );
+			    $("#tab-eg5-1").removeClass( 'active' );
+			}
+            if ($("#tab_2").hasClass( 'active' )) {
+			    $("#tab_2").removeClass( 'active' );
+			    $("#tab-eg5-2").removeClass( 'active' );
+			}
+            if ($("#tab_3").hasClass( 'active' )) {
+			    $("#tab_3").removeClass( 'active' );
+			    $("#tab-eg5-3").removeClass( 'active' );
+			}
+			if ($("#tab_0").hasClass( 'active' )) {
+			    return;
+			}
+			else {
+				$("#tab_0").addClass('active');
+				$("#tab-eg5-0").addClass('active');
+			}   
+		}
+
+        else if (get_type == "PType_002" || get_type == "Customer") {
+            if ($("#tab_0").hasClass('active')) {
+				$("#tab_0").removeClass('active');
+				$("#tab-eg5-0").removeClass('active');
+			}
+            if ($("#tab_2").hasClass('active')) {
+				$("#tab_2").removeClass('active');
+				$("#tab-eg5-2").removeClass('active');
+			}
+            if ($("#tab_3").hasClass('active')) {
+				$("#tab_3").removeClass('active');
+				$("#tab-eg5-3").removeClass('active');
+			}
+			if ($("#tab-eg5-1").hasClass('active')) {
+				return;
+			}
+			else {
+				$("#tab_1").addClass('active');
+				$("#tab-eg5-1").addClass('active');
+			}
+		}
+
+        else if (get_type == "PType_003" || get_type == "Supplier") {
+			if ($("#tab_0").hasClass('active')) {
+				$("#tab_0").removeClass('active');
+				$("#tab-eg5-0").removeClass('active');
+			}
+			if ($("#tab_1").hasClass('active')) {
+				$("#tab_1").removeClass('active');
+				$("#tab-eg5-1").removeClass('active');
+			}
+			if ($("#tab_3").hasClass('active')) {
+				$("#tab_3").removeClass('active');
+				$("#tab-eg5-3").removeClass('active');
+			}
+			if ($("#tab_2").hasClass('active')) {
+				return;
+			}
+			else {
+				$("#tab_2").addClass('active');
+				$("#tab-eg5-2").addClass('active');
+			}
+		}
+
+        else if (get_type == "PType_004" || get_type == "Sub Con") {
+			if ($("#tab_0").hasClass('active')) {
+				$("#tab_0").removeClass('active');
+				$("#tab-eg5-0").removeClass('active');
+			}
+			if ($("#tab_1").hasClass('active')) {
+				$("#tab_1").removeClass('active');
+				$("#tab-eg5-1").removeClass('active');
+			}
+			if ($("#tab_2").hasClass('active')) {
+				$("#tab_2").removeClass('active');
+				$("#tab-eg5-2").removeClass('active');
+			}
+			if ($("#tab_3").hasClass('active')) {
+				return;
+			}
+			else {
+				$("#tab_3").addClass('active');
+				$("#tab-eg5-3").addClass('active');
+			}
+		}
+	}
+
+	function Create(Page)
+	{
+		//ToCreate
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/ToCreate",
+			data: { Page: Page },
+			dataType: "json",
+			success: function (response) {
+				if (response.result == 'Redirect') {
+					window.location = response.url;
+				}
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+	function Edit(id,type)
+	{
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/GoEdit",
+			data: { ConP : id , Type : type },
+			//contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response)
+			{
+				if (response.result == 'Redirect')
+				{
+                    window.location = response.url;
+				}
+
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+	function Delete(con,type,positioncode)
+	{
+
+		swal({
+			title: "",
+            text: "Are you sure? Do you want to delete it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm) {
+				if (isConfirm)
+				{
+					$.ajax({
+						type: "POST",
+						url: "/HD_ContactPerson/Delete",
+						data: { type: type, positioncode: positioncode, conP_code: con },
+						//contentType: "application/json; charset=utf-8",
+						dataType: "json",
+						success: function (response)
+						{
+							if (response.code === 1) {
+								window.location = '/Login/Logout';
+							}
+							else {
+								if (response) {
+									setTimeout(function () {
+										swal({
+											title: "",
+											text: "Successful",
+											type: "success"
+										},
+											function () {
+												if ($.fn.dataTable.isDataTable('#table_HET')) {
+													$('#table_HET').DataTable().destroy();
+													load_HET();
+												}
+												else {
+													load_HET();
+												}
+
+												if ($.fn.dataTable.isDataTable('#table_customer')) {
+													$('#table_customer').DataTable().destroy();
+													load_customer();
+												}
+												else {
+													load_customer();
+												}
+
+												if ($.fn.dataTable.isDataTable('#table_supplier')) {
+													$('#table_supplier').DataTable().destroy();
+													load_supplier();
+												}
+												else {
+													load_supplier();
+												}
+
+												if ($.fn.dataTable.isDataTable('#table_sub_con')) {
+													$('#table_sub_con').DataTable().destroy();
+													load_sub_con();
+												}
+												else {
+													load_sub_con();
+												}
+
+											});
+									}, 500);
+
+								}
+								else {
+									Alert_Error("", "It can't be deleted. Please try again.");
+								}
+							}
+						},
+						failure: function (response) {
+						},
+						error: function (response) {
+						}
+					});
+				}
+				else
+				{
+                    swal("", "Cancelled", "error");
+				}
+			});
+
+
+	}
+
+
+	function load_HET()
+	{
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Load_Table_HET",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: OnSuccess_HET,
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+	function load_customer() {
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Load_Table_Customer",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: OnSuccess_customer,
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+	function load_supplier() {
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Load_Table_Supplier",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: OnSuccess_supplier,
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+	function load_sub_con() {
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Load_Table_Sub_Con",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: OnSuccess_employee,
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+
+
+	function OnSuccess_HET(response) {
+		On_Loading();
+		let table = $("#table_HET").DataTable(
+			{
+				retrieve: true,
+				scrollX: true,
+				searching: false,
+				info: true,
+				paging: true,
+				data: response,
+				columns: [
+
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Employee_Name' },
+					{ 'data': 'Position_Code' },
+					{ 'data': 'Phone' },
+					{ 'data': 'Email' },
+					{ 'data': 'LineID' },
+					{ 'data': 'Note' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<center>' +
+								'<button  onclick="PictureProfile(\'' + data.ContactP_Code + '\'\,\'' + data.Link_Image+'\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">' +
+								'<i class="fas fa-portrait"></i>' +
+								'</button>' +
+								'</center>'
+								;
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD17") {
+                                return '<center>' +
+                                    '<button onclick="Edit(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD18") {
+                                return '<center>' +
+                                    '<button disabled onclick="Edit(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-warning disable_btn">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+                            else {
+                                return "";
+                            }
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD17") {
+                                return '<center>' +
+                                    '<button onclick="Delete(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\',\'' + data.Position_Code + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">' +
+                                    '<i class="fas fa-trash"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD18") {
+                                return '<center>' +
+                                    '<button disabled onclick="Delete(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\',\'' + data.Position_Code + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-danger disable_btn">' +
+                                    '<i class="fas fa-trash"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+                            else {
+                                return "";
+                            }
+
+						}
+					},
+
+
+				]
+			});
+
+		Off_Loading();
+	}
+
+	function OnSuccess_customer(response) {
+		On_Loading();
+		let table = $("#table_customer").DataTable(
+			{	
+				retrieve: true,
+				scrollX: true,
+				searching: false,
+				info: true,
+				paging: true,
+				data: response,
+				columns: [
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Contact_Name' },
+					{ 'data': 'Position_Code' },
+					{ 'data': 'Company_Name' },
+					{ 'data': 'Phone' },
+					{ 'data': 'Email' },
+					{ 'data': 'LineID' },
+					{
+						'data': 'Note'
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD17") {
+                                return '<center>' +
+                                    '<button onclick="Edit(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD18") {
+                                return '<center>' +
+                                    '<button disabled onclick="Edit(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-warning disable_btn">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+                            else {
+                                return "";
+                            }
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD17") {
+                                return '<center>' +
+                                    '<button onclick="Delete(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\',\'' + data.Position_Code + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">' +
+                                    '<i class="fas fa-trash"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD18") {
+                                return '<center>' +
+                                    '<button disabled onclick="Delete(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\',\'' + data.Position_Code + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-danger disable_btn">' +
+                                    '<i class="fas fa-trash"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+                            else {
+                                return "";
+                            }
+
+						}
+					},
+
+
+				]
+			});
+		    @*<div class="tab-pane" id="tab-eg5-1" role="tabpanel">*@
+
+
+		Off_Loading();
+	}
+
+	function OnSuccess_supplier(response) {
+		On_Loading();
+		let table = $("#table_supplier").DataTable(
+			{
+				retrieve: true,
+				scrollX: true,
+				searching: false,
+				info: true,
+				paging: true,
+				data: response,
+				columns: [
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Contact_Name' },
+					{ 'data': 'Position_Code' },
+					{ 'data': 'Company_Name' },
+					{ 'data': 'Phone' },
+					{ 'data': 'Email' },
+					{ 'data': 'LineID' },
+					{ 'data': 'CG_Name'},
+					{ 'data': 'Note'},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD17") {
+                                return '<center>' +
+                                    '<button onclick="Edit(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD18") {
+                                return '<center>' +
+                                    '<button disabled onclick="Edit(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-warning disable_btn">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+                            else {
+                                return "";
+                            }
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD17") {
+                                return '<center>' +
+                                    '<button onclick="Delete(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\',\'' + data.Position_Code + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">' +
+                                    '<i class="fas fa-trash"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD18") {
+                                return '<center>' +
+                                    '<button disabled onclick="Delete(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\',\'' + data.Position_Code + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-danger disable_btn">' +
+                                    '<i class="fas fa-trash"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+                            else {
+                                return "";
+                            }
+
+						}
+					},
+
+
+				]
+			});
+
+		Off_Loading();
+	}
+
+	function OnSuccess_employee(response) {
+		On_Loading();
+		let table = $("#table_sub_con").DataTable(
+			{
+				retrieve: true,
+				scrollX: true,
+				searching: false,
+				info: true,
+				paging: true,
+				data: response,
+				columns: [
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Contact_Name' },
+					{ 'data': 'Position_Code' },
+					{ 'data': 'Company_Name' },
+					{ 'data': 'Phone' },
+					{ 'data': 'Email' },
+					{ 'data': 'LineID' },
+					{ 'data': 'CG_Name' },
+					{ 'data': 'Note' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD17") {
+                                return '<center>' +
+                                    '<button onclick="Edit(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD18") {
+                                return '<center>' +
+                                    '<button disabled onclick="Edit(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-warning disable_btn">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+                            else {
+                                return "";
+                            }
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD17") {
+                                return '<center>' +
+                                    '<button onclick="Delete(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\',\'' + data.Position_Code + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">' +
+                                    '<i class="fas fa-trash"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD18") {
+                                return '<center>' +
+                                    '<button disabled onclick="Delete(\'' + data.ContactP_Code + '\',\'' + data.PType_Code + '\',\'' + data.Position_Code + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-danger disable_btn">' +
+                                    '<i class="fas fa-trash"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+                            else {
+                                return "";
+                            }
+
+						}
+					},
+
+
+				]
+			});
+
+		Off_Loading();
+	}
+
+        </script>
+

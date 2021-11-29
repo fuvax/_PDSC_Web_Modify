@@ -1,0 +1,466 @@
+﻿
+@{
+    ViewBag.Title = "Summary Report";
+}
+
+@if (ViewBag.GetRoles == "Role_RP11" && ViewBag.GetMNRoles == "PDSCPAGE005")
+{
+    
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h3 style="color:black">Summary Report</h3>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Position : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <select onchange="Get_DropDown_Emp();" id="Type" name="Type" class="form-control">
+                            <option value="">----Select----</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Employee : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <select id="Employee_Code" name="Employee_Code" class="form-control">
+                            <option value="">----Select----</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="text-right">
+                <button onclick="Gen_Table_Summary();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">
+                    <i class="fas fa-print"></i>
+                    Report
+                </button>
+
+                @*<button class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+                        <i class="fas fa-file-excel"></i>
+                        Export
+                    </button>*@
+            </div>
+        </div>
+    </div>
+    <div class="card-hover-shadow-2x card-border card" style="margin-bottom:35px;margin-top:35px;">
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label id="Type_Name" class="text-font-13" style="font-weight:bold;color:black;"> </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <label id="Emp_lb" class="text-font-12" style="font-weight:bold;color:red;"></label>
+                    </div>
+                    <div class="text-right">
+                      @*  <button class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+                            Export Excel
+                        </button>*@
+                    </div>
+                </div>
+            </div>
+            @*	<div class="col md-12">
+                    <div class="row form-group">
+
+                        <div class="col sm-4">
+
+                            <table id="Table_Color" class="table table-bordered table-hover table-striped" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Project Status</th>
+                                        <th>Number of Project</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                        <div class="col sm-8">
+                            <div style="border:1px solid black">
+                                <div id="piechart"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>*@
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <table id="Table-Summary" class="table table-bordered table-hover table-striped" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Status</th>
+                                    <th>Units</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td style="font-weight:bold;color:black;">Grand Total</td>
+                                    <td id="Total" style="font-weight:bold;color:red;"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="col-sm-8" style="border:1px solid black;">
+                        <div id="Pie"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h3 style="color:black">Summary Report</h3>
+        </div>
+        <div class="card-body">
+            <label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/moment.js/moment.min.js"></script>
+<script>
+
+    //onload
+    $.fn.select2.defaults.set("theme", "bootstrap");
+
+    $('#Type').select2();
+    $('#Employee_Code').select2();
+
+    var red = 0;
+    var org = 0;
+    var yen = 0;
+    var green = 0;
+    var Type_Name = "";
+    var Emp_Name = "";
+
+    var red_text = "";
+    var org_text = "";
+    var yen_text = "";
+    var green_text = "";
+
+
+
+    $(document).ready(function () {
+        GetLable();
+        SetUp();
+    });
+
+    function NewPieRender() {
+
+        var data = [{
+            type: "pie",
+            automargin: true,
+            marker:
+            {
+                colors: [
+                    "#D81B16",
+                    "#FFA106",
+                    "#F7FF00",
+                    "#35F900",
+                ]
+            },
+            values: [red, org, yen, green],
+            labels: [red_text, org_text, yen_text, green_text],
+            textinfo: "percent",
+            insidetextorientation: "auto",
+            hoverinfo: "value+label",
+            title:
+            {
+                text: '',
+                font:
+                {
+                    family: 'Arial',
+                    size: 25,
+                    color: ['#000000']
+                }
+            }
+        }]
+
+
+        var layout = {
+            height: 500,
+            width: 500,
+            margin: { "t": 0, "b": 0, "l": 50, "r": 0 },
+            showlegend: true,
+            legend: {
+                x: 0,
+                xanchor: 'bottom',
+                y: -0.25
+            }
+        }
+
+        Plotly.newPlot(Pie, data, layout)
+    }
+
+
+
+
+
+
+
+    function SetUp() {
+        Get_DropDown_Type();
+        //Get_DropDown_Emp();
+    }
+
+    function GetLable() {
+        $.ajax({
+            type: "POST",
+            url: "/RP_SummaryReport/Get_LableColor",
+            data: "",
+            dataType: "json",
+            success: function (response) {
+
+                if (response != "" && response != null) {
+
+                    red_text = response[0].CS_Description;
+                    org_text = response[1].CS_Description;
+                    yen_text = response[2].CS_Description;
+                    green_text = response[3].CS_Description;
+
+
+                }
+
+            },
+            failure: function (response) {
+            },
+            error: function (response) {
+            }
+        });
+    }
+
+    function Gen_Table_Summary() {
+
+        var Type = $('#Type').val();
+        var Emp_Code = $('#Employee_Code').val();
+
+        On_Loading();
+        if ((Type != null && Type != "") && (Emp_Code != null && Emp_Code != "")) {
+            $.ajax({
+                type: "POST",
+                url: "/RP_SummaryReport/Get_Table_Summary",
+                data: { PositionCode: Type, EmpCode: Emp_Code },
+                dataType: "json",
+                success: function (response) {
+
+                    Type_Name = $('#Type').find(':selected').text();
+                    Emp_Name = $('#Employee_Code').find(':selected').text();
+
+                    $('#Type_Name').text(Type_Name + " : ");
+                    $('#Emp_lb').text(Emp_Name);
+                                        
+                    OnSuccess(response);
+                    Off_Loading();
+
+                    red = response[3].Units;
+                    org = response[2].Units;
+                    yen = response[1].Units;
+                    green = response[0].Units;
+                                        
+                    NewPieRender();
+                    
+                },
+                failure: function (response) {
+                },
+                error: function (response) {
+                }
+            });
+        }
+        else {
+            Alert_Error("", "Please select Postion and Employee before search !");
+            Off_Loading();
+        }
+        
+    }
+
+    function OnSuccess(response) {
+        if ($.fn.dataTable.isDataTable('#Table-Summary')) {
+            $('#Table-Summary').DataTable().destroy();
+            RenderTable(response);
+        }
+        else {
+            RenderTable(response);
+        }
+    }
+
+    function RenderTable(response) {
+        var table = $("#Table-Summary").DataTable(
+            {
+
+                searching: false,
+                info: false,
+                paging: false,
+                data: response,
+				lengthChange: false,
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						extend: 'excel',
+						text: 'Export excel',
+						className: 'btn btn-success',
+						filename: `Summary_Report`,
+						exportOptions: {
+							modifier: {
+								page: 'all'
+							}
+						}
+					}
+				],
+                columns: [
+                    {
+                        'data': 'id',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }
+                    },
+                    { 'data': 'CS_Color' },
+                    { 'data': 'Units' },
+                ],
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api(), data;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(2)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(2, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $(api.column(2).footer()).html(
+                        pageTotal
+                    );
+                }
+            });
+    }
+
+
+
+    function Get_DropDown_Type() {
+        //ClearType();
+        $.ajax({
+            type: "POST",
+            url: "/RP_SummaryReport/Get_Dropdown_Type",
+            data: "",
+            dataType: "json",
+            success: function (response) {
+
+
+                response.forEach((obj) => {
+
+                    optionValue = obj.Position_Code;
+                    optionText = obj.Position_Name;
+                    $('#Type').append(`<option value="${optionValue}">
+                                             ${optionText}
+                                      </option>`);
+                });
+                Off_Loading();
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+
+        });
+    }
+
+    function Get_DropDown_Emp() {
+        ClearEmp();
+        On_Loading();
+        var positionCode = $('#Type').val();
+
+        if (positionCode != null && positionCode != "") {
+            $.ajax({
+                type: "POST",
+                url: "/RP_SummaryReport/Get_Dropdown_Emp",
+                data: { PositionCode: positionCode },
+                dataType: "json",
+                success: function (response) {
+
+
+                    response.forEach((obj) => {
+
+                        optionValue = obj.Employee_Code;
+                        optionText = obj.Name;
+                        $('#Employee_Code').append(`<option value="${optionValue}">
+                                             ${optionValue}-${optionText}
+                                      </option>`);
+                    });
+                    Off_Loading();
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+
+            });
+        }
+        else {
+            Alert_Error("", "Please you select Position.");
+            Off_Loading();
+            ClearType();
+            ClearEmp();
+            Get_DropDown_Type();
+        }
+    }
+    function ClearType() {
+        $('#Type')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="">----Select----</option>')
+            .val('')
+            ;
+    }
+    function ClearEmp() {
+        $('#Employee_Code')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option value="">----Select----</option>')
+            .val('')
+            ;
+    }
+
+</script>
+

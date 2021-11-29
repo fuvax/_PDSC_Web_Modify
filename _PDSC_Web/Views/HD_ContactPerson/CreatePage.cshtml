@@ -1,0 +1,966 @@
+﻿
+@{
+    ViewBag.Title = "Create-ContactPerson";
+}
+
+
+@if ((ViewBag.GetRoles == "Role_HD17") && (ViewBag.GetMNRoles == "PDSCPAGE002"))
+{
+
+    <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;margin-bottom:25px;">
+        <div class="card-body">
+
+
+            @using (Html.BeginForm("CreatePerson", "HD_ContactPerson", FormMethod.Post, new
+            {
+                enctype = "multipart/form-data"
+            }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label class="text-font-13">Person Type : </label>
+
+                            </div>
+
+                            <div class="col-sm-4 text-left">
+                                @*<select  onchange="lockfild();" id="PersonType" name="PersonType"   class="form-control input-lg"  >
+                                    </select>*@
+                                <input type="text" id="PersonType" name="PersonType" hidden />
+                                <label class="text-font-13" style="color:red;font-weight:bold;font-size:20px;" id="PersonTypeText"></label>
+                            </div>
+                            <div class="col-sm-4 text-left">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label id="Employeelb" class="text-font-13">Employee : </label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<select id="Employee" name="Employee" class="form-control input-lg">
+									<option value="">--Selected--</option>
+								</select>
+							</div>
+							<div class="col-sm-2 text-left">
+								<label id="Employee-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label id="Companylb" class="text-font-13">Company : </label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<select id="Company" name="Company" class="form-control input-lg">
+									<option value="">--Selected--</option>
+
+								</select>
+							</div>
+							<div class="col-sm-2 text-left">
+								<label id="Company-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label id="ContectNamelb" class="text-font-13">Contact Name</label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<input id="ContectName" name="ContectName" type="text" class="form-control" maxlength="50" />
+							</div>
+							<div class="col-sm-2 text-left">
+								<label id="ContectName-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label class="text-font-13">Position</label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<input id="Position" name="Position" type="text" class="form-control" maxlength="50" />
+							</div>
+							<div class="col-sm-2 text-left">
+								<label id="Position-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label id="Phonelb" class="text-font-13">Phone</label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<input name="Phone" id="Phone" type="text" class="form-control" maxlength="10" />
+							</div>
+							<div class="col-sm-4 text-left">
+								<input name="Phoneh" id="Phoneh" type="text" class="form-control" maxlength="10" hidden />
+								<label id="Phoneh-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>							
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label id="Emaillb" class="text-font-13">E-mail</label>
+
+							</div>
+							<div class="col-sm-4 text-left">								
+								<input  name="Email" id="Email" type="text" class="form-control" maxlength="40" />						
+							</div>
+							<div class="col-sm-4 text-left">
+								<input name="Emailh" id="Emailh" type="text" class="form-control" maxlength="50" hidden />
+								<label id="Emailh-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>							
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label class="text-font-13">Line ID</label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<input name="LineID" id="LineID" type="text" class="form-control" maxlength="50" />
+							</div>
+							<div class="col-sm-2 text-left">
+								<label id="LineID-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label id="ContectGrouplb" class="text-font-13">Contact Group</label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<select id="ContectGroup" name="ContectGroup" class="form-control">
+									<option value="">--Seleted--</option>
+								</select>
+							</div>
+							<div class="col-sm-2 text-left">
+								<label id="ContectGroup-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label id="notelb" class="text-font-13">Note</label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<textarea class="form-control" id="note" name="note" maxlength="100"></textarea>
+							</div>
+							<div class="col-sm-2 text-left">
+								<label id="note-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+
+							</div>
+							<div class="col-md-12 text-center">
+								<button id="SaveBtn" type="submit" hidden>save</button>
+							</div>							
+						</div>
+                    </div>
+                </div>
+            }
+            <div class="col-md-12 text-center" style="margin-bottom:25px;">
+                <button onclick="Save();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+                    <i class="fas fa-save"></i>
+                    SAVE
+                </button>
+            </div>
+        </div>
+    </div>
+
+}
+
+<a href="@Url.Action("Index", "HD_ContactPerson")" class="float pointer" style="color:white;">
+    <i class="fas fa-arrow-left B-icon"></i>
+</a>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script>
+
+	//onload
+	$.fn.select2.defaults.set("theme", "bootstrap");
+
+	$('#Employee').select2();
+	$('#Company').select2();
+	$('#ContectGroup').select2();
+
+	$(document).ready(function ()
+	{
+		On_Loading();
+		//Show_backbtn();
+		var type = '@Session["ContactType"]';
+		// Get list Persontype
+		GetPersonType(type);
+		
+
+
+	});
+
+		//GetListEmployee();
+
+
+			$("#Employee").change(function ()
+			{
+				var selected = $('#Employee').val();
+
+
+
+				if (selected != "" && selected != "") {
+					$.ajax({
+						type: "POST",
+						url: "/HD_ContactPerson/GetListEmployeeByEmpCode",
+						data: { EMPCode : selected },
+						dataType: "json",
+						success: function (response)
+						{
+							if (response.code === 1) {
+								window.location = '/Login/Logout';
+							}
+							else {
+								ClearDataInput();
+
+								for (i = 0; i < response.length; i++) {
+									$('#Position').val(response[i].Position_Name);
+									$('#Phone').val(response[i].Phone);
+									$('#Email').val(response[i].Email);
+									$('#note').val(response[i].Note);
+								}
+							}
+
+						},
+						failure: function (response) {
+							alert(response.responseText);
+							//alert("failure");
+						},
+						error: function (response) {
+							alert(response.responseText);
+							//alert("Error");
+						}
+					});
+				}
+				else
+				{
+					ClearDataInput();
+				}
+
+			});
+
+		function ClearDataInput()
+		{
+			$('#Position').val("");
+			$('#Phone').val("");
+            $('#Phoneh').val("");
+			$('#Email').val("");
+            $('#Emailh').val("");
+			$('#note').val("");
+	}
+
+	@*function Validatemail()
+	{
+		const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+		var inputmail = $('#Email').val();
+
+		if (inputmail == re)
+		{
+			alert("Valid email address!");
+
+			return true;
+		}
+		else
+		{
+			alert("You have entered an invalid email address!");
+
+			return false;
+		}
+	}*@
+
+	@*function Validatephone()
+	{
+		var phoneformate = "";
+	}*@
+
+		function Save()
+		{
+
+			//var ValiMail = Validatemail();
+			//var ValiPhone = Validatephone();
+
+			$('#Phoneh').val($('#Phone').val());
+            $('#Emailh').val($('#Email').val());
+
+			swal({
+				title: "",
+                text: "Are you sure? Do you want to save it?",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+				closeOnConfirm: false,
+				closeOnCancel: false
+			},
+				function (isConfirm) {
+					if (isConfirm)
+					{
+
+						if ($('#PersonTypeText').text() == "HET")
+						{
+
+							msg = "Please Enter ";
+
+							if ($('#Employee').val() == "" || $('#Employee').val() == null)
+							{
+								msg = msg + " Employee ";
+							}
+
+							if ($('#Position').val() == "" || $('#Position').val() == null)
+							{
+								msg = msg + " Position ";
+							}
+							////////////////////////////////////////////////////////////
+							if (($('#Employee').val() != "" && $('#Employee').val() != null) &&
+								($('#Position').val() != "" && $('#Position').val() != null)
+								)
+							{
+								$('#SaveBtn').trigger('click');
+							}
+							else {
+								swal("", msg, "error");
+							}
+						}
+						else if ($('#PersonTypeText').text() == "Customer")
+						{
+							msg = "Please Enter ";
+
+							if ($('#Company').val() == "" || $('#Company').val() == null)
+							{
+								msg = msg + " Company ";
+							}
+
+							if ($('#Position').val() == "" || $('#Position').val() == null)
+
+							{
+								msg = msg + "  Position ";
+							}
+
+							if ($('#ContectName').val() == "" || $('#ContectName').val() == null)
+							{
+								msg = msg + "   Contact Name ";
+							}
+							///////////////////////////////////////////////////////////////////
+							if (($('#Company').val() != "" && $('#Company').val() != null) &&
+								($('#Position').val() != "" && $('#Position').val() != null) &&
+								($('#ContectName').val() != "" && $('#ContectName').val() != null)
+							)
+							{
+								$('#SaveBtn').trigger('click');
+							}
+							else
+							{
+								swal("", msg, "error");
+							}
+						}
+						else if ($('#PersonTypeText').text() == "Supplier")
+						{
+							msg = "Please Enter ";
+
+							if ($('#Company').val() == "" || $('#Company').val() == null) {
+								msg = msg + " Company ";
+							}
+
+							if ($('#Position').val() == "" || $('#Position').val() == null) {
+								msg = msg + "  Position ";
+							}
+
+							if ($('#ContectName').val() == "" || $('#ContectName').val() == null) {
+								msg = msg + "   Contact Name ";
+							}
+
+							if ($('#ContectGroup').val() == "" || $('#ContectGroup').val() == null)
+							{
+								msg = msg + "  Contact Group ";
+							}
+							///////////////////////////////////////////////////////////////////
+							if (($('#Company').val() != "" && $('#Company').val() != null) &&
+								($('#Position').val() != "" && $('#Position').val() != null) &&
+								($('#ContectName').val() != "" && $('#ContectName').val() != null) &&
+								($('#ContectGroup').val() != "" && $('#ContectGroup').val() != null)
+							)
+							{
+								$('#SaveBtn').trigger('click');
+							}
+							else
+							{
+								swal("", msg, "error");
+							}
+						}
+						else if ($('#PersonTypeText').text() == "Sub Con")
+						{
+							msg = "Please Enter ";
+
+							if ($('#Company').val() == "" || $('#Company').val() == null) {
+								msg = msg + " Company ";
+							}
+
+							if ($('#Position').val() == "" || $('#Position').val() == null) {
+								msg = msg + "  Position ";
+							}
+
+							if ($('#ContectName').val() == "" || $('#ContectName').val() == null) {
+								msg = msg + "   Contact Name ";
+							}
+
+							if ($('#ContectGroup').val() == "" || $('#ContectGroup').val() == null) {
+								msg = msg + "  Contact Group ";
+							}
+							///////////////////////////////////////////////////////////////////
+							if (($('#Company').val() != "" && $('#Company').val() != null) &&
+								($('#Position').val() != "" && $('#Position').val() != null) &&
+								($('#ContectName').val() != "" && $('#ContectName').val() != null) &&
+								($('#ContectGroup').val() != "" && $('#ContectGroup').val() != null)
+							)
+							{
+								$('#SaveBtn').trigger('click');
+							}
+							else
+							{
+								swal("", msg, "error");
+							}
+						}
+
+					}
+					else {
+
+						swal("", "Cancelled", "error");
+					}
+				});
+
+		}
+
+		function GetPersonType(Type)
+		{
+			$.ajax({
+				type: "POST",
+				url: "/HD_ContactPerson/LoadPage",
+				data: "",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (response)
+				{
+					var result = response.length;
+					for (var i = 0; i < result; i++)
+					{
+						if (response[i].PType_Name == Type)
+						{
+							$('#PersonType').val(response[i].PType_Code);
+							$('#PersonTypeText').text(response[i].PType_Name);
+						}
+					}
+					lockfild();
+                    Off_Loading();
+				},
+				failure: function (response) {
+					console.log(response.responseText);
+                    Off_Loading();
+				},
+				error: function (response) {
+					console.log(response.responseText);
+                    Off_Loading();
+				}
+			});
+		}
+
+
+	//---- Clear Dropdown function
+	function ClearDDCompany() {
+		$('#Company')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">--Selected--</option>')
+			.val('')
+			;
+	}
+
+	function ClearDDEmployee() {
+		$('#Employee')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">--Selected--</option>')
+			.val('')
+			;
+		}
+
+	function ClearDDContectGroup() {
+			$('#ContectGroup')
+				.find('option')
+				.remove()
+				.end()
+				.append('<option value="">--Selected--</option>')
+				.val('')
+				;
+		}
+	//----------------------------
+
+	// ------ Group Function SetUp-----
+	function _HET_Setup() {
+
+
+		document.getElementById("Companylb").disabled = true;
+		document.getElementById("Company").disabled = true;
+
+		document.getElementById("ContectGrouplb").disabled = true;
+		document.getElementById("ContectGroup").disabled = true;
+
+		document.getElementById("ContectNamelb").disabled = true;
+		document.getElementById("ContectName").disabled = true;
+
+
+        document.getElementById("Phonelb").disabled = true;
+        document.getElementById("Phone").disabled = true;
+
+        document.getElementById("Emaillb").disabled = true;
+		document.getElementById("Email").disabled = true;
+
+		//
+		$('#Employee-mark').attr("hidden", false);
+		$('#Position-mark').attr("hidden", false);
+		//
+
+		ClearDDCompany();
+		ClearDDEmployee();
+		ClearDDContectGroup();
+
+		//list Emp
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Select_Employee",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "") {
+					if (response.code === 1) {
+						window.location = '/Login/Logout';
+					}
+					else {
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].Employee_Code;
+							optionText = response[i].Employee_Name;
+							optionType = response[i].Position_Group;;
+
+							if (optionType == "" || optionType == null) {
+								optionType = "N/A";
+							}
+
+
+							$('#Employee').append(`<option value="${optionValue}">
+									   [${optionType}] ${optionValue}-${optionText}
+								  </option>`);
+                      @*  $('#Employee').append(`<option value="${optionValue}">
+									   ${optionText}
+								  </option>`);*@
+						}
+					}
+				}
+			},
+			failure: function (response) {
+				console.log(response.responseText);
+			},
+			error: function (response) {
+				console.log(response.responseText);
+			}
+		});
+
+
+		// list contactGroup
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/list_ConteactGroup",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "") {
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].CG_Code;
+						optionText = response[i].CG_Name;
+						$('#ContectGroup').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+					}
+				}
+
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+		}
+
+	function _Customer_Setup() {
+		document.getElementById("ContectGrouplb").disabled = true;
+		document.getElementById("ContectGroup").disabled = true;
+
+		document.getElementById("Employeelb").disabled = true;
+		document.getElementById("Employee").disabled = true;
+
+		document.getElementById("ContectNamelb").disabled = false;
+		document.getElementById("ContectName").disabled = false;
+
+
+        document.getElementById("Phonelb").disabled = false;
+        document.getElementById("Phone").disabled = false;
+
+        document.getElementById("Emaillb").disabled = false;
+		document.getElementById("Email").disabled = false;
+
+		//
+		$('#Company-mark').attr("hidden", false);
+		$('#Position-mark').attr("hidden", false);
+		$('#ContectName-mark').attr("hidden", false);
+		//
+
+		ClearDDCompany();
+		ClearDDEmployee();
+
+		//get list employee
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Select_Employee",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "")
+				{
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].Employee_Code;
+						optionText = response[i].Employee_Name;
+						optionType = response[i].Position_Group;;
+
+						if (optionType == "" || optionType == null) {
+							optionType = "N/A";
+						}
+
+
+						$('#Employee').append(`<option value="${optionValue}">
+									   [${optionType}] ${optionValue}-${optionText}
+								  </option>`);
+
+					}
+				}
+
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+		//get list company
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/list_Customer",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response)
+			{
+				//console.log("response : "+response);
+				if (response != null && response != "")
+				{
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].Customer;
+						optionText = response[i].Name;
+						$('#Company').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+					}
+				}
+
+
+			},
+			failure: function (response) {
+				alert(" failure : "+response.responseText);
+			},
+			error: function (response) {
+				alert(" Error : " +response.responseText);
+			}
+		});
+	}
+
+	function _Supplier_Setup() {
+		document.getElementById("Employeelb").disabled = true;
+		document.getElementById("Employee").disabled = true;
+
+		document.getElementById("ContectNamelb").disabled = false;
+		document.getElementById("ContectName").disabled = false;
+
+        document.getElementById("Phonelb").disabled = false;
+        document.getElementById("Phone").disabled = false;
+
+        document.getElementById("Emaillb").disabled = false;
+		document.getElementById("Email").disabled = false;
+
+		$('#Company-mark').attr("hidden", false);
+		$('#Position-mark').attr("hidden", false);
+		$('#ContectName-mark').attr("hidden", false);
+		$('#ContectGroup-mark').attr("hidden", false);
+
+		ClearDDCompany();
+		ClearDDContectGroup();
+		//list company
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Select_Supplier",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+				var result = response.length;
+
+				for (var i = 0; i < result; i++) {
+
+					optionValue = response[i].Supplier_Code;
+					optionText = response[i].Supplier_Name;
+					$('#Company').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+				}
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+
+		//list conteactGroup
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/list_ConteactGroup_Suplier",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "") {
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].CG_Code;
+						optionText = response[i].CG_Name;
+						$('#ContectGroup').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+					}
+				}
+
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function _Sub_Con_Setup() {
+		document.getElementById("Employeelb").disabled = true;
+		document.getElementById("Employee").disabled = true;
+
+		document.getElementById("ContectNamelb").disabled = false;
+		document.getElementById("ContectName").disabled = false;
+
+        document.getElementById("Phonelb").disabled = false;
+        document.getElementById("Phone").disabled = false;
+
+        document.getElementById("Emaillb").disabled = false;
+		document.getElementById("Email").disabled = false;
+
+		$('#Company-mark').attr("hidden", false);
+		$('#Position-mark').attr("hidden", false);
+		$('#ContectName-mark').attr("hidden", false);
+		$('#ContectGroup-mark').attr("hidden", false);
+
+		ClearDDCompany();
+		ClearDDContectGroup();
+
+		//list company
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Select_Sub_Con",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+				var result = response.length;
+
+				for (var i = 0; i < result; i++) {
+
+					optionValue = response[i].Subcon_Code;
+					optionText = response[i].Subcon_Name;
+					$('#Company').append(`<option value="${optionValue}">
+									  ${optionValue}-${optionText}
+								  </option>`);
+
+				}
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+
+		//list conteactGroup
+
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/list_ConteactGroup_SubCon",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "") {
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].CG_Code;
+						optionText = response[i].CG_Name;
+						$('#ContectGroup').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+					}
+				}
+
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+	//-----------------------------------
+
+	//--------- Function Condition Selete onchange----------------
+	function lockfild() {
+		//var e = document.getElementById("PersonType");
+		var DDseleted = $('#PersonType').val();
+
+		if (DDseleted !="" )
+		{
+			if (DDseleted == "PType_001") {
+				ShowAll();
+
+				_HET_Setup();
+			}
+			else if (DDseleted == "PType_002") { //emp -cus
+
+				ShowAll();
+
+				_Customer_Setup();
+
+
+			}
+			else if (DDseleted == "PType_003") { //supp
+				ShowAll();
+				_Supplier_Setup();
+
+
+			}
+			else if (DDseleted == "PType_004") { //sub
+
+				ShowAll();
+
+				_Sub_Con_Setup()
+
+
+
+
+			}
+		}
+
+
+	}
+	//----------------------------------------------
+
+	//------ Normaly Function ----------------
+	function ShowAll() {
+		document.getElementById("Employeelb").disabled = false;
+		document.getElementById("Employee").disabled = false;
+
+		document.getElementById("ContectGrouplb").disabled = false;
+		document.getElementById("ContectGroup").disabled = false;
+
+		document.getElementById("Companylb").disabled = false;
+		document.getElementById("Company").disabled = false;
+
+
+	}
+	//--------------------------------------
+
+
+</script>
+

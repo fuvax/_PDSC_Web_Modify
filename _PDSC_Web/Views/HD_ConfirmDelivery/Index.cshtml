@@ -1,0 +1,462 @@
+﻿
+@{
+    ViewBag.Title = "Index-ConfrimPO";
+}
+
+@if ((ViewBag.GetRoles != "") && (ViewBag.GetMNRoles != null))
+{
+    if ((ViewBag.GetRoles == "Role_HD21" || ViewBag.GetRoles == "Role_HD22") && (ViewBag.GetMNRoles == "PDSCPAGE002"))
+    {
+        <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;">
+            <div class="card-header">
+                <h2 style="color:black;">Search</h2>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12">
+                    <div class="form-group row">
+
+                        <div class="col-sm-3 text-right">
+                            <label class="text-font-13">Sale Order : </label>
+                        </div>
+                        <div class="col-sm-3 text-left">
+                            <select id="saleorder" onchange="AutoGenTable();" class="form-control">
+                                <option value="">--Selected--</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;margin-bottom:25px;">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="table_confirm_PO" class="table table-bordered table-striped table-hover order-column" width="100%">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">No.</th>
+                                <th rowspan="2">SO No.</th>
+                                <th rowspan="2">MFG No.</th>
+                                <th rowspan="2">EQ. No.</th>
+                                <th rowspan="2">Spec Desc.</th>
+                                <th rowspan="2">Contract Delivery Date</th>
+                                <th rowspan="2">PO No.</th>
+                                <th rowspan="2">PO Shipment Date</th>
+                                <th colspan="2">Partial Date</th>
+                                <th rowspan="2">Partial Item</th>
+                                <th colspan="2">Confirm DSCR Date</th>
+                                <th rowspan="2">Last Update</th>
+                                <th rowspan="2">Update By</th>
+                                <th rowspan="2">Edit</th>
+                                <th rowspan="2">Save</th>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <th>Clear</th>
+                                <th>Date</th>
+                                <th>Clear</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/lib/moment.js/moment.min.js"></script>
+        <script src="~/lib/select2/js/select2.min.js"></script>
+        <script src="~/lib/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/datatables.net-fixedcolumns/dataTables.fixedColumns.min.js"></script>
+
+
+        <script type="text/javascript">
+	$.fn.select2.defaults.set("theme", "bootstrap");
+
+
+
+	$('#saleorder').select2();
+
+	$(document).ready(function ()
+	{
+		On_Loading();
+		loadDD_SaleOrder();
+		Hide_backbtn();
+	});
+
+	function loadDD_SaleOrder() {
+		$.ajax({
+			type: "POST",
+			url: "/HD_ConfirmDelivery/Load_DropDown",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+				var result = response.length;
+
+				for (var i = 0; i < result; i++) {
+
+					optionValue = response[i].SaleOrder;
+					optionText = response[i].SaleOrder;
+					$('#saleorder').append(`<option value="${optionValue}">
+									   ${optionText}
+								  </option>`);
+
+				}
+                Off_Loading();
+			},
+			failure: function (response) {
+				alert(response.responseText);
+                Off_Loading();
+			},
+			error: function (response) {
+				alert(response.responseText);
+                Off_Loading();
+			}
+		});
+	}
+
+	function Save(mfg)
+	{
+
+		var p_date = $('#Partial_Date_' + mfg).val();
+		var item = $('#Partial_Item_' + mfg).val();
+		var c_date = $('#Confirm_DSCR_Date_' + mfg).val();
+
+
+		swal({
+			title: "",
+            text: "Are you sure? Do you want to save it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm) {
+				if (isConfirm)
+				{
+
+					$.ajax({
+						type: "POST",
+						url: "/HD_ConfirmDelivery/Save_Confirm_PO",
+						data: { MFG: mfg, Parial_Date: p_date, Parial_Item: item, Confirm_DSCR_Date: c_date },
+						dataType: "json",
+						success: function (response)
+						{
+
+							if (response.code === 1) {
+								window.location = '/Login/Logout';
+							}
+							else {
+								if (response) {
+									setTimeout(function () {
+										swal({
+											title: "",
+											text: "Successful",
+											type: "success"
+										},
+											function () {
+
+												AutoGenTable()
+											});
+									}, 500);
+
+
+								}
+								else {
+									swal("", "It can't be saved. Please Try again", "error");
+								}
+							}
+						},
+						failure: function (response) {
+							alert(response.responseText);
+						},
+						error: function (response) {
+							alert(response.responseText);
+						}
+					});
+
+				}
+				else {
+
+					swal("", "Cancelled", "error");
+				}
+			});
+
+
+	}
+
+	function Edit(mfg)
+	{
+		$('#Partial_Date_' + mfg).prop('disabled', false);
+        var partial_date = "#Partial_Date_" + mfg;
+        changeFormat_date(partial_date);
+
+		$('#Partial_Item_' + mfg).prop('disabled', false);
+
+		$('#Confirm_DSCR_Date_' + mfg).prop('disabled', false);
+        var dscr_date = "#Confirm_DSCR_Date_" + mfg;
+        changeFormat_date(dscr_date);
+	}
+	function Clear_DSCR_Date(mfg)
+	{
+
+		$('#'+mfg).val('');
+	}
+	function Clear_Partial_Date(mfg) {
+
+		$('#'+ mfg).val('');
+	}
+
+	function Onsuccess(response) {
+
+
+		if (response.code === 1) {
+			window.location = '/Login/Logout';
+		}
+		else {
+			if ($.fn.dataTable.isDataTable('#table_confirm_PO')) {
+				$('#table_confirm_PO').DataTable().destroy();
+				RenderTable(response);
+			}
+			else {
+				RenderTable(response);
+			}
+		}
+
+	}
+
+	function RenderTable(response)
+	{
+
+		var table = $("#table_confirm_PO").DataTable(
+			{
+				fixedColumns: {
+					
+					rightColumns: 2
+				},
+				searching: false,
+				info: true,
+				scrollX: true,
+				scrollCollapse: true,			
+				data: response,
+				columns: [
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'sale_order_no' },
+					{ 'data': 'MFG_No' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							if (moment(data.Contract_Delivery_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else
+							{
+								return moment(data.Contract_Delivery_Date).format("DD-MMM-YYYY");
+							}
+						}
+					},
+					{ 'data': 'PO_No' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							if (moment(data.PO_Shipment_Date).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.PO_Shipment_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.Partial_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input  onkeydown="return false" disabled  id="Partial_Date_' + data.MFG_No + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />';
+							}
+							else {
+								return '<input  onkeydown="return false" disabled  id="Partial_Date_' + data.MFG_No + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.Partial_Date).format("DD-MMM-YYYY") + '" />';
+							}
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD21") {
+                                return '<button onclick="Clear_Partial_Date(\'Partial_Date_' + data.MFG_No + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">' +
+                                    '<i class="fas fa-times"></i>' +
+                                    '</button>';
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD22") {
+                                return '<button disabled onclick="Clear_Partial_Date(\'Partial_Date_' + data.MFG_No + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-danger disable_btn">' +
+									'<i class="fas fa-times"></i>' +
+									'</button>';
+							}
+							else {
+								return "";
+							}
+
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<input  disabled id="Partial_Item_' + data.MFG_No + '" class="form-control width-set" type="text" value="' + data.Partial_Item + '" maxlength="51" />';
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.Confirm_DSCR_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input  onkeydown="return false" disabled id="Confirm_DSCR_Date_' + data.MFG_No + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />';
+							}
+							else {
+								return '<input  onkeydown="return false" disabled id="Confirm_DSCR_Date_' + data.MFG_No + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.Confirm_DSCR_Date).format("DD-MMM-YYYY") + '" />';
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD21") {
+                                return '<button onclick="Clear_DSCR_Date(\'Confirm_DSCR_Date_' + data.MFG_No + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">' +
+                                    '<i class="fas fa-times"></i>' +
+                                    '</button>';
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD22") {
+                                return '<button disabled onclick="Clear_DSCR_Date(\'Confirm_DSCR_Date_' + data.MFG_No + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-danger disable_btn">' +
+                                    '<i class="fas fa-times"></i>' +
+                                    '</button>';
+							}
+							else {
+								return "";
+							}
+
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+
+							if (moment(data.Partial_Last_Update).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Partial_Last_Update).format("DD-MMM-YYYY HH:mm");
+							}
+
+						}
+					},
+					{ 'data': 'Partial_Last_by' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD21") {
+                                return '<center>' +
+                                    '<button  onclick="Edit(' + '\'' + data.MFG_No + '\'' + ');"   class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>';
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD22") {
+                                return '<center>' +
+                                    '<button disabled onclick="Edit(' + '\'' + data.MFG_No + '\'' + ');"   class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-warning disable_btn">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>';
+							}
+							else {
+								return "";
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD21") {
+                                return '<center>' +
+                                    '<button onclick="Save(' + '\'' + data.MFG_No + '\'' + ');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">' +
+                                    '<i class="fas fa-save"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD22") {
+                                return '<center>' +
+                                    '<button disabled onclick="Save(' + '\'' + data.MFG_No + '\'' + ');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-success disable_btn">' +
+                                    '<i class="fas fa-save"></i>' +
+                                    '</button>' +
+                                    '</center>'
+                                    ;
+							}
+							else {
+								return "";
+							}
+							
+						}
+					}
+
+
+				]
+			});
+		Off_Loading();
+	}
+
+	function AutoGenTable()
+	{
+		On_Loading();
+		var Seleted = $('#saleorder').val();
+
+
+		if (Seleted != "" && Seleted != null) {
+			$.ajax({
+				type: "POST",
+				url: "/HD_ConfirmDelivery/AutoGenTable",
+				data: { SaleOrder: Seleted },
+				dataType: "json",
+				success: Onsuccess,
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+			});
+            Off_Loading();
+		}
+        else {
+            Alert_Error("", "Please you select a Sale Order.");
+            Off_Loading();
+        }
+	}
+
+
+
+        </script>
+

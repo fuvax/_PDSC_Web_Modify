@@ -1,0 +1,273 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@if ((ViewBag.GetRoles != "") && (ViewBag.GetMNRoles != null))
+{
+    if ((ViewBag.GetRoles == "Role_HD11" || ViewBag.GetRoles == "Role_HD12") && (ViewBag.GetMNRoles == "PDSCPAGE002"))
+    {
+        <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table id="Manufacturing_table" class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+
+                                <th>No.</th>
+                                <th>Sale Order</th>
+                                <th>MFG</th>
+                                <th>EQ No.</th>
+                                <th>Spec Desc</th>
+                                <th>Manufacturing</th>
+                                <th>Last Date</th>
+                                <th>Last By</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    }
+}
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript">
+
+	$(document).ready(function ()
+	{
+
+		On_Loading();
+
+		Hide_backbtn();
+		RenderDropDown();
+
+		LoadPage_Manufacturing();
+
+	});
+
+	function LoadPage_Manufacturing()
+	{
+			$.ajax({
+				type: "POST",
+				url: '@Url.Action("LoadPage_Manufacturing", "HD_Manufacturing")',
+				data: {},
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: OnSuccess,
+				failure: function (response) {
+					//alert(response.d);
+				},
+				error: function (response) {
+					//alert(response.d);
+				}
+			});
+	}
+
+	function OnSuccess(response)
+	{
+
+
+		var table = $("#Manufacturing_table").DataTable(
+			{
+				fixedColumns: {
+					leftColumns: 6,
+					rightColumns: 1
+				},
+				searching: true,
+				info: true,
+				paging: true,
+				data: response,
+
+				columns: [
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'sale_order_no' },
+					{ 'data': 'MFG_No' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{
+						data: null,
+						render: function (data, type, row) {
+
+
+							return '<label id="' + data.MFG_No + '" class="text-font-13" style="color:red;font-weight:bold;">' + data.MNF_Name + '</label>' +
+								'<input type="text" id="ManfText_' + data.MFG_No + '" value="' + data.MNF_Code + '" hidden />' +
+								'<input type="text" id="Text_' + data.MFG_No + '" hidden />';
+
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+
+							if (moment(data.Manufac_Last_Update).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Manufac_Last_Update).format("DD-MMM-YYYY HH:mm");
+							}
+
+
+
+						}
+					},
+					{ 'data': 'Last_by' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_HD11") {
+                                return '<center>' +
+                                    '<button Onclick="_GetValue(\'' + data.MFG_No + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>';
+							}
+							else if ('@ViewBag.GetRoles' == "Role_HD12") {
+                                return '<center>' +
+                                    '<button disabled Onclick="_GetValue(\'' + data.MFG_No + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-warning disable_btn">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>';
+							}
+                            else {
+                                return "";
+                            }
+						}
+					}
+				]
+			});
+		Off_Loading();
+	};
+
+
+	function _GetValue(id)
+	{
+		CallModal();
+		$('#txthide').val(id);
+
+		var ID_ManfText = $('#ManfText_' + id).val();
+
+		$("#manf").val(ID_ManfText);
+
+	}
+
+	function CallModal()
+	{
+		$('#staticBackdrop').modal('show');
+	}
+
+	function CloseModal()
+	{
+		$('#staticBackdrop').modal('hide');
+	}
+
+	function Submited()
+	{
+		var Value = $('#manf').val();
+		var Text = $("#manf option:selected").text();
+
+
+		if (Value != null && Value != "") {
+			var id = $('#txthide').val(); // get id from txt
+			var mytxt = '#' + id;
+
+			var IdText = '#Text_' + id;
+			$(IdText).val(Value);
+			$(mytxt).text(Text);
+
+			Save(id);
+
+			CloseModal();
+		}
+		else
+		{
+			Alert_warning("","Please Select Other");
+
+		}
+	}
+
+	function Save(id)
+	{
+		var IdText = '#Text_' + id;
+		var ID_DropDown = $(IdText).val();
+
+
+		$.ajax({
+				type: "POST",
+				url: '@Url.Action("Save_Manuf", "HD_Manufacturing")',
+			    data: { MFG: id , Manf_Code: ID_DropDown},
+				@*contentType: "application/json; charset=utf-8",*@
+				dataType: "json",
+				success: function (response)
+				{
+					if (response.code === 1) {
+						window.location = '/Login/Logout';
+					}
+					else {
+						if (response) {
+							Alert_Ok("", "Successful", true, "/HD_Manufacturing/Index");
+						}
+						else {
+							Alert_Ok("", "Error", false, "/HD_Manufacturing/Index");
+						}
+					}
+				},
+				failure: function (response) {
+					//alert(response.d);
+				},
+				error: function (response) {
+					//alert(response.d);
+				}
+			});
+	}
+
+	function RenderDropDown()
+	{
+		//Load_DropDownManf
+		$(function () {
+			$.ajax({
+				type: "POST",
+				url: '@Url.Action("Load_DropDownManf", "HD_Manufacturing")',
+				data: {},
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (response)
+				{
+					var result = response.length;
+
+					for (var i = 0; i < result; i++)
+					{
+
+						optionValue = response[i].MNF_Code;
+						optionText = response[i].MNF_Name;
+
+						$('#manf').append(`<option value="${optionValue}">
+									  ${optionText}
+								  </option>`);
+					}
+				},
+				failure: function (response) {
+					//alert(response.d);
+				},
+				error: function (response) {
+					//alert(response.d);
+				}
+			});
+		});
+	}
+
+
+
+
+        </script>
+

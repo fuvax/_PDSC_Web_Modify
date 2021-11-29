@@ -1,0 +1,322 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+}
+<style>
+	td.details-control {
+		background: url('../Resoure/icon/details_open.png') no-repeat center center;
+		cursor: pointer;
+	}
+
+	tr.shown td.details-control {
+		background: url('../Resoure/icon/details_close.png') no-repeat center center;
+	}
+	table.dataTable thead .sorting,
+	table.dataTable thead .sorting_asc,
+	table.dataTable thead .sorting_desc {
+		background: none;
+	}
+</style>
+<div class="card-hover-shadow-2x card-border card" style="margin-bottom:25px;">
+
+    <div class="card-header">
+        <h2 style="color:black;">Engineer Master</h2>
+    </div>
+    @if (ViewBag.GetRoles != "" &&  ViewBag.GetMNRoles == "PDSCPAGE001")
+    {
+        <div class="card-body">
+
+            @if (ViewBag.GetRoles == "Role_MM11")
+            {
+                <button onclick="window.location.href='@Url.Action("Create", "ProjectEngineerMaster")';" class="mb-2 mr-2 btn-icon btn-lg btn-shadow btn-outline-2x btn btn-outline-success">
+                    <i class="fas fa-plus"></i>
+                    Create
+                </button>
+            }
+            @*else if (ViewBag.GetRoles == "Role_MM12")
+            {
+                <button disabled onclick="window.location.href='@Url.Action("Create", "ProjectEngineerMaster")';" class="mb-2 mr-2 btn-icon btn-lg btn-outline-2x btn btn-outline-success disable_btn">
+                    <i class="fas fa-plus"></i>
+                    Create
+                </button>
+            }*@
+
+            <div class="text-center">
+                <div class="table-responsive-md">
+                    <table style="width: 100%;" id="table_MasterEngineer" class="table table-hover table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Site</th>
+                                <th>No.</th>
+                                <th>Type</th>
+                                <th>In Charge Person</th>
+                                <th>Site Handle</th>
+                                <th>Leader</th>
+                                <th>DM</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    }
+    else
+    {
+        <div class="card-body">
+            <label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+        </div>
+
+    }
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript">
+
+	function format(d) {
+
+		var html = '<table>';
+
+		d.list_PE_Model.map((item, index) => {
+			var count = index + 1;
+			console.log(" Item : " + item.Site_Code);
+			if (item.Site_Code != "" && item.Site_Code != null)
+			{
+				html +=
+					'<tr>' +
+				'<td class="text-left">' + count+'.) '+ item.Site_Code + ' - ' + item.Site_Name + '</td>' +
+					'</tr>'
+			} else
+			{
+				html +=
+					'<tr>' +
+					'<td class="text-left">No Site Handle</td>' +
+					'</tr>'
+			}
+
+
+		});
+		html += "</table>"
+		return html;
+	}
+
+
+	$(document).ready(function ()
+	{
+		On_Loading();
+		$('#liEngineer').attr('class','mm-active');
+
+		$(function () {
+			$.ajax({
+				type: "POST",
+				url: '@Url.Action("Load_EngineerMasterPage", "ProjectEngineerMaster")',
+				data: '{}',
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: OnSuccess,
+				failure: function (response) {
+					//alert(response.d);
+				},
+				error: function (response) {
+					//alert(response.d);
+				}
+			});
+		});
+		function OnSuccess(response)
+		{
+
+			var table =	$("#table_MasterEngineer").DataTable(
+				{
+					fixedColumns: {
+						//leftColumns: 7,
+						rightColumns: 2
+					},
+					searching: true,
+					info: true,
+					paging: true,
+					data: response,
+					columns: [
+
+						{
+							"className": 'details-control',
+							"orderable": true,
+							"data": null,
+							"defaultContent": ''
+						},
+						{
+							'data': 'id',
+							render: function (data, type, row, meta) {
+								return meta.row + meta.settings._iDisplayStart + 1;
+							}
+						},
+						{ 'data': 'PE_Model.Position_Group' },
+						{ 'data': 'PE_Model.Engineer_Name' },
+						{ 'data': 'PE_Model.Site_Handle' },
+						{ 'data': 'PE_Model.Leader_Name' },
+						{ 'data': 'PE_Model.DM_Name' },
+						{
+							data: null,
+							render: function (data, type, row) {
+								if ('@ViewBag.GetRoles' == "Role_MM11") {
+									return '<center>' +
+										'<button onclick="Edit(' + data.PE_Model.Engineer_Code + ');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">' +
+										'<i class="fas fa-pen"></i>' +
+										'</button>';
+								}
+								else if ('@ViewBag.GetRoles' == "Role_MM12") {
+                                    return '<center>' +
+                                        '<button disabled onclick="Edit(' + data.PE_Model.Engineer_Code + ');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-warning disable_btn">' +
+                                        '<i class="fas fa-pen"></i>' +
+                                        '</button>';
+								}
+								else {
+									return "";
+                                }
+
+
+							}
+						},
+						{
+							data: null,
+							render: function (data, type, row)
+							{
+								if ('@ViewBag.GetRoles' == "Role_MM11") {
+                                    return '<center>' +
+                                        '<button onclick="Delete(' + data.PE_Model.Engineer_Code + ',' + data.PE_Model.Site_Handle + ');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">' +
+                                        '<i class="fas fa-trash"></i>' +
+                                        '</button>' +
+                                        '</center>'
+                                        ;
+								}
+								else if ('@ViewBag.GetRoles' == "Role_MM12") {
+                                    return '<center>' +
+                                        '<button disabled onclick="Delete(' + data.PE_Model.Engineer_Code + ',' + data.PE_Model.Site_Handle + ');" class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-danger disable_btn">' +
+                                        '<i class="fas fa-trash"></i>' +
+                                        '</button>' +
+                                        '</center>'
+                                        ;
+								}
+								else {
+									return "";
+                                }
+								
+							}
+						}
+					]
+				});
+
+
+			$('#table_MasterEngineer tbody').on('click', 'td.details-control', function () {
+				var tr = $(this).closest('tr');
+				var row = table.row(tr);
+
+				if (row.child.isShown()) {
+					// This row is already open - close it
+					row.child.hide();
+					tr.removeClass('shown');
+				}
+				else {
+					// Open this row
+					row.child(format(row.data())).show();
+					tr.addClass('shown');
+				}
+			});
+			Off_Loading();
+		};
+	});
+
+	function Delete(pe_code,SiteHander)
+	{
+		if (SiteHander > 0)
+		{
+			Alert_Error("","It' can't be removed because this engineer have site handle!");
+		}
+		else
+		{
+			swal({
+				title: "",
+				text: "Are you sure? Do you want to remove it?",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Yes",
+				cancelButtonText: "No",
+				closeOnConfirm: false,
+				closeOnCancel: false
+			},
+				function (isConfirm) {
+					if (isConfirm) {
+						setTimeout(function () {
+							swal({
+								title: "",
+								text: "Deleted.",
+								type: "success"
+							},
+								function () {
+
+
+									$.ajax({
+										type: "POST",
+										url: "/ProjectEngineerMaster/Delete",
+										data: { Engieer_Code: pe_code },
+										dataType: "json",
+										success: function (response) {
+											//var result = response.length;
+											location.reload();
+										},
+										failure: function (response) {
+											location.reload();
+											//alert(response.responseText);
+										},
+										error: function (response) {
+											location.reload();
+											//alert(response.responseText);
+										}
+									});
+								});
+						}, 500);
+					}
+					else {
+						swal("", "Cancelled", "error");
+					}
+				});
+		}
+
+	}
+	function Edit(pe_code)
+	{
+		$.ajax({
+			type: "POST",
+			url: "/ProjectEngineerMaster/ToEdit",
+			data: { code: pe_code },
+			dataType: "json",
+			success: function (response) {
+
+				if (response.result == 'Redirect')
+				{
+					window.location = response.url;
+				}
+			},
+			failure: function (response) {
+
+				alert("failure"+response.responseText);
+			},
+			error: function (response) {
+
+				alert("error" +response.responseText);
+			}
+		});
+	}
+
+
+</script>
+
+	

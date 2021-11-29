@@ -1,0 +1,492 @@
+﻿
+@{
+    ViewBag.Title = "Working History Report";
+}
+
+@if (ViewBag.GetRoles == "Role_RP11" && ViewBag.GetMNRoles == "PDSCPAGE005")
+{
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h3 style="color:black">Working History Report</h3>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Type : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <select onchange="AutoGen_Get_DropDown_Emp();" id="Type" name="Type" class="form-control">
+                            <option value="">----All----</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Working Start Date : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <input id="Start_Working" name="Start_Working" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Employee : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <select onchange="AutoGen_Get_DropDown_SiteCode();" id="Employee_Code" name="Employee_Code" class="form-control">
+                            <option value="">----All----</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Working End Date : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <input id="End_Working" name="End_Working" type="date" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Site : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <select id="Site_Code" name="Site_Code" class="form-control">
+                            <option value="">----All----</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3 text-right">
+
+                    </div>
+                    <div class="col-sm-3 ">
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-9 text-right">
+
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <button onclick="Gen_Table();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">
+                            <i class="fas fa-print"></i>
+                            Report
+                        </button>
+
+                        @*<button class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+                                <i class="fas fa-file-excel"></i>
+                                Export
+                            </button>*@
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="Infomation" class="card-hover-shadow-2x card-border card" style="margin-bottom:35px;margin-top:35px;">
+        <div class="card-header">
+            <h3 style="color:black">Information </h3>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Employee Name : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <label id="Emp_lb" class="text-font-12"></label>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Working Start Date : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <label id="StartData_lb" class="text-font-12"></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Position : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <label id="Position_lb" class="text-font-12"></label>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Working End Date : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <label id="EndDate_lb" class="text-font-12"></label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card-hover-shadow-2x card-border card" style="margin-bottom:35px;margin-top:35px;">
+        <div class="card-header">
+            <h3 style="color:black;">Detail</h3>
+        </div>
+        <div class="card-body ">
+            @*<button class="btn btn-success" id="downloadLink" onclick="">Export to excel</button>*@
+            <table id="table-working" class="table table-responsive table-bordered table-hover" width="100%">
+                <thead class="success">
+                    <tr>
+                        <th>No.</th>
+                        <th>Site Code</th>
+                        <th>Site Name</th>
+                        <th>MFG No.</th>
+                        <th>EQ. No.</th>
+                        <th>Spec Description</th>
+                        <th>Working By</th>
+                        <th>Type</th>
+                        <th>Working Date</th>
+                        <th>Stage</th>
+                        <th>Task</th>
+                        <th>Result</th>
+                        <th>Create Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{ 
+	<div class="card-hover-shadow-2x card-border card">
+		<div class="card-header">
+			<h3 style="color:black">Working History Report</h3>
+		</div>
+		<div class="card-body">
+			<label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+		</div>
+	</div>
+}
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script>
+
+	//onload
+	$.fn.select2.defaults.set("theme", "bootstrap");
+
+	$('#Type').select2();
+	$('#Employee_Code').select2();
+	$('#Site_Code').select2();
+
+	$(document).ready(function () {
+		On_Loading();
+		SetUp();
+	});
+
+	function SetUp() {
+		Get_Dropdown_Type();
+		AutoGen_Get_DropDown_Emp();
+		AutoGen_Get_DropDown_SiteCode();
+		//document.getElementById("Employee_Code").disabled = true;
+		//document.getElementById("Site_Code").disabled = true;
+	}
+
+
+	function Get_Dropdown_Type() {
+
+		//ClearType();
+		$.ajax({
+			type: "POST",
+			url: "/RP_Working/Get_Dropdown_Engineer_Type",
+			data: "",
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			success: function (response) {
+
+
+				response.forEach((obj) => {
+
+					optionValue = obj.Position_Group;
+					optionText = obj.Position_Group;
+					$('#Type').append(`<option value="${optionValue}">
+											 ${optionText}
+									  </option>`);
+				});
+				Off_Loading();
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+
+		});
+	}
+	function AutoGen_Get_DropDown_Emp() {
+
+		ClearEmp();
+		var type = $('#Type').val();
+
+
+		//if (type != "" && type != null) {
+			$.ajax({
+				type: "POST",
+				url: "/RP_Working/Get_DropDown_Employee",
+				data: { type: type },
+				dataType: "json",
+				success: function (response) {
+
+					response.forEach((obj) => {
+
+						optionValue = obj.Employee_Code;
+						optionText = obj.Employee_Name;
+						$('#Employee_Code').append(`<option value="${optionValue}">
+										 ${optionValue}-${optionText}
+								  </option>`);
+					});
+					Off_Loading();
+				},
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+			});
+		//}
+
+	}
+	function AutoGen_Get_DropDown_SiteCode() {
+		//document.getElementById("Site_Code").disabled = false;
+
+		ClearSiteCode();
+		var type = $('#Type').val();
+		var emp = $('#Employee_Code').val();
+
+
+		//if ((type != "" && type != null) && (emp != "" && emp != null)) {
+			$.ajax({
+				type: "POST",
+				url: "/RP_Working/Get_DropDown_Site",
+				data: { type: type, emp_Code: emp },
+				dataType: "json",
+				success: function (response) {
+
+
+					response.forEach((obj) => {
+
+						optionValue = obj.Site_Code;
+						optionText = obj.Site_Name;
+						$('#Site_Code').append(`<option value="${optionValue}">
+										 ${optionValue}-${optionText}
+								  </option>`);
+					});
+					Off_Loading();
+				},
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+			});
+		//}
+
+	}
+
+
+
+	function Gen_Table() {
+		
+		var type = $('#Type').val();
+		var emp = $('#Employee_Code').val();
+		var site = $('#Site_Code').val();;
+		var startDate = $('#Start_Working').val();
+		var EndDate = $('#End_Working').val();
+
+		$('#Emp_lb').text(emp == '' ? 'All' : emp);
+		$('#Position_lb').text(type == '' ? 'All' : type);
+		$('#StartData_lb').text(moment(startDate).format("DD-MMM-YYYY"));
+		$('#EndDate_lb').text(moment(EndDate).format("DD-MMM-YYYY"));
+
+        On_Loading();
+		var myList = [];
+
+		myList.push({
+			Type: type,
+			Employee_Code: emp,
+			Site_Code: site,
+			Start_Working: startDate,
+			End_Working: EndDate
+		});
+
+		if ((startDate == "" || startDate == null) || (EndDate == "" || EndDate == null))
+		{
+			Off_Loading();
+			swal("", "Please Enter Startdate and Enddate", "error");
+		}
+		else
+		{
+			$.ajax({
+				type: "POST",
+				url: "/RP_Working/Get_Table_Report",
+				data: { ListModel: myList },
+				dataType: "json",
+				success: OnSuccess,
+				failure: function (response) {
+				},
+				error: function (response) {
+				}
+			});
+		}
+
+       // Off_Loading();
+	}
+
+	function OnSuccess(response) {
+		if ($.fn.dataTable.isDataTable('#table-working')) {
+			$('#table-working').DataTable().destroy();
+			RenderTable(response);
+		}
+		else {
+			RenderTable(response);
+		}
+	}
+
+	function RenderTable(response) {
+		//On_Loading();
+		$(window).scrollTop($('#Infomation').offset().top);
+
+
+
+		var table = $("#table-working").DataTable(
+			{
+
+				searching: false,
+				info: true,
+				paging: true,
+				data: response,
+				lengthChange: false,
+				dom: 'Bfrtip',
+				buttons: [
+					{
+						extend: 'excel',
+						text: 'Export excel',
+						className: 'btn btn-success',
+						filename: `Working_History_Report`,
+						exportOptions: {
+							modifier: {
+								page: 'all'
+							}
+						}
+					}
+				],
+				columns: [
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Site_Code' },
+					{ 'data': 'Site_Name' },
+					{ 'data': 'MFG' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{ 'data': 'Working_by_Name' },
+					{ 'data': 'Position_Group' },
+					{
+						'data': null,
+						render: function (data, type, row) {
+							return moment(data.TT_Working_Date).format("DD-MMM-YYYY");
+						}
+					},
+					{ 'data': 'SM_Name' },
+					{ 'data': 'Task_Name' },
+					{ 'data': 'Result_Name' },
+					{
+						'data': null,
+						render: function (data, type, row) {
+							return moment(data.Create_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					}
+				]
+
+			});
+
+		@*table.buttons().container()
+			.appendTo('#table-working .col-md-6:eq(0)');*@
+
+
+		Off_Loading();
+	}
+
+
+	@*function fnExcelReport() {
+		var tab_text = '<table border="1px" style="font-size:12px" ">';
+		var textRange;
+		var j = 0;
+		var tab = document.getElementById('table-working'); // id of table
+		var lines = tab.rows.length;
+
+		// the first headline of the table
+		if (lines > 0) {
+			tab_text = tab_text + '<tr bgcolor="#DFDFDF">' + tab.rows[0].innerHTML + '</tr>';
+		}
+
+		// table data lines, loop starting from 1
+		for (j = 1; j < lines; j++) {
+			tab_text = tab_text + "<tr>" + tab.rows[j].innerHTML + "</tr>";
+		}
+
+		tab_text = tab_text + "</table>";
+		tab_text = tab_text.replace(/<A[^>]*>|<\/A>/g, "");             //remove if u want links in your table
+		tab_text = tab_text.replace(/<img[^>]*>/gi, "");                 // remove if u want images in your table
+		tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, "");    // reomves input params
+		// console.log(tab_text); // aktivate so see the result (press F12 in browser)
+
+		var ua = window.navigator.userAgent;
+		var msie = ua.indexOf("MSIE ");
+
+		// if Internet Explorer
+		if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+			txtArea1.document.open("txt/html", "replace");
+			txtArea1.document.write(tab_text);
+			txtArea1.document.close();
+			txtArea1.focus();
+			sa = txtArea1.document.execCommand("SaveAs", true, "DataTableExport.xls");
+		}
+		else // other browser not tested on IE 11
+			sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+
+		return (sa);
+	}   *@
+
+
+	function ClearType() {
+		$('#Type')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">----All----</option>')
+			.val('')
+			;
+	}
+	function ClearEmp() {
+		$('#Employee_Code')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">----All----</option>')
+			.val('')
+			;
+	}
+	function ClearSiteCode() {
+		$('#Site_Code')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">----All----</option>')
+			.val('')
+			;
+	}
+        </script>
+

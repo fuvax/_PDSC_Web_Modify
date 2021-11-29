@@ -1,0 +1,237 @@
+﻿
+@{
+    ViewBag.Title = "Delivery_View";
+}
+
+@if ((ViewBag.GetRoles == "Role_IN11") && (ViewBag.GetMNRoles == "PDSCPAGE004"))
+{
+    <div class="card">
+        <div class="card-header">
+
+        </div>
+        <div class="card-body">
+
+
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-2">
+
+                    </div>
+                    <div class="col-sm-7">
+
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="Div_0" class="container" style=" width:200px; height:140px;" hidden>
+                                        <img id="img_0" name="img_0" src="" class="image img_size" style="border: 1px solid black; margin: 0px;" />
+                                        <input type="text" id="img_file_0" name="img_file_0" hidden />
+                                        <div class="middle">
+                                            <a onclick="ModalPreviewPhoto(0);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="Div_1" class="container" style=" width:200px; height:140px;" hidden>
+                                        <img id="img_1" name="img_1" src="" class="image img_size" style="border: 1px solid black; margin: 0px;">
+                                        <input type="text" id="img_file_1" name="img_file_1" hidden />
+                                        <div class="middle">
+                                            <a onclick="ModalPreviewPhoto(1);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="Div_2" class="container" style=" width:200px; height:140px;" hidden>
+                                        <img id="img_2" name="img_2" src="" class="image img_size" style="border: 1px solid black; margin: 0px;">
+                                        <input type="text" id="img_file_2" name="img_file_2" hidden />
+                                        <div class="middle">
+                                            <a onclick="ModalPreviewPhoto(2);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div id="Div_3" class="container" style=" width:200px; height:140px;" hidden>
+                                        <img id="img_3" name="img_3" src="" class="image img_size" style="border: 1px solid black; margin: 0px;">
+                                        <input type="text" id="img_file_3" name="img_file_3" hidden />
+                                        <div class="middle">
+                                            <a onclick="ModalPreviewPhoto(3);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="Div_4" class="container" style=" width:200px; height:140px;" hidden>
+                                        <img id="img_4" name="img_4" src="" class="image img_size" style="border: 1px solid black; margin: 0px;">
+                                        <input type="text" id="img_file_4" name="img_file_4" hidden />
+                                        <div class="middle">
+                                            <a onclick="ModalPreviewPhoto(4);" class="btn-remove mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="col-sm-3">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+    <a href="@Url.Action("Delivery_Transaction", "IN_Progreass_View")" class="float pointer" style="color:white;">
+        <i class="fas fa-arrow-left B-icon"></i>
+    </a>
+
+
+<script src="~/ThridParty/Theam/ArchitectUI-Pro/assets/core/jquery.min.js" type="text/javascript"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/moment.js/moment.min.js"></script>
+<script>
+
+
+	$(document).ready(() =>
+	{
+        On_Loading();
+		GetImgData();
+
+	});
+
+	function ModalPreviewPhoto(id) {
+		var ResoreUrl;
+		var url = "";
+		if (url == null || url == "" || url == "null") {
+			ResoreUrl = "/Resoure/Picture/_NoImg.png";
+		}
+		else {
+			ResoreUrl = url;
+		}
+
+		switch (id) {
+			case 0: ResoreUrl = $('#img_0').attr('src');; break;
+			case 1: ResoreUrl = $('#img_1').attr('src');; break;
+			case 2: ResoreUrl = $('#img_2').attr('src');; break;
+			case 3: ResoreUrl = $('#img_3').attr('src');; break;
+			case 4: ResoreUrl = $('#img_4').attr('src');; break;
+		}
+
+
+		$('#PreviewImg').attr('src', ResoreUrl);
+		$('#ViewPicture').modal('show');
+
+	}
+	function Preview(input) // add
+	{
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function (e) {
+				if ($('#img_0').attr('src') == "") {
+					$('#img_0').attr('src', e.target.result);
+					$('#Div_0').removeAttr('hidden');
+
+
+					$('#img_file_0').val(e.target.result);
+				}
+				else if ($('#img_1').attr('src') == "") {
+					$('#img_1').attr('src', e.target.result);
+					$('#Div_1').removeAttr('hidden');
+
+					$('#img_file_1').val(e.target.result);
+				}
+				else if ($('#img_2').attr('src') == "") {
+					$('#img_2').attr('src', e.target.result);
+					$('#Div_2').removeAttr('hidden');
+
+					$('#img_file_2').val(e.target.result);
+				}
+				else if ($('#img_3').attr('src') == "") {
+					$('#img_3').attr('src', e.target.result);
+					$('#Div_3').removeAttr('hidden');
+
+					$('#img_file_3').val(e.target.result);
+				}
+				else if ($('#img_4').attr('src') == "") {
+					$('#img_4').attr('src', e.target.result);
+					$('#Div_4').removeAttr('hidden');
+
+					$('#img_file_4').val(e.target.result);
+				}
+
+			}
+
+			reader.readAsDataURL(input.files[0]); // convert to base64 string
+		}
+		$("#uploadfile").val("");
+	}
+
+	function CloseModal()
+	{
+		$('#ViewPicture').modal('hide');
+	}
+
+	function GetImgData()
+	{
+
+		var TT_Code = '@Session["TT_Code"]';
+
+
+		$.ajax({
+			type: "POST",
+			url: "/IN_Progreass_View/Edit_GetImg",
+			data: JSON.stringify({ 'TransectionCode': TT_Code }),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response)
+			{
+				if ((response != null && response != ""))
+				{
+
+					for (var i = 0; i < response.length;i++)
+					{
+						var img = "img_" + i;
+						var img_file = "img_file_" + i;
+
+
+						$('#Div_' + i).removeAttr('hidden');
+
+						document.getElementById(img).src = response[i].ImgT_FileData;
+
+
+					}
+
+				}
+                Off_Loading();
+			},
+			failure: function (response) {
+				alert("failure" + response.responseText);
+                Off_Loading();
+			},
+			error: function (response) {
+				alert("error" + response.responseText);
+                Off_Loading();
+			}
+		});
+	}
+
+
+</script>
+

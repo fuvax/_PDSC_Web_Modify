@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "datatables.net-bs4@1.10.22",
+      "destination": "lib/datatables.net-bs4/"
+    },
+    {
+      "library": "datatable@2.0.1",
+      "destination": "lib/datatable/"
+    },
+    {
+      "library": "bootstrap-table@1.18.0",
+      "destination": "lib/bootstrap-table/"
+    },
+    {
+      "library": "datatables.net-fixedcolumns@3.3.2",
+      "destination": "lib/datatables.net-fixedcolumns/"
+    },
+    {
+      "library": "sweetalert@2.1.2",
+      "destination": "lib/sweetalert/"
+    },
+    {
+      "library": "limonte-sweetalert2@10.12.5",
+      "destination": "lib/limonte-sweetalert2/"
+    },
+    {
+      "library": "datatables.net-buttons@1.6.5",
+      "destination": "lib/datatables.net-buttons/"
+    },
+    {
+      "library": "datatables.net-buttons-bs4@1.6.5",
+      "destination": "lib/datatables.net-buttons-bs4/"
+    },
+    {
+      "library": "jszip-utils@0.1.0",
+      "destination": "lib/jszip-utils/"
+    },
+    {
+      "library": "jszip@3.5.0",
+      "destination": "lib/jszip/"
+    },
+    {
+      "library": "Chart.js@2.9.4",
+      "destination": "lib/Chart.js/"
+    },
+    {
+      "library": "d3@6.5.0",
+      "destination": "lib/d3/"
+    },
+    {
+      "library": "datatables.net-fixedcolumns-bs4@3.3.2",
+      "destination": "lib/datatables.net-fixedcolumns-bs4/"
+    }
+  ]
+}

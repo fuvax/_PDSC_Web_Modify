@@ -1,0 +1,1404 @@
+﻿
+@{
+    ViewBag.Title = "Main-ProjectUpdateStatus";
+}
+
+
+@if (ViewBag.GetMNRoles == "PDSCPAGE003")
+{
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h2 style="color:black;">Project Update Status</h2>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Site Code : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <label class="text-font-12">@Session["SiteCode"]</label>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Site Name : </label>
+                    </div>
+                    <div class="col-sm-3 text-left">
+                        <label class="text-font-12">@Session["SiteName"]</label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-sm-3 text-right">
+                        <label class="text-font-13">Province : </label>
+                    </div>
+                    <div class="col-sm-3 ">
+                        <label class="text-font-12">@Session["Address"]</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-hover-shadow-2x card-border card" style="margin-top:35px;">
+        <div class="card-header-tab card-header">
+            <ul class="nav">
+                @if ((ViewBag.GetRoles == "Role_US11" || ViewBag.GetRoles == "Role_US12") && (ViewBag.GetMNRoles == "PDSCPAGE003"))
+                {
+                    <li class="nav-item"><a id="tab_0" data-toggle="tab" href="#tab-eg5-0" class="nav-link">Plan</a></li>
+                    <li class="nav-item"><a id="tab_1" data-toggle="tab" href="#tab-eg5-1" class="nav-link">Update Info.</a></li>
+                }
+                else
+                {
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-1" class="active nav-link">Update Info.</a></li>
+                }
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                @if ((ViewBag.GetRoles == "Role_US11" || ViewBag.GetRoles == "Role_US12") && (ViewBag.GetMNRoles == "PDSCPAGE003"))
+                {
+                    <div class="tab-pane" id="tab-eg5-0" role="tabpanel">
+
+                        <div class="col-md-12">
+                            <table id="List_ViewPlan" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">No.</th>
+                                        <th rowspan="2">So No.</th>
+                                        <th rowspan="2">MFG No.</th>
+                                        <th rowspan="2">EQ No.</th>
+                                        <th rowspan="2">Spec Desc.</th>
+                                        <th rowspan="2">Type</th>
+                                        <th rowspan="2">Work Approve Limit</th>
+                                        <th colspan="2"><center>Prepar</center></th>
+                                        <th colspan="4"><center>Delivery</center></th>
+                                        <th colspan="4"><center>Install</center></th>
+                                        <th colspan="4"><center>Power Supply</center></th>
+                                        <th colspan="2"><center>Testing</center></th>
+                                        <th colspan="4"><center>QC</center></th>
+                                        <th rowspan="2"><center>Contract H/O Date</center></th>
+                                        <th rowspan="2"><center>Revise H/O Date</center></th>
+                                        <th rowspan="2">Edit</th>
+                                        <th rowspan="2">Save</th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllPreparStart();" id="CBPrepareStart" value="">
+                                            Plan Start Date
+                                        </th>
+                                        <th>clear</th>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllDeliveryStart();" id="CBDeliveryStart" value="">
+                                            Plan Start Date
+                                        </th>
+                                        <th>clear</th>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllDeliveryFinish();" id="CBDeliveryFinish" value="">
+                                            Plan Finish Date
+                                        </th>
+                                        <th>clear</th>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllInstallStart();" id="CBInstallStart" value="">
+                                            Plan Start Date
+                                        </th>
+                                        <th>clear</th>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllInstallFinish();" id="CBInstallFinish" value="">
+                                            Plan Finish Date
+                                        </th>
+                                        <th>clear</th>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllPoweSupplyStart();" id="CBPoweSupplyStart" value="">
+                                            Plan Start Date
+                                        </th>
+                                        <th>clear</th>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllPoweSupplyFinish();" id="CBPoweSupplyFinish" value="">
+                                            Plan Finish Date
+                                        </th>
+                                        <th>clear</th>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllTestingStart();" id="CBTestingStart" value="">
+                                            Plan Start Date
+                                        </th>
+                                        <th>clear</th>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllQCStart();" id="CBQCStart" value="">
+                                            Plan Start Date
+                                        </th>
+                                        <th>clear</th>
+                                        <th>
+                                            <input disabled type="checkbox" onclick="AllQCFinish();" id="CBQCFinish" value="">
+                                            Plan Finish Date
+                                        </th>
+                                        <th>clear</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-1" role="tabpanel">
+                        <div class="col-md-12">
+
+                            <table id="List_UpdateInfo" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">No.</th>
+                                        <th rowspan="2">So No.</th>
+                                        <th rowspan="2">MFG No.</th>
+                                        <th rowspan="2">Spec Desc.</th>
+                                        <th rowspan="2">EQ No.</th>
+                                        <th rowspan="2">Type</th>
+                                        <th rowspan="2">Work Approve Limit</th>
+                                        <th colspan="4"><center>Project Status</center></th>
+                                        <th colspan="3"><center>QC Final Defect</center></th>
+
+                                    </tr>
+                                    <tr>
+                                        <th>Progress(%)</th>
+                                        <th>Remain(Day)</th>
+                                        <th>Status</th>
+                                        <th>Highest Stage</th>
+                                        <th>Edit</th>
+										<th>QC_Final Defect</th>
+                                        <th>QC Result</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="tab-pane active" id="tab-eg5-1" role="tabpanel">
+                        <div class="col-md-12">
+
+                            <table id="List_UpdateInfo" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">No.</th>
+                                        <th rowspan="2">So No.</th>
+                                        <th rowspan="2">MFG No.</th>
+                                        <th rowspan="2">Spec Desc.</th>
+                                        <th rowspan="2">EQ No.</th>
+                                        <th rowspan="2">Type</th>
+                                        <th rowspan="2">Work Approve Limit</th>
+                                        <th colspan="4"><center>Project Status</center></th>
+                                        <th colspan="3"><center>QC Final Defect</center></th>
+
+                                    </tr>
+                                    <tr>
+                                        <th>Progress(%)</th>
+                                        <th>Remain(Day)</th>
+                                        <th>Status</th>
+                                        <th>Highest Stage</th>
+                                        <th>Edit</th>
+										<th>QC_Final Defect</th>
+                                        <th>QC Result</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h2 style="color:black;">Project Update Status</h2>
+        </div>
+        <div class="card-body">
+            <label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+        </div>
+    </div>
+}
+<a href="@Url.Action("Index", "ProjectUpdateStatus")" class="float pointer" style="color:white;">
+    <i class="fas fa-arrow-left B-icon"></i>
+</a>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/lib/moment.js/moment.min.js"></script>
+
+@*<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>*@
+<script type="text/javascript">
+
+    $(document).ready(function ()
+	{
+
+		On_Loading();
+		//$('#liUpdateStatus').attr('class', 'mm-active');
+		SetTab();
+        loadTableViewPlan();
+        loadTableUpdateInfo();
+	});
+
+    
+
+	$('a[data-toggle="tab"]').click(function ()
+	{
+		$('#List_ViewPlan').DataTable().destroy();
+		loadTableViewPlan();
+
+		$('#List_UpdateInfo').DataTable().destroy();
+		loadTableUpdateInfo();
+
+
+	});
+
+	$('#uncheckbox_field').click(function () {
+        UnCheckboxActive();
+	});
+
+	function SetTab()
+	{
+		if (('@ViewBag.GetRoles' == "Role_US11" || '@ViewBag.GetRoles' == "Role_US12") && ('@ViewBag.GetMNRoles' == "PDSCPAGE003"))
+		{
+			var get_tab = '@Session["SelectTab"]';
+			//console.log("select tab: " + get_tab);
+			if (get_tab == "Plan" || get_tab == "") {
+				if ($("#tab_1").hasClass('active')) {
+					$("#tab_1").removeClass('active');
+					$("#tab-eg5-1").removeClass('active');
+				}
+				if ($("#tab_0").hasClass('active')) {
+					return;
+				}
+				else {
+					$("#tab_0").addClass('active');
+					$("#tab-eg5-0").addClass('active');
+				}
+			}
+
+			else if (get_tab == "UpdateInfo"){
+				if ($("#tab_0").hasClass('active')) {
+					$("#tab_0").removeClass('active');
+					$("#tab-eg5-0").removeClass('active');
+				}
+				if ($("#tab_1").hasClass('active')) {
+					return;
+				}
+				else {
+					$("#tab_1").addClass('active');
+					$("#tab-eg5-1").addClass('active');
+				}
+			}
+		}
+	}
+
+	function ToPrepare(mfg,stage)
+	{
+		var roles_go_submit = '@Session["GoSubmit"]';
+        console.log("Gostage: " + roles_go_submit);
+
+        if (stage == "" && roles_go_submit != "1")
+		{
+            swal("", "Please  you set WorkApproval limit", "error");
+		}
+		else
+		{
+			$.ajax({
+				type: "POST",
+				url: "/ProjectUpdateStatus/ToPrepare",
+				data: { MFG_No: mfg, Stage: stage },
+				dataType: "json",
+				success: function (response) {
+
+					if (response.result == 'Redirect') {
+						window.location = response.url;
+					}
+				},
+				failure: function (response) {
+
+					alert("failure" + response.responseText);
+				},
+				error: function (response) {
+
+					alert("error" + response.responseText);
+				}
+			});
+		}
+
+
+	}
+
+	function ToDefect(mfg)
+	{
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/ToDefect",
+			data: { MFG_No: mfg },
+			dataType: "json",
+			success: function (response) {
+
+				if (response.result == 'Redirect') {
+					window.location = response.url;
+				}
+			},
+			failure: function (response) {
+
+				alert("failure" + response.responseText);
+			},
+			error: function (response) {
+
+				alert("error" + response.responseText);
+			}
+		});
+	}
+
+	function EditRow(mfg)
+	{
+		//open disable
+		//enable Checkbox
+		$('#CBPrepareStart').prop('disabled', false);
+        $('#CBDeliveryStart').prop('disabled', false);
+        $('#CBDeliveryFinish').prop('disabled', false);
+        $('#CBInstallStart').prop('disabled', false);
+        $('#CBInstallFinish').prop('disabled', false);
+        $('#CBPoweSupplyStart').prop('disabled', false);
+        $('#CBPoweSupplyFinish').prop('disabled', false);
+        $('#CBTestingStart').prop('disabled', false);
+        $('#CBQCStart').prop('disabled', false);
+        $('#CBQCFinish').prop('disabled', false);
+
+		//enable input by row
+		$('#PrepareStart_' + mfg).prop('disabled', false);
+        var PrepareStart_date = "#PrepareStart_" + mfg;
+        changeFormat_date(PrepareStart_date);
+
+		$('#DeliveryStart_' + mfg).prop('disabled', false);
+        var DeliveryStart_date = "#DeliveryStart_" + mfg;
+        changeFormat_date(DeliveryStart_date);
+
+		$('#DeliveryFinish_' + mfg).prop('disabled', false);
+        var DeliveryFinish_date = "#DeliveryFinish_" + mfg;
+        changeFormat_date(DeliveryFinish_date);
+
+		$('#InstallStart_' + mfg).prop('disabled', false);
+        var InstallStart_date = "#InstallStart_" + mfg;
+        changeFormat_date(InstallStart_date);
+
+		$('#InstallFinish_' + mfg).prop('disabled', false);
+        var InstallFinish_date = "#InstallFinish_" + mfg;
+        changeFormat_date(InstallFinish_date);
+
+		$('#PoweSupplyStart_' + mfg).prop('disabled', false);
+        var PoweSupplyStart_date = "#PoweSupplyStart_" + mfg;
+        changeFormat_date(PoweSupplyStart_date);
+
+		$('#PoweSupplyFinish_' + mfg).prop('disabled', false);
+        var PoweSupplyFinish_date = "#PoweSupplyFinish_" + mfg;
+        changeFormat_date(PoweSupplyFinish_date);
+
+		$('#TestingStart_' + mfg).prop('disabled', false);
+        var TestingStart_date = "#TestingStart_" + mfg;
+        changeFormat_date(TestingStart_date);
+
+		$('#QCStart_' + mfg).prop('disabled', false);
+        var QCStart_date = "#QCStart_" + mfg;
+        changeFormat_date(QCStart_date);
+
+		$('#QCFinish_' + mfg).prop('disabled', false);
+        var QCFinish_date = "#QCFinish_" + mfg;
+        changeFormat_date(QCFinish_date);
+
+	}
+	function SaveRow(mfg)
+	{
+		//prepare Data
+
+		var prepareStart = $('#PrepareStart_' + mfg).val();
+		var DeliveryStart = $('#DeliveryStart_' + mfg).val();
+		var DeliveryFinish = $('#DeliveryFinish_' + mfg).val();
+		var InstallStart = $('#InstallStart_' + mfg).val();
+		var InstallFinish = $('#InstallFinish_' + mfg).val();
+		var PoweSupplyStart = $('#PoweSupplyStart_' + mfg).val();
+		var PoweSupplyFinish = $('#PoweSupplyFinish_' + mfg).val();
+		var TestingStart = $('#TestingStart_' + mfg).val();
+		var QCStart = $('#QCStart_' + mfg).val();
+		var QCFinish = $('#QCFinish_' + mfg).val();
+
+		var list = [];
+
+		var text = "Please Check Finish Date not over Start Date in ";
+
+		var DeliveryStaus = $('#DeliveryText_' + mfg).val();
+		var InstallStaus = $('#InstallText_' + mfg).val();
+		var PowerSupplyStaus = $('#PoweSupplyText_' + mfg).val();
+		var QCStaus = $('#QCText_' + mfg).val();
+
+		if (DeliveryStaus == "false")
+		{
+			text = text + "Delivery ";
+		}
+
+		if (InstallStaus == "false")
+		{
+			text = text + "Install ";
+		}
+
+		if (PowerSupplyStaus == "false")
+		{
+			text = text + "PowerSupply ";
+		}
+
+		if (QCStaus == "false")
+		{
+			text = text + "QC ";
+		}
+
+		
+		if (DeliveryStaus == "false" || InstallStaus == "false" || PowerSupplyStaus == "false" || QCStaus == "false")
+		{
+			text
+			//swal("Cancelled", text, "error");
+            swal("", text, "error");
+		}
+		else
+		{
+
+			list.push(prepareStart);
+			list.push(DeliveryStart);
+			list.push(DeliveryFinish);
+			list.push(InstallStart);
+			list.push(InstallFinish);
+			list.push(PoweSupplyStart);
+			list.push(PoweSupplyFinish);
+			list.push(TestingStart);
+			list.push(QCStart);
+			list.push(QCFinish);
+
+			console.log("List :" + list);
+
+
+			$.ajax({
+				type: "POST",
+				url: "/ProjectUpdateStatus/SaveByRow",
+				data: { List: list, MFG: mfg },
+				dataType: "json",
+				success: function (response) {
+					if (response.code === 1) {
+						window.location = '/Login/Logout';
+					}
+					else {
+						if (response.result == 'Redirect') {
+							window.location = response.url;
+						}
+					}
+				},
+				failure: function (response) {
+				},
+				error: function (response) {
+				}
+			});
+		}
+		
+
+	}
+	function SaveAllByModal()
+	{
+
+
+		var date = $('#Maindate').val();
+		var fieldname = CheckboxActive();
+
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/SaveByFied",
+			data: { FieldName: fieldname , Date : date },
+			dataType: "json",
+			success: function (response) {
+				if (response.code === 1) {
+					window.location = '/Login/Logout';
+				}
+				else {
+					if (response.result == 'Redirect') {
+						window.location = response.url;
+					}
+				}
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+	function CheckboxActive()
+	{
+		if ($('#CBPrepareStart').prop("checked"))
+		{
+            return "P_Prepare_Start_Date";
+		}
+		else if ($('#CBDeliveryStart').prop("checked"))
+		{
+			return "P_Delivery_Start_Date";
+		}
+		else if ($('#CBDeliveryFinish').prop("checked"))
+		{
+			return "P_Delivery_Finish_Date";
+		}
+		else if ($('#CBInstallStart').prop("checked"))
+		{
+			return "P_Install_Start_Date";
+		}
+		else if ($('#CBInstallFinish').prop("checked"))
+		{
+			return "P_Install_Finish_Date";
+		}
+		else if ($('#CBPoweSupplyStart').prop("checked"))
+		{
+			return "P_Power_Supply_Start_Date";
+		}
+		else if ($('#CBPoweSupplyFinish').prop("checked"))
+		{
+			return "P_Power_Supply_Finish_Date";
+		}
+		else if ($('#CBTestingStart').prop("checked"))
+		{
+			return "P_Testing_Start_Date";
+		}
+		else if ($('#CBQCStart').prop("checked"))
+		{
+			return "P_QC_Start_Date";
+		}
+		else if ($('#CBQCFinish').prop("checked"))
+		{
+			return "P_QC_Finish_Date";
+		}
+	}
+
+    function UnCheckboxActive() {
+        if ($('#CBPrepareStart').prop("checked")) {
+            $('#CBPrepareStart').prop("checked", false);
+        }
+        else if ($('#CBDeliveryStart').prop("checked")) {
+            $('#CBDeliveryStart').prop("checked", false);
+        }
+        else if ($('#CBDeliveryFinish').prop("checked")) {
+            $('#CBDeliveryFinish').prop("checked", false);
+        }
+        else if ($('#CBInstallStart').prop("checked")) {
+            $('#CBInstallStart').prop("checked", false);
+        }
+        else if ($('#CBInstallFinish').prop("checked")) {
+            $('#CBInstallFinish').prop("checked", false);
+        }
+        else if ($('#CBPoweSupplyStart').prop("checked")) {
+            $('#CBPoweSupplyStart').prop("checked", false);
+        }
+        else if ($('#CBPoweSupplyFinish').prop("checked")) {
+            $('#CBPoweSupplyFinish').prop("checked", false);
+        }
+        else if ($('#CBTestingStart').prop("checked")) {
+            $('#CBTestingStart').prop("checked", false);
+        }
+        else if ($('#CBQCStart').prop("checked")) {
+            $('#CBQCStart').prop("checked", false);
+        }
+        else if ($('#CBQCFinish').prop("checked")) {
+            $('#CBQCFinish').prop("checked", false);
+        }
+	}
+
+	function AllPreparStart()
+	{
+		$('#header').text("Select Prepare Plan Start Date");
+		//open modal
+        if ($('#CBPrepareStart').prop("checked")) {
+            $('#modalDate').modal('show');
+        }
+
+		//modalDate
+	}
+	function AllDeliveryStart()
+	{
+		$('#header').text("Select Delivery Plan Start Date");
+		//open modal
+        if ($('#CBDeliveryStart').prop("checked", true)) {
+            $('#modalDate').modal('show');
+        }
+		//modalDate
+	}
+	function AllDeliveryFinish()
+	{
+		$('#header').text("Select Delivery Plan Finish Date");
+		//open modal
+        if ($('#CBDeliveryFinish').prop("checked", true)) {
+            $('#modalDate').modal('show');
+        }
+		//modalDate
+	}
+	function AllInstallStart()
+	{
+		$('#header').text("Select Install Plan Start Date");
+		//open modal
+        if ($('#CBInstallStart').prop("checked", true)) {
+            $('#modalDate').modal('show');
+        }
+		//modalDate
+	}
+	function AllInstallFinish()
+	{
+		$('#header').text("Select Install Plan Finish Date");
+		//open modal
+        if ($('#CBInstallFinish').prop("checked", true)) {
+            $('#modalDate').modal('show');
+        }
+		//modalDate
+	}
+	function AllPoweSupplyStart()
+	{
+		$('#header').text("Select PowerSupply Plan Start Date");
+		//open modal
+        if ($('#CBPoweSupplyStart').prop("checked", true)) {
+            $('#modalDate').modal('show');
+        }
+		//modalDate
+	}
+	function AllPoweSupplyFinish()
+	{
+		$('#header').text("Select PowerSupply Plan Finish Date");
+		//open modal
+        if ($('#CBPoweSupplyFinish').prop("checked", true)) {
+            $('#modalDate').modal('show');
+        }
+		//modalDate
+	}
+	function AllTestingStart()
+	{
+		$('#header').text("Select Testing Plan Start Date");
+		//open modal
+        if ($('#CBTestingStart').prop("checked", true)) {
+            $('#modalDate').modal('show');
+        }
+		//modalDate
+	}
+	function AllQCStart()
+	{
+		$('#header').text("Select QC Plan Start Date");
+		//open modal
+        if ($('#CBQCStart').prop("checked", true)) {
+            $('#modalDate').modal('show');
+        }
+		//modalDate
+	}
+	function AllQCFinish()
+	{
+		$('#header').text("Select QC Plan Finish Date");
+		//open modal
+        if ($('#CBQCFinish').prop("checked", true)) {
+            $('#modalDate').modal('show');
+        }
+		//modalDate
+	}
+
+
+
+	function loadTableViewPlan() {
+
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/LoadProjectTableViewPlan",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+				if (response.code === 1) {
+					window.location = '/Login/Logout';
+				}
+				else {
+					OnSuccess_ViewPlan(response);
+				}
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+	function OnSuccess_ViewPlan(response)
+	{
+
+		if ($.fn.dataTable.isDataTable('#List_ViewPlan'))
+		{
+			$('#List_ViewPlan').DataTable().destroy();
+			Render_List_ViewPlan(response);
+		}
+		else {
+			Render_List_ViewPlan(response);
+		}
+		Off_Loading();
+	}
+
+	function Render_List_ViewPlan(response)
+	{
+
+		var table = $("#List_ViewPlan").DataTable(
+			{
+
+				fixedColumns: {
+					//leftColumns: 5,
+					rightColumns: 2
+				},
+				scrollX: true,
+				searching: true,
+				info: true,
+				paging: true,
+				data: response,
+				columns: [
+					{
+					 'data': 'id',
+					 render: function (data, type, row, meta)
+					{
+						return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Sale_Order' },
+					{ 'data': 'MFG' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{ 'data': 'Model_Type' },
+					{ 'data': 'WorkApproveLimit' },
+					{
+
+						data: null,
+						render: function (data,type,row)
+						{
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.P_Prepare_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input  onkeydown="return false" disabled  id="PrepareStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />';
+							}
+							else {
+								return '<input  onkeydown="return false" disabled  id="PrepareStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_Prepare_Start_Date).format("DD-MMM-YYYY") + '" />';
+							}
+							//return moment(data.P_Prepare_Start_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data,type,row)
+						{
+							return `<button onclick="clearDatetime('PrepareStart_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.P_Delivery_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input onchange="checkDateLess(this);"  onkeydown="return false" disabled  id="DeliveryStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />';
+							}
+							else {
+								return '<input onchange="checkDateLess(this);" onkeydown="return false" disabled  id="DeliveryStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_Delivery_Start_Date).format("DD-MMM-YYYY") + '" />';
+							}
+							//return moment(data.P_Delivery_Start_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="clearDatetime('DeliveryStart_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.P_Delivery_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input  onchange="checkDateOver(this);" onkeydown="return false" disabled  id="DeliveryFinish_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />' +
+									   '<input id="DeliveryText_' + data.MFG+'" type="text" hidden  />';
+							}
+							else {
+								return '<input onchange="checkDateOver(this);" onkeydown="return false" disabled  id="DeliveryFinish_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_Delivery_Finish_Date).format("DD-MMM-YYYY") + '" />' +
+									'<input id="DeliveryText_' + data.MFG + '" type="text"  hidden />';
+							}
+							//return moment(data.P_Delivery_Finish_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="clearDatetime('DeliveryFinish_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+									var onfocus = "onfocus=\"(this.type = 'date')\"";
+									var onblur = "onblur=\"(this.type = 'text')\"";
+									if (moment(data.P_Install_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+										return '<input  onchange="checkDateLess(this);" onkeydown="return false" disabled  id="InstallStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />';
+									}
+									else {
+										return '<input onchange="checkDateLess(this);"  onkeydown="return false" disabled  id="InstallStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_Install_Start_Date).format("DD-MMM-YYYY") + '" />';
+									}
+							//return moment(data.P_Install_Start_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="clearDatetime('InstallStart_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.P_Install_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input  onchange="checkDateOver(this);" onkeydown="return false" disabled  id="InstallFinish_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />' +
+									'<input id="InstallText_' + data.MFG + '" type="text" hidden  />';
+							}
+							else {
+								return '<input onchange="checkDateOver(this);" onkeydown="return false" disabled  id="InstallFinish_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_Install_Finish_Date).format("DD-MMM-YYYY") + '" />' +
+									'<input id="InstallText_' + data.MFG + '" type="text" hidden  />';
+							}
+							//return moment(data.P_Install_Finish_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="clearDatetime('InstallFinish_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.P_Power_Supply_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input onchange="checkDateLess(this);" onkeydown="return false" disabled  id="PoweSupplyStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />';
+							}
+							else {
+								return '<input onchange="checkDateLess(this);" onkeydown="return false" disabled  id="PoweSupplyStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_Power_Supply_Start_Date).format("DD-MMM-YYYY") + '" />';
+							}
+							//return moment(data.P_Power_Supply_Start_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="clearDatetime('PoweSupplyStart_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.P_Power_Supply_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input onchange="checkDateOver(this);" onkeydown="return false" disabled  id="PoweSupplyFinish_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />' +
+									'<input id="PoweSupplyText_' + data.MFG + '" type="text" hidden  />';
+							}
+							else {
+								return '<input onchange="checkDateOver(this);"  onkeydown="return false" disabled  id="PoweSupplyFinish_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_Power_Supply_Finish_Date).format("DD-MMM-YYYY") + '" />' +
+									'<input id="PoweSupplyText_' + data.MFG + '" type="text" hidden  />';
+							}
+							//return moment(data.P_Power_Supply_Finish_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="clearDatetime('PoweSupplyFinish_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.P_Testing_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input  onkeydown="return false" disabled  id="TestingStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />';
+							}
+							else {
+								return '<input  onkeydown="return false" disabled  id="TestingStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_Testing_Start_Date).format("DD-MMM-YYYY") + '" />';
+							}
+							//return moment(data.P_Testing_Start_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="clearDatetime('TestingStart_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.P_QC_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input onchange="checkDateLess(this);"  onkeydown="return false" disabled  id="QCStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />';
+							}
+							else {
+								return '<input onchange="checkDateLess(this);" onkeydown="return false" disabled  id="QCStart_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_QC_Start_Date).format("DD-MMM-YYYY") + '" />';
+							}
+							//return moment(data.P_QC_Start_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="clearDatetime('QCStart_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					{
+
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+							if (moment(data.P_QC_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<input onchange="checkDateOver(this);" onkeydown="return false" disabled  id="QCFinish_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="" />' +
+									'<input id="QCText_' + data.MFG + '" type="text" hidden  />';
+							}
+							else
+							{
+								return '<input onchange="checkDateOver(this);" onkeydown="return false" disabled  id="QCFinish_' + data.MFG + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type="text" value="' + moment(data.P_QC_Finish_Date).format("DD-MMM-YYYY") + '" />' +
+									'<input id="QCText_' + data.MFG + '" type="text" hidden  />';
+							}
+							//return moment(data.P_QC_Finish_Date).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="clearDatetime('QCFinish_${data.MFG}');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">
+								<i class="fas fa-times"></i>
+								</button>`;
+						}
+					},
+					//
+					{
+
+						data: null,
+						render: function (data, type, row) {
+
+							@*return moment(data.Handover_Date).format("DD-MMM-YYYY HH:mm");*@
+							if (moment(data.Handover_Date).format("DD-MM-YYYY") == "01-01-9999")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else
+							{
+								return moment(data.Handover_Date).format("DD-MMM-YYYY");
+							}
+						}
+					},
+					{
+						data: null,
+						render: function (data,type,row)
+						{
+							//return moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY HH:mm");
+
+							if (moment(data.RHO_Revise_Handover).format("DD-MM-YYYY") == "01-01-9999")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else
+							{
+								return moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY");
+							}
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_US11") {
+                                return '<button onclick="EditRow(\'' + data.MFG + '\')"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>';
+							}
+							else if ('@ViewBag.GetRoles' == "Role_US12") {
+                                return '<button disabled onclick="EditRow(\'' + data.MFG + '\')"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-warning disable_btn">' +
+                                    '<i class="fas fa-pen"></i>' +
+                                    '</button>';
+							}
+							else {
+								return "";
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetRoles' == "Role_US11") {
+                                return '<button onclick="SaveRow(\'' + data.MFG + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">' +
+                                    '<i class="fas fa-save" ></i>' +
+                                    '</button >';
+							}
+							else if ('@ViewBag.GetRoles' == "Role_US12") {
+                                return '<button disabled onclick="SaveRow(\'' + data.MFG + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-success disable_btn">' +
+                                    '<i class="fas fa-save" ></i>' +
+                                    '</button >';
+							}
+							else {
+								return "";
+							}
+
+						}
+					}
+				]
+			});
+		Off_Loading();
+
+	}
+
+	function clearDatetime(id)
+	{
+		$('#'+id).val('');
+	}
+
+	function checkDateOver(e)
+	{
+
+
+		var arry = e.id.split('_');
+
+
+		if (arry[0] == "DeliveryFinish")
+		{
+
+			let startdate = $('#DeliveryStart_' + arry[1]).val();
+
+			if (startdate != "" && startdate != null) {
+				if ($("#" + e.id).val() < startdate)
+				{
+					swal("", "Finish Date can't less than Start Date !!!", "error");
+					$("#" + e.id).val('');
+					$('#DeliveryText_'+arry[1]).val('false');
+				}
+				else
+				{
+					$('#DeliveryText_' + arry[1]).val('true');
+				}
+			}
+			else
+			{
+				swal("", "Please enter your Start Date first", "error");
+				$('#DeliveryText_' + arry[1]).val('true');
+			}
+
+		}
+		else if (arry[0] == "InstallFinish")
+		{
+			let startdate = $('#InstallStart_' + arry[1]).val();
+
+			if (startdate != "" && startdate != null) {
+				if ($("#" + e.id).val() < startdate) {
+                    swal("", "Finish Date can't less than Start Date !!!", "error");
+					$("#" + e.id).val('');
+					$('#InstallText_' + arry[1]).val('false');
+				}
+				else {
+					$('#InstallText_' + arry[1]).val('true');
+				}
+			}
+			else {
+                swal("", "Please enter your Start Date first", "error");
+				$('#InstallText_' + arry[1]).val('true');
+			}
+		}
+		else if (arry[0] == "PoweSupplyFinish")
+		{
+			let startdate = $('#PoweSupplyStart_' + arry[1]).val();
+
+			if (startdate != "" && startdate != null) {
+				if ($("#" + e.id).val() < startdate) {
+                    swal("", "Finish Date can't less than Start Date !!!", "error");
+					$("#" + e.id).val('');
+					$('#PoweSupplyText_' + arry[1]).val('false');
+				}
+				else {
+					$('#PoweSupplyText_' + arry[1]).val('true');
+				}
+			}
+			else {
+                swal("", "Please enter your Start Date first", "error");
+				$('#PoweSupplyText_' + arry[1]).val('true');
+			}
+		}
+		else if (arry[0] == "QCFinish")
+		{
+			let startdate = $('#QCStart_' + arry[1]).val();
+
+			if (startdate != "" && startdate != null) {
+				if ($("#" + e.id).val() < startdate) {
+                    swal("", "Finish Date can't less than Start Date !!!", "error");
+					$("#" + e.id).val('');
+					$('#QCText_' + arry[1]).val('false');
+				}
+				else {
+					$('#QCText_' + arry[1]).val('true');
+				}
+			}
+			else {
+                swal("", "Please enter your Start Date first", "error");
+				$('#QCText_' + arry[1]).val('true');
+			}
+		}
+
+
+	}
+
+	function checkDateLess(e) {
+
+
+		var arry = e.id.split('_');
+
+
+		if (arry[0] == "DeliveryStart") {
+
+			let enddate = $('#DeliveryFinish_' + arry[1]).val();
+
+			if (enddate != "" && enddate != null) {
+				if ($("#" + e.id).val() > enddate) {
+                    swal("", "Start Date can't over Finish Date !!!", "error");
+					//$("#" + e.id).val('');
+					$('#DeliveryText_' + arry[1]).val('false');
+				}
+				else {
+					$('#DeliveryText_' + arry[1]).val('true');
+				}
+			}
+			else {
+				$('#DeliveryText_' + arry[1]).val('true');
+			}
+
+		}
+		else if (arry[0] == "InstallStart")
+		{
+			let enddate = $('#InstallFinish_' + arry[1]).val();
+
+			if (enddate != "" && enddate != null) {
+				if ($("#" + e.id).val() > enddate) {
+                    swal("", "Start Date can't over Finish Date !!!", "error");
+					//$("#" + e.id).val('');
+					$('#InstallText_' + arry[1]).val('false');
+				}
+				else {
+					$('#InstallText_' + arry[1]).val('true');
+				}
+			}
+			else {
+				$('#InstallText_' + arry[1]).val('true');
+			}
+		}
+		else if (arry[0] == "PoweSupplyStart")
+		{
+			let enddate = $('#PoweSupplyFinish_' + arry[1]).val();
+
+			if (enddate != "" && enddate != null) {
+				if ($("#" + e.id).val() > enddate) {
+                    swal("", "Start Date can't over Finish Date !!!", "error");
+					//$("#" + e.id).val('');
+					$('#PoweSupplyText_' + arry[1]).val('false');
+				}
+				else {
+					$('#PoweSupplyText_' + arry[1]).val('true');
+				}
+			}
+			else {
+				$('#PoweSupplyText_' + arry[1]).val('true');
+			}
+		}
+		else if (arry[0] == "QCStart")
+		{
+			let enddate = $('#QCFinish_' + arry[1]).val();
+
+			if (enddate != "" && enddate != null) {
+				if ($("#" + e.id).val() > enddate) {
+                    swal("", "Start Date can't over Finish Date !!!", "error");
+					//$("#" + e.id).val('');
+					$('#QCText_' + arry[1]).val('false');
+				}
+				else {
+					$('#QCText_' + arry[1]).val('true');
+				}
+			}
+			else {
+				$('#QCText_' + arry[1]).val('true');
+			}
+		}
+		
+
+
+	}
+
+
+	function loadTableUpdateInfo() {
+
+		$.ajax({
+			type: "POST",
+			url: "/ProjectUpdateStatus/LoadTableUpdateInfo",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+				if (response.code === 1) {
+					window.location = '/Login/Logout';
+				}
+				else {
+					OnSuccess_UpdateInfo(response);
+				}
+			},
+			failure: function (response) {
+			},
+			error: function (response) {
+			}
+		});
+	}
+
+
+
+	function OnSuccess_UpdateInfo(response)
+	{
+
+		//alert("1");
+		if ($.fn.dataTable.isDataTable('#List_UpdateInfo'))
+		{
+			//alert("2");
+			$('#List_UpdateInfo').DataTable().destroy();
+			Render_List_Info(response);
+		}
+		else
+		{
+			//alert("3");
+			Render_List_Info(response);
+		}
+
+		Off_Loading();
+
+	}
+
+	function Render_List_Info(response)
+	{
+		var table = $("#List_UpdateInfo").DataTable(
+			{
+				fixedColumns: {
+					leftColumns: 5,
+					rightColumns: 3
+				},
+				scrollX: true,
+				searching: true,
+				info: true,
+				paging: true,
+				data: response,
+				columns: [
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Sale_Order' },
+					{ 'data': 'MFG' },
+					{ 'data': 'Item_Description' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Model_Type' },
+					{ 'data': 'WorkApproveLimit' },
+					{
+						'data':'Percent_Progress'
+					},
+					{
+						'data': 'Remain_Day'
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<center><div class="block-' + data.Color_Status + '"></div></center>';
+						}
+					},
+					{
+						'data': 'Stage'
+					},
+
+
+					{
+						data: null,
+						render: function (data, type, row) {
+							return `<button onclick="ToPrepare('${data.MFG}','${data.WorkApproveLimit}');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">
+								<i class="fas fa-pen"></i>
+								</button>`;
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if ('@ViewBag.GetDefectRoles' == "Role_US31") {
+                                return '<button onclick="ToDefect(\'' + data.MFG + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-dark">' +
+                                    'QC Final Defect' +
+                                    '</button>';
+							}
+							else {
+                                return '<button disabled onclick="ToDefect(\'' + data.MFG + '\');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-outline-2x btn btn-outline-dark disable_btn">' +
+                                    'QC Final Defect' +
+                                    '</button>';
+							}
+
+
+						}
+					},
+					{
+						'data': 'QC_Result_Name'
+					}
+
+				]
+			});
+		Off_Loading();
+	}
+</script>
+

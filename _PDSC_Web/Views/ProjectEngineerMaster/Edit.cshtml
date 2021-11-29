@@ -1,0 +1,267 @@
+﻿
+@{
+	ViewBag.Title = "Edit_MasterEngineerPage";
+}
+
+    <div class="card-hover-shadow-2x card-border card">
+        <div class="card-header">
+            <h2>Edit Engineer Master</h2>
+        </div>
+
+        @if (ViewBag.GetRoles == "Role_MM11" && ViewBag.GetMNRoles == "PDSCPAGE001")
+        {
+
+            using (Html.BeginForm("EditEngineerMaster", "ProjectEngineerMaster", FormMethod.Post, new { id = "CreatePEForm" }))
+            {
+                <div class="card-body" style="margin-top:50px;">
+
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3 text-left">
+                                <label class="text-font-13">Type : </label>
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="text-font-11" style="font-weight:bold;color:red;">
+                                    @ViewBag.TypeName
+                                </label>
+                            </div>
+                            <div class="col-sm-3 ">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3 text-left">
+                                <label class="text-font-13">In Charge Person : </label>
+                            </div>
+                            <div class="col-sm-3">
+
+                                <input id="PE_Code" name="PE_Code" type="text" value="@ViewBag.PE_Code" hidden />
+
+                                <label id="PE_Name" name="PE_Name" class="text-font-11" style="font-weight:bold;color:black;">
+                                    @ViewBag.PE_Code-@ViewBag.PE_Name
+                                </label>
+
+                            </div>
+                            <div class="col-sm-3 ">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3">
+                                <label class="text-font-13">Leader : </label>
+                            </div>
+                            <div class="col-sm-3">
+                                <select id="Leader" name="Leader" class="form-control">
+                                    <option value="">--Selected--</option>
+                                    @foreach (var obj in ViewBag.listLeader)
+                                    {
+                                        if (obj.Employee_Code == ViewBag.Leder)
+                                        {
+                                            <option value="@obj.Employee_Code" selected>[@obj.Position_Group] @obj.Employee_Code-@obj.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@obj.Employee_Code">[@obj.Position_Group] @obj.Employee_Code-@obj.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label style="color:red;font-weight:bold;font-size:20px;">****</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label class="text-font-13">DM  : </label>
+                            </div>
+                            <div class="col-sm-3 ">
+                                <select id="DM" name="DM" class="form-control ">
+                                    <option value="">--Selected--</option>
+                                    @foreach (var obj in ViewBag.listDM)
+                                    {
+                                        if (obj.Employee_Code == ViewBag.DMCode)
+                                        {
+                                            <option value="@obj.Employee_Code" selected>[@obj.Position_Group] @obj.Employee_Code-@obj.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@obj.Employee_Code">[@obj.Position_Group] @obj.Employee_Code-@obj.Name</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label style="color:red;font-weight:bold;font-size:20px;">****</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label class="text-font-13">Phone : </label>
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input id="phone" name="phone" class="form-control" value="@ViewBag.Phone" disabled />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input id="phoneh" name="phoneh" class="form-control" value="@ViewBag.Phone" hidden />
+                            </div>
+                            <div class="col-sm-3 ">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row form-group">
+                            <div class="col-sm-3 ">
+
+                            </div>
+                            <div class="col-sm-3 ">
+                                <label class="text-font-13">E-Mail : </label>
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input id="mail" name="mail" class="form-control" value="@ViewBag.Email" disabled />
+                            </div>
+                            <div class="col-sm-3 ">
+                                <input id="mailh" name="mailh" class="form-control" value="@ViewBag.Email" hidden />
+                            </div>
+                            <div class="col-sm-3 ">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button id="SaveBtn" type="submit" hidden>save</button>
+                    </div>
+
+                </div>
+            }
+            <div class="col-md-12 text-center" style="margin-bottom:25px;">
+                <button onclick="Save();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+                    <i class="fas fa-save"></i>
+                    SAVE
+                </button>
+            </div>
+        }
+        else
+        {
+            <div class="card-body">
+                <label style="color:red; font-weight:bold; font-size: larger">Please contact staff for set roles</label>
+            </div>
+
+        }
+    </div>
+<a id="btn_back" onclick="Back_Button();" class="float pointer" style="color:white;">
+	<i class="fas fa-arrow-left B-icon"></i>
+</a>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script>
+
+	//onload
+
+
+	$(document).ready(function () {
+		On_Loading();
+		$('#liEngineer').attr('class', 'mm-active');
+
+		//$('#PE_Code').val('ViewBag.PE_Code');
+
+		$.fn.select2.defaults.set("theme", "bootstrap");
+
+
+		$('#DM').select2();
+		$('#Leader').select2();
+
+		setTimeout(function ()
+		{
+			Off_Loading();
+		}, 500);
+		
+	});
+
+    function Save()
+    {
+        
+
+        $('#phoneh').val($('#phone').val());
+        $('#mailh').val($('#mail').val());
+
+		var msg = "Please enter ";
+
+       
+
+        if (($('#Leader').val() == "" || $('#Leader').val() == null))
+        {
+			msg = msg + " Leader ";
+		}
+
+        if (($('#DM').val() == "" || $('#DM').val() == null))
+        {
+			msg = msg + " DM ";
+		}
+
+		
+
+		swal({
+			title: "",
+            text: "Are you sure? Do you want to save it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm) {
+				if (isConfirm) {
+					if (($('#Leader').val() != "" && $('#Leader').val() != null) &&
+						($('#DM').val() != "" && $('#DM').val() != null))
+					{
+						$('#SaveBtn').trigger('click');
+					}
+					else
+					{
+						swal("", msg, "error");
+					}
+
+				}
+				else {
+
+					swal("", "Cancelled", "error");
+				}
+			});
+
+	}
+
+
+
+
+
+</script>

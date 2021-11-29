@@ -1,0 +1,1101 @@
+﻿
+@{
+    ViewBag.Title = "Edit-ContactPerson";
+}
+
+@if ((ViewBag.GetRoles == "Role_HD17") && (ViewBag.GetMNRoles == "PDSCPAGE002"))
+{
+    <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;margin-bottom:25px;">
+        <div class="card-body">
+            @using (Html.BeginForm("EditPerson", "HD_ContactPerson", FormMethod.Post, new
+            {
+                enctype = "multipart/form-data"
+            }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <input type="text" id="ContactP_Code" name="ContactP_Code" hidden />
+                                <label class="text-font-13">Person Type : </label>
+
+                            </div>
+
+                            <div class="col-sm-4 text-left">
+                                <input type="text" id="PersonType" name="PersonType" value="@ViewBag.Type_Code" hidden />
+                                @if (ViewBag.Type_Code == "PType_001")
+                                {
+                                    <label class="text-font-13" style="color:red;font-weight:bold;font-size:20px;" id="PersonTypeText">HET</label>
+                                }
+                                else if (ViewBag.Type_Code == "PType_002")
+                                {
+                                    <label class="text-font-13" style="color:red;font-weight:bold;font-size:20px;" id="PersonTypeText">Customer</label>
+                                }
+                                else if (ViewBag.Type_Code == "PType_003")
+                                {
+                                    <label class="text-font-13" style="color:red;font-weight:bold;font-size:20px;" id="PersonTypeText">Supplier</label>
+                                }
+                                else if (ViewBag.Type_Code == "PType_004")
+                                {
+                                    <label class="text-font-13" style="color:red;font-weight:bold;font-size:20px;" id="PersonTypeText">Sub Con</label>
+                                }
+
+
+
+                            </div>
+                            <div class="col-sm-4 text-left">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label id="Employeelb" class="text-font-13">Employee : </label>
+
+                            </div>
+                            <div class="col-sm-4 text-left">
+                                <input id="Employee" name="Employee" type="text" hidden />
+                                <label id="EmployeeText" class="text-font-13" style="color:black;font-weight:bold;"></label>
+                            </div>
+							<div class="col-sm-2 text-left">
+								<label id="Employee-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label id="Companylb" class="text-font-13">Company : </label>
+
+                            </div>
+                            <div class="col-sm-4 text-left">
+                                <select id="Company" name="Company" class="form-control input-lg" required>
+                                    <option value="">--Selected--</option>
+
+                                </select>
+                            </div>
+							<div class="col-sm-2 text-left">
+								<label id="Company-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label id="ContectNamelb" class="text-font-13">Contact Name</label>
+
+                            </div>
+                            <div class="col-sm-4 text-left">
+                                <input id="ContectName" name="ContectName" type="text" class="form-control" maxlength="50" />
+                            </div>
+							<div class="col-sm-2 text-left">
+								<label id="ContectName-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label class="text-font-13">Position</label>
+
+                            </div>
+                            <div class="col-sm-4 text-left">
+                                <input id="Position" name="Position" type="text" class="form-control" maxlength="50" />
+
+                            </div>
+							<div class="col-sm-2 text-left">
+								<label id="Position-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label class="text-font-13">Phone</label>
+
+                            </div>
+                            <div id="Phonelb" class="col-sm-4 text-left">
+                                <input name="Phone" id="Phone" type="text" class="form-control" maxlength="10" />
+                            </div>
+							<div class="col-sm-4 text-left">
+								<input name="Phoneh" id="Phoneh" type="text" class="form-control" maxlength="10" hidden />
+								<label id="Phoneh-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+                            <div class="col-sm-4 text-left">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label class="text-font-13">E-mail</label>
+
+                            </div>
+                            <div id="Emaillb" class="col-sm-4 text-left">
+                                <input name="Email" id="Email" type="text" class="form-control" maxlength="50" />
+                            </div>
+							<div class="col-sm-4 text-left">
+								<input name="Emailh" id="Emailh" type="text" class="form-control" maxlength="50" hidden />
+								<label id="Emailh-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+                            <div class="col-sm-4 text-left">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label class="text-font-13">Line ID</label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<input name="LineID" id="LineID" type="text" class="form-control" maxlength="50" />
+							</div>
+							<div class="col-sm-2 text-left">
+								<label id="LineID-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+                                <label id="ContectGrouplb" class="text-font-13">Contact Group</label>
+
+                            </div>
+                            <div class="col-sm-4 text-left">
+                                <select id="ContectGroup" name="ContectGroup" class="form-control" required>
+                                    <option value="">--Seleted--</option>
+                                </select>
+                            </div>
+							<div class="col-sm-2 text-left">
+								<label id="ContectGroup-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+						<div class="form-group row">
+							<div class="col-sm-4 text-right">
+								<label id="notelb" class="text-font-13">Note</label>
+
+							</div>
+							<div class="col-sm-4 text-left">
+								<textarea class="form-control" id="note" name="note" maxlength="100"></textarea>
+							</div>
+							<div class="col-sm-2 text-left">
+								<label id="note-mark" style="color:red;font-weight:bold;font-size:20px;" hidden>****</label>
+							</div>
+						</div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <div class="col-sm-4 text-right">
+
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button id="SaveBtn" type="submit" hidden>save</button>
+                            </div>
+                            <div class="col-sm-4 text-left">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col-md-12 text-center" style="margin-bottom:25px;">
+                <button onclick="Save();" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">
+                    <i class="fas fa-save"></i>
+                    SAVE
+                </button>
+            </div>
+        </div>
+    </div>
+
+}
+<a href="@Url.Action("Index", "HD_ContactPerson")" class="float pointer" style="color:white;">
+    <i class="fas fa-arrow-left B-icon"></i>
+</a>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script>
+
+
+	//onload
+	$.fn.select2.defaults.set("theme", "bootstrap");
+
+
+	$('#Company').select2();
+	$('#ContectGroup').select2();
+
+	$(document).ready(function ()
+	{
+		//Show_backbtn();
+
+		// use HET Setup Becaue HET Is Startup Seleted
+		//_HET_Setup();
+		//Data_HET();
+		lockfild();
+
+	});
+
+	function Save()
+	{
+		var msg = "";
+
+        $('#Phoneh').val($('#Phone').val());
+		$('#Emailh').val($('#Email').val());
+
+		swal({
+			title: "",
+            text: "Are you sure? Do you want to save it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm) {
+				if (isConfirm) {
+
+					if ($('#PersonTypeText').text() == "HET")
+					{
+
+						msg = "Please Enter ";
+
+						
+
+						if ($('#Position').val() == "" || $('#Position').val() == null) {
+							msg = msg + " Position ";
+						}
+							////////////////////////////////////////////////////////////
+
+						if (($('#Position').val() != "" && $('#Position').val() != null)
+						) {
+							$('#SaveBtn').trigger('click');
+						}
+						else {
+							swal("", msg, "error");
+						}
+					}
+					else if ($('#PersonTypeText').text() == "Customer")
+					{
+						msg = "Please Enter ";
+
+						if ($('#Company').val() == "" || $('#Company').val() == null) {
+							msg = msg + " Company ";
+						}
+
+						if ($('#Position').val() == "" || $('#Position').val() == null) {
+							msg = msg + "  Position ";
+						}
+
+						if ($('#ContectName').val() == "" || $('#ContectName').val() == null) {
+							msg = msg + "   Contact Name ";
+						}
+							///////////////////////////////////////////////////////////////////
+						if (($('#Company').val() != "" && $('#Company').val() != null) &&
+							($('#Position').val() != "" && $('#Position').val() != null) &&
+							($('#ContectName').val() != "" && $('#ContectName').val() != null)
+						) {
+							$('#SaveBtn').trigger('click');
+						}
+						else {
+							swal("", msg, "error");
+						}
+					}
+					else if ($('#PersonTypeText').text() == "Supplier")
+					{
+						msg = "Please Enter ";
+
+						if ($('#Company').val() == "" || $('#Company').val() == null) {
+							msg = msg + " Company ";
+						}
+
+						if ($('#Position').val() == "" || $('#Position').val() == null) {
+							msg = msg + "  Position ";
+						}
+
+						if ($('#ContectName').val() == "" || $('#ContectName').val() == null) {
+							msg = msg + "   Contact Name ";
+						}
+
+						if ($('#ContectGroup').val() == "" || $('#ContectGroup').val() == null) {
+							msg = msg + "  Contact Group ";
+						}
+							///////////////////////////////////////////////////////////////////
+						if (($('#Company').val() != "" && $('#Company').val() != null) &&
+							($('#Position').val() != "" && $('#Position').val() != null) &&
+							($('#ContectName').val() != "" && $('#ContectName').val() != null) &&
+							($('#ContectGroup').val() != "" && $('#ContectGroup').val() != null)
+						) {
+							$('#SaveBtn').trigger('click');
+						}
+						else {
+                            swal("Sysrem Error", msg, "error");
+						}
+					}
+					else if ($('#PersonTypeText').text() == "Sub Con")
+					{
+						msg = "Please Enter ";
+
+						if ($('#Company').val() == "" || $('#Company').val() == null) {
+							msg = msg + " Company ";
+						}
+
+						if ($('#Position').val() == "" || $('#Position').val() == null) {
+							msg = msg + "  Position ";
+						}
+
+						if ($('#ContectName').val() == "" || $('#ContectName').val() == null) {
+							msg = msg + "   Contact Name ";
+						}
+
+						if ($('#ContectGroup').val() == "" || $('#ContectGroup').val() == null) {
+							msg = msg + "  Contact Group ";
+						}
+							///////////////////////////////////////////////////////////////////
+						if (($('#Company').val() != "" && $('#Company').val() != null) &&
+							($('#Position').val() != "" && $('#Position').val() != null) &&
+							($('#ContectName').val() != "" && $('#ContectName').val() != null) &&
+							($('#ContectGroup').val() != "" && $('#ContectGroup').val() != null)
+						) {
+							$('#SaveBtn').trigger('click');
+						}
+						else {
+                            swal("", msg, "error");
+						}
+					}
+
+				}
+				else {
+
+                    swal("", "Cancelled", "error");
+				}
+			});
+
+	}
+
+
+	function Data_HET()
+	{
+		var ContectP = '@ViewBag.ContectP';
+		On_Loading();
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/ListData_HET",
+			data: { ConP : ContectP},
+			dataType: "json",
+			success: function (response)
+			{
+				for (i = 0; i < response.length; i++)
+				{
+
+					ClearDDEmployee();
+					ClearDDContectGroup();
+					ItemDropDownEmployee(response[i].Employee_Code);
+
+
+					//	$('#Position').val(response[i].Position);
+					$('#ContactP_Code').val(response[i].ContactP_Code);
+
+					$('#Position').val(response[i].Position_Code);
+					$('#Phone').val(response[i].Phone);
+					$('#Email').val(response[i].Email);
+					$('#LineID').val(response[i].LineID);
+					$('#note').val(response[i].Note);
+				}
+				Off_Loading();
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+
+	}
+
+	function Data_Customer()
+	{
+		On_Loading();
+		var ContectP = '@ViewBag.ContectP';
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/ListData_Customer",
+			data: { ConP: ContectP },
+			dataType: "json",
+			success: function (response)
+			{
+				for (i = 0; i < response.length; i++)
+				{
+
+					ClearDDCompany();
+
+					ItemDropDownCompanyCustomer(response[i].Company_Code);
+
+
+
+					$('#ContactP_Code').val(response[i].ContactP_Code);
+
+					$('#Position').val(response[i].Position_Code);
+					$('#Phone').val(response[i].Phone);
+					$('#Email').val(response[i].Email);
+					$('#LineID').val(response[i].LineID);
+					$('#note').val(response[i].Note);
+					$('#EmployeeText').text("N/A");
+
+					$('#ContectName').val(response[i].Contact_Name);
+				}
+				Off_Loading();
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+
+	}
+
+	function Data_Supplier()
+	{
+		On_Loading();
+		var ContectP = '@ViewBag.ContectP';
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/ListData_Subplier",
+			data: { ConP: ContectP },
+			dataType: "json",
+			success: function (response)
+			{
+				for (i = 0; i < response.length; i++)
+				{
+
+					ClearDDCompany();
+					ClearDDContectGroup();
+					ItemDropDownCompanySupplier(response[i].Company_Code);
+					//ItemDropDownContactGroup(response[i].CG_Code);
+					ItemDropDownContactGroup_Suplier(response[i].CG_Code);
+
+					$('#ContactP_Code').val(response[i].ContactP_Code);
+
+					$('#Position').val(response[i].Position_Code);
+					$('#Phone').val(response[i].Phone);
+					$('#Email').val(response[i].Email);
+					$('#LineID').val(response[i].LineID);
+					$('#note').val(response[i].Note);
+					$('#EmployeeText').text("N/A");
+
+					$('#ContectName').val(response[i].Contact_Name);
+				}
+				Off_Loading();
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function Data_SubCon()
+	{
+		On_Loading();
+		var ContectP = '@ViewBag.ContectP';
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/ListData_SubCon",
+			data: { ConP: ContectP },
+			dataType: "json",
+			success: function (response)
+			{
+				for (i = 0; i < response.length; i++) {
+
+
+					ClearDDCompany();
+					ClearDDContectGroup();
+					ItemDropDownCompanySubCon(response[i].Company_Code);
+					ItemDropDownContactGroup_SubCon(response[i].CG_Code);
+
+					//ContectGroup
+					$('#ContactP_Code').val(response[i].ContactP_Code);
+
+					$('#Position').val(response[i].Position_Code);
+					$('#Phone').val(response[i].Phone);
+					$('#Email').val(response[i].Email);
+					$('#LineID').val(response[i].LineID);
+					$('#note').val(response[i].Note);
+					$('#EmployeeText').text("N/A");
+
+					$('#ContectName').val(response[i].Contact_Name);
+				}
+				Off_Loading();
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+
+
+
+	//---- Clear Dropdown function
+	function ClearDDCompany() {
+		$('#Company')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">--Selected--</option>')
+			.val('')
+			;
+	}
+
+	function ClearDDEmployee() {
+		$('#Employee')
+			.find('option')
+			.remove()
+			.end()
+			.append('<option value="">--Selected--</option>')
+			.val('')
+			;
+		}
+
+	function ClearDDContectGroup() {
+			$('#ContectGroup')
+				.find('option')
+				.remove()
+				.end()
+				.append('<option value="">--Selected--</option>')
+				.val('')
+				;
+		}
+	//----------------------------
+
+	// ------ Group Function SetUp-----
+	function _HET_Setup()
+	{
+		@*document.getElementById("Companylb").style.display = "none";
+		document.getElementById("Company").style.display = "none";*@
+
+		document.getElementById("Companylb").disabled = true;
+		document.getElementById("Company").disabled = true;
+
+		document.getElementById("ContectGrouplb").disabled = true;
+		document.getElementById("ContectGroup").disabled = true;
+
+		document.getElementById("ContectNamelb").disabled = true;
+		document.getElementById("ContectName").disabled = true;
+
+        document.getElementById("Phonelb").disabled = true;
+        document.getElementById("Phone").disabled = true;
+
+        document.getElementById("Emaillb").disabled = true;
+		document.getElementById("Email").disabled = true;
+
+		$('#Position-mark').attr("hidden", false);
+
+		ClearDDCompany();
+		ClearDDEmployee();
+		ClearDDContectGroup();
+
+		//list Emp
+		ItemDropDownEmployee();
+
+
+		// list contactGroup
+		//ItemDropDownContactGroup();
+	}
+
+
+	function _Customer_Setup() {
+		document.getElementById("ContectGrouplb").disabled = true;
+		document.getElementById("ContectGroup").disabled = true;
+
+		document.getElementById("Employeelb").disabled = true;
+		document.getElementById("Employee").disabled = true;
+
+		document.getElementById("ContectNamelb").disabled = false;
+		document.getElementById("ContectName").disabled = false;
+
+        document.getElementById("Phonelb").disabled = false;
+		document.getElementById("Phone").disabled = false;
+
+        document.getElementById("Emaillb").disabled = false;
+		document.getElementById("Email").disabled = false;
+
+		$('#Company-mark').attr("hidden", false);
+		$('#Position-mark').attr("hidden", false);
+		$('#ContectName-mark').attr("hidden", false);
+		//
+
+		ClearDDCompany();
+		ClearDDEmployee();
+		ClearDDContectGroup();
+
+		//get list employee
+		//ItemDropDownEmployee();
+		//get list company
+		ItemDropDownCompanyCustomer();
+	}
+
+	function _Supplier_Setup() {
+		document.getElementById("Employeelb").disabled = true;
+		document.getElementById("Employee").disabled = true;
+
+		document.getElementById("ContectNamelb").disabled = false;
+		document.getElementById("ContectName").disabled = false;
+
+        document.getElementById("Phonelb").disabled = false;
+        document.getElementById("Phone").disabled = false;
+
+        document.getElementById("Emaillb").disabled = false;
+		document.getElementById("Email").disabled = false;
+
+		$('#Company-mark').attr("hidden", false);
+		$('#Position-mark').attr("hidden", false);
+		$('#ContectName-mark').attr("hidden", false);
+		$('#ContectGroup-mark').attr("hidden", false);
+
+		ClearDDCompany();
+		ClearDDContectGroup();
+		//list company
+		ItemDropDownCompanySupplier();
+
+		//list conteactGroup
+		ItemDropDownContactGroup_Suplier();
+	}
+
+	function _Sub_Con_Setup() {
+		document.getElementById("Employeelb").disabled = true;
+		document.getElementById("Employee").disabled = true;
+
+		document.getElementById("ContectNamelb").disabled = false;
+		document.getElementById("ContectName").disabled = false;
+
+        document.getElementById("Phonelb").disabled = false;
+        document.getElementById("Phone").disabled = false;
+
+        document.getElementById("Emaillb").disabled = false;
+		document.getElementById("Email").disabled = false;
+
+		$('#Company-mark').attr("hidden", false);
+		$('#Position-mark').attr("hidden", false);
+		$('#ContectName-mark').attr("hidden", false);
+		$('#ContectGroup-mark').attr("hidden", false);
+
+		ClearDDCompany();
+		ClearDDContectGroup();
+
+		//list company
+		ItemDropDownCompanySubCon();
+
+		//list conteactGroup
+		ItemDropDownContactGroup_SubCon();
+	}
+	//-----------------------------------
+
+
+	//------ Normaly Function ----------------
+	function ShowAll() {
+		document.getElementById("Employeelb").disabled = false;
+		document.getElementById("Employee").disabled = false;
+
+		document.getElementById("ContectGrouplb").disabled = false;
+		document.getElementById("ContectGroup").disabled = false;
+
+		document.getElementById("Companylb").disabled = false;
+		document.getElementById("Company").disabled = false;
+
+
+	}
+	//--------------------------------------
+
+	//Item In DropDown
+
+	function ItemDropDownContactGroup_Suplier(Code)
+	{
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/list_ConteactGroup_Suplier",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "")
+				{
+					if (Code != null && Code != "") {
+
+						for (var i = 0; i < response.length; i++)
+						{
+
+							optionValue = response[i].CG_Code;
+							optionText = response[i].CG_Name;
+							$('#ContectGroup').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+							if (Code == optionValue) {
+
+								$("#ContectGroup option[value=\"" + optionValue + "\"]").prop("selected", "selected");
+							}
+						}
+
+
+					}
+					else
+					{
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].CG_Code;
+							optionText = response[i].CG_Name;
+							$('#ContectGroup').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+						}
+					}
+				}
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function ItemDropDownContactGroup_SubCon(Code) {
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/list_ConteactGroup_SubCon",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "") {
+					if (Code != null && Code != "") {
+
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].CG_Code;
+							optionText = response[i].CG_Name;
+							$('#ContectGroup').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+							if (Code == optionValue) {
+
+								$("#ContectGroup option[value=\"" + optionValue + "\"]").prop("selected", "selected");
+							}
+						}
+
+
+					}
+					else {
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].CG_Code;
+							optionText = response[i].CG_Name;
+							$('#ContectGroup').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+						}
+					}
+				}
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function ItemDropDownEmployee(Code)
+	{
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Select_EmployeeForEdit",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response)
+			{
+
+				if (response != null && response != "") {
+
+
+
+					for (var i = 0; i < response.length; i++) {
+
+						optionValue = response[i].Employee_Code;
+						optionText = response[i].Name;
+						optionType = response[i].Position_Group;;
+
+						if (optionType == "" || optionType == null)
+						{
+							optionType = "N/A";
+						}
+
+						if (Code == optionValue) {
+
+							$('#Employee').val(optionValue);
+							//$('#EmployeeText').text(" [ " + optionType + " ] " + optionValue + '-' + optionText);
+                            $('#EmployeeText').text(optionText);
+						}
+
+					}
+
+
+				}
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+
+	function ItemDropDownCompanyCustomer(Code)
+	{
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/list_Customer",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "")
+				{
+					if (Code != null && Code != "")
+					{
+						for (var i = 0; i < response.length; i++)
+						{
+
+							optionValue = response[i].Customer;
+							optionText = response[i].Name;
+
+
+								$('#Company').append(`<option  value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+							if (Code == optionValue)
+							{
+
+								$("#Company option[value=\"" + optionValue + "\"]").prop("selected", "selected");
+							}
+
+
+						}
+					}
+					else
+					{
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].Customer;
+							optionText = response[i].Name;
+							$('#Company').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+						}
+					}
+				}
+
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function ItemDropDownCompanySubCon(Code) {
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Select_Sub_Con",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "") {
+					if (Code != null && Code != "") {
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].Subcon_Code;
+							optionText = response[i].Subcon_Name;
+
+
+							$('#Company').append(`<option  value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+							if (Code == optionValue) {
+
+								$("#Company option[value=\"" + optionValue + "\"]").prop("selected", "selected");
+							}
+
+
+						}
+					}
+					else {
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].Subcon_Code;
+							optionText = response[i].Subcon_Name;
+							$('#Company').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+						}
+					}
+				}
+
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function ItemDropDownCompanySupplier(Code) {
+		$.ajax({
+			type: "POST",
+			url: "/HD_ContactPerson/Select_Supplier",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+
+				if (response != null && response != "") {
+					if (Code != null && Code != "") {
+
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].Supplier_Code;
+							optionText = response[i].Supplier_Name;
+
+
+							$('#Company').append(`<option  value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+							if (Code == optionValue) {
+
+								$("#Company option[value=\"" + optionValue + "\"]").prop("selected", "selected");
+							}
+
+
+						}
+					}
+					else {
+						for (var i = 0; i < response.length; i++) {
+
+							optionValue = response[i].Supplier_Code;
+							optionText = response[i].Supplier_Name;
+							$('#Company').append(`<option value="${optionValue}">
+									   ${optionValue}-${optionText}
+								  </option>`);
+
+						}
+					}
+				}
+
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+
+		});
+
+	}
+
+
+
+	function lockfild()
+	{
+		//PersonTypeText
+		var DDseleted = $('#PersonType').val();
+
+
+		if (DDseleted == "PType_001") {
+			ShowAll();
+
+			_HET_Setup();
+			Data_HET();
+
+		}
+		else if (DDseleted == "PType_002") { //emp -cus
+
+			ShowAll();
+
+			_Customer_Setup();
+			Data_Customer();
+
+
+		}
+		else if (DDseleted == "PType_003") { //supp
+			ShowAll();
+			_Supplier_Setup();
+			Data_Supplier();
+
+
+
+		}
+		else if (DDseleted == "PType_004") { //sub
+
+			ShowAll();
+
+
+			_Sub_Con_Setup();
+			Data_SubCon();
+
+
+		}
+
+
+	}
+	//
+
+</script>
+

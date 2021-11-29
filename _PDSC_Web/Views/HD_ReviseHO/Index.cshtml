@@ -1,0 +1,738 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@if ((ViewBag.GetRoles != "") && (ViewBag.GetMNRoles != null))
+{
+    if ((ViewBag.GetRoles == "Role_HD15" || ViewBag.GetRoles == "Role_HD16") && (ViewBag.GetMNRoles == "PDSCPAGE002"))
+    {
+        <div class="card-hover-shadow-2x card-border card" style="margin-top:25px;">
+            <div class="card-header-tab card-header">
+                <div class="card-header-title">
+                    <h2 style="color:black;">Revise Hand Over</h2>
+                </div>
+                <ul class="nav">
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-0" class="active nav-link">By Sale Order</a></li>
+                    @if (ViewBag.GetRoles == "Role_HD15")
+                    {
+                        <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-1" class="nav-link">By MFG</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="card-body">
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-eg5-0" role="tabpanel">
+
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <div class="col-sm-3 text-right">
+                                    <label class="text-font-13">Sale Order : </label>
+                                </div>
+                                <div class="col-sm-3 text-left">
+                                    <select onchange="AutoGenTable();" id="saleorder" class="form-control">
+                                        <option value="">--Seleted--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (ViewBag.GetRoles == "Role_HD15")
+                        {
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <div class="col-sm-3 text-right">
+                                        <label class="text-font-13">Revise Hand Over Date : </label>
+                                    </div>
+                                    <div class="col-sm-3 text-left">
+                                        <input id="ReviseDate" class="form-control" type="date" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center" style="margin-bottom:35px;">
+                                <button onclick="Save_By_SaleOrder();" type="submit" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn-lg btn btn-outline-success">
+                                    <i class="fas fa-save"></i>
+                                    SAVE
+                                </button>
+                            </div>
+                        }
+
+                        <div class="table-responsive">
+                            <table id="ReviseBySaleOrder" class="table table-bordered table-striped table-hover" width="100%">
+                                <thead>
+                                    <tr>
+
+                                        <th>No.</th>
+                                        <th>Sale Order</th>
+                                        <th>MFG No.</th>
+                                        <th>EQ. No.</th>
+                                        <th>Spec No</th>
+                                        <th>Contract H/O</th>
+                                        <th>Revise H/O</th>
+                                        <th>Last Update</th>
+                                        <th>Update By</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+
+                    @if (ViewBag.GetRoles == "Role_HD15")
+                    {
+                        <div class="tab-pane" id="tab-eg5-1" role="tabpanel">
+
+                            <div class="col-md-12">
+                                <div class="form-group row">
+
+                                    <div class="col-sm-3 text-right">
+                                        <label class="text-font-13">SO No : </label>
+                                    </div>
+                                    <div class="col-sm-3 text-left">
+                                        <select onchange="AutoGenTable2();" id="saleorder2" class="form-control">
+                                            <option value="">--Seleted--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <div class="col-sm-4">
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <table id="ReviseByMFG" class="table table-bordered table-striped table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2">No.</th>
+                                        <th rowspan="2">SO No.</th>
+                                        <th rowspan="2">MFG No.</th>
+                                        <th rowspan="2">EQ. No.</th>
+                                        <th rowspan="2">Spec No</th>
+                                        <th rowspan="2">Contract H/O</th>
+                                        <th colspan="2">Revise H/O</th>
+                                        <th rowspan="2">Last Update</th>
+                                        <th rowspan="2">Update By</th>
+                                        <th rowspan="2">Edit</th>
+                                        <th rowspan="2">Save</th>
+
+                                    </tr>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Clear</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+
+                        </div>
+                    }
+                    </div>
+
+
+
+            </div>
+        </div>
+    }
+}
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/lib/moment.js/moment.min.js"></script>
+        <script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/select2/js/select2.min.js"></script>
+        <script type="text/javascript">
+
+
+	$.fn.select2.defaults.set("theme", "bootstrap");
+
+
+
+	$('#saleorder').select2();
+
+	$(document).ready(function ()
+	{
+
+		Hide_backbtn();
+		loadDD_SaleOrder();
+		loadDD_MFG();
+		//
+
+
+	});
+
+	function Clear(id)
+	{
+		$('#' + id).val('');
+
+	}
+
+	function SaveByMFG(mfg)
+	{
+		var Date = $('#dateMFG_' + mfg).val();
+
+
+		swal({
+			title: "",
+            text: "Are you sure? Do you want to save it?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			closeOnConfirm: false,
+			closeOnCancel: false
+		},
+			function (isConfirm) {
+				if (isConfirm)
+				{
+					$.ajax({
+						type: "POST",
+						url: "/HD_ReviseHO/Save_By_MFG",
+						data: { MFG: mfg, ReviceDate: Date },
+						dataType: "json",
+						success: function (response)
+						{
+							if (response.code === 1) {
+								window.location = '/Login/Logout';
+							}
+							else {
+								if (response) {
+									setTimeout(function () {
+										swal({
+											title: "",
+											text: "Successful",
+											type: "success"
+										},
+											function () {
+												AutoGenTable2();
+											});
+									}, 500);
+
+								}
+								else {
+									Alert_Error("", "It can't be saved. Please try again.");
+								}
+							}
+						},
+						failure: function (response) {
+							alert(response.responseText);
+						},
+						error: function (response) {
+							alert(response.responseText);
+						}
+					});
+				}
+				else {
+                    swal("", "Cancelled", "error");
+				}
+			});
+
+
+	}
+
+	function EditByMFG(mfg)
+	{
+		$('#dateMFG_' + mfg).prop('disabled', false);
+		var s_date = "#dateMFG_" + mfg;
+		changeFormat_date(s_date);
+
+	}
+
+	function loadDD_SaleOrder()
+	{
+		$.ajax({
+			type: "POST",
+			url: "/HD_ReviseHO/Load_DropDown",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+				if (response.code === 1) {
+					window.location = '/Login/Logout';
+				}
+				else {
+					var result = response.length;
+
+					for (var i = 0; i < result; i++) {
+
+						optionValue = response[i].SaleOrder;
+						optionText = response[i].SaleOrder;
+						$('#saleorder').append(`<option value="${optionValue}">
+									   ${optionText}
+								  </option>`);
+
+					}
+				}
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function loadDD_MFG() {
+		$.ajax({
+			type: "POST",
+			url: "/HD_ReviseHO/Load_DropDown",
+			data: "",
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+				if (response.code === 1) {
+					window.location = '/Login/Logout';
+				}
+				else {
+                    var result = response.length;
+
+                    for (var i = 0; i < result; i++) {
+
+                        optionValue = response[i].SaleOrder;
+                        optionText = response[i].SaleOrder;
+                        $('#saleorder2').append(`<option value="${optionValue}">
+									   ${optionText}
+								  </option>`);
+
+                    }
+				}
+				
+
+			},
+			failure: function (response) {
+				alert(response.responseText);
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function AutoGenTable()
+	{
+		On_Loading();
+		var Seleted = $('#saleorder').val();
+
+		if (Seleted != "" && Seleted != null)
+		{
+			$.ajax({
+				type: "POST",
+				url: "/HD_ReviseHO/AutoGenTable",
+				data: { SaleOrder: Seleted},
+				dataType: "json",
+				success: Onsuccess_SaleOrder,
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+			});
+		}
+		else
+		{
+			Alert_Error("", "Please you select a Sale Order.");
+			Off_Loading();
+		}
+
+	}
+
+	function AutoGenTable2()
+	{
+		On_Loading();
+		var Seleted = $('#saleorder2').val();
+
+		if (Seleted != "" && Seleted != null) {
+			$.ajax({
+				type: "POST",
+				url: "/HD_ReviseHO/AutoGenTable",
+				data: { SaleOrder: Seleted },
+				dataType: "json",
+                success: Onsuccess_MFG,
+				failure: function (response) {
+					alert(response.responseText);
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+			});
+		}
+		else
+		{
+			Alert_Error("", "Please you select a Sale Order.");
+            Off_Loading();
+		}
+
+	}
+
+	function Onsuccess_SaleOrder(response)
+	{
+		if (response.code === 1) {
+            window.location = '/Login/Logout';
+		}
+		else {
+            if ($.fn.dataTable.isDataTable('#ReviseBySaleOrder')) {
+                $('#ReviseBySaleOrder').DataTable().destroy();
+                RenderTableSaleOrder(response);
+            }
+            else {
+                RenderTableSaleOrder(response);
+            }
+        }
+		
+	}
+
+	function Onsuccess_MFG(response) {
+		
+        if (response.code === 1) {
+            window.location = '/Login/Logout';
+		}
+		else {
+            if ($.fn.dataTable.isDataTable('#ReviseByMFG')) {
+                $('#ReviseByMFG').DataTable().destroy();
+                RenderTableMFG(response);
+            }
+            else {
+                RenderTableMFG(response);
+            }
+        }
+		
+
+	}
+	function RenderTableSaleOrder(response)
+	{
+		On_Loading();
+		var table = $("#ReviseBySaleOrder").DataTable(
+			{
+				language: {
+					loadingRecords: '<span style="width:100%;"><img src="~/Resoure/gif/Gear_loading.gif"></span>'
+				},
+				searching: false,
+				info: true,
+				paging: false,
+				data: response,
+				columns: [
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'sale_order_no' },
+					{ 'data': 'MFG_No' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{
+						data: null,
+						render: function (data, type, row) {
+
+                            if (moment(data.Handover_Date).format("DD-MM-YYYY") == "01-01-9999") {
+                                return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+                            }
+                            else {
+                                return moment(data.Handover_Date).format("DD-MMM-YYYY");
+                            }
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							if (moment(data.RHO_Revise_Handover).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-12" style="color:red;font-weight:bold;">N/A</lable>';
+							}
+							else {
+								return '<lable class="text-font-12" style="color:red;font-weight:bold;">' + moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY") + '</lable>';
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+
+                            if (moment(data.RHO_Last_Update).format("DD-MM-YYYY") == "01-01-9999") {
+                                return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+                            }
+                            else {
+                                return moment(data.RHO_Last_Update).format("DD-MMM-YYYY HH:mm");
+                            }
+							//return moment(data.RHO_Last_Update).format("DD-MMM-YYYY HH:mm");
+						}
+					},
+					{ 'data': 'RHO_Last_by' },
+
+
+				]
+			});
+
+		Off_Loading();
+	}
+
+	function RenderTableMFG(response)
+	{
+		On_Loading();
+		var table = $("#ReviseByMFG").DataTable(
+			{
+				fixedColumns: {
+					leftColumns: 5,
+					rightColumns: 2
+				},
+				scrollX: true,
+				searching: false,
+				info: true,
+				paging: true,
+				data: response,
+				columns: [
+					{ 'data': null },
+					{ 'data': 'sale_order_no' },
+					{ 'data': 'MFG_No' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{
+						data: null,
+						render: function (data, type, row) {
+
+							@*return moment(data.Handover_Date).format("DD-MMM-YYYY HH:mm");*@
+							if (moment(data.Handover_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MMM-YYYY");
+							}
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							var onfocus = "onfocus=\"(this.type = 'date')\"";
+							var onblur = "onblur=\"(this.type = 'text')\"";
+                            //console.log("RHO_Revise_Handover: " + moment(data.RHO_Revise_Handover).format("YYYY-MM-DD"));
+                            if (moment(data.RHO_Revise_Handover).format("DD-MM-YYYY HH:mm:ss.SSS") == "01-01-9999 00:00:00.000") {
+								return '<input onkeydown="return false"  disabled id = "dateMFG_' + data.MFG_No + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type = "text" value = "" />';
+							}
+							else {
+								return '<input onkeydown="return false"  disabled id = "dateMFG_' + data.MFG_No + '" class="form-control width-set" ' + onfocus + ' ' + onblur + '  type = "text" value = "' + moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY") + '" />';
+							}
+
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<button onclick="Clear(\'dateMFG_' + data.MFG_No + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-danger">' +
+								'<i class="fas fa-times"></i>' +
+								'</button>'
+								;
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+
+							@*return moment(data.RHO_Last_Update).format("DD-MMM-YYYY HH:mm");*@
+							if (moment(data.RHO_Last_Update).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.RHO_Last_Update).format("DD-MMM-YYYY HH:mm");
+							}
+						}
+					},
+					{ 'data': 'RHO_Last_by' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<center>' +
+								'<button  onclick="EditByMFG(' + '\'' + data.MFG_No + '\'' + ');"   class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-warning">' +
+								'<i class="fas fa-pen"></i>' +
+								'</button>';
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							return '<center>' +
+								'<button onclick="SaveByMFG(' + '\'' + data.MFG_No + '\'' + ');"  class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-success">' +
+								'<i class="fas fa-save"></i>' +
+								'</button>' +
+								'</center>'
+								;
+						}
+					}
+
+				]
+			});
+		table.on('order.dt search.dt', function () {
+			table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+				cell.innerHTML = i + 1;
+			});
+		}).draw();
+
+		Off_Loading();
+	}
+
+	function Save_By_SaleOrder()
+	{
+		var Seleted = $('#saleorder').val();
+		var Date = $('#ReviseDate').val();
+
+        if (Seleted != "" && Seleted != null) {
+
+            if (Date != "" && Date != null) {
+                $.ajax({
+                    type: "POST",
+                    url: "/HD_ReviseHO/Save_By_SaleOrder",
+                    data: { saleorder: Seleted, ReviceDate: Date },
+                    dataType: "json",
+					success: function (response) {
+						if (response.code === 1) {
+							window.location = '/Login/Logout';
+						}
+						else {
+							if (response) {
+
+								swal({
+									title: "",// "Are you sure? Do you want to save?",
+									text: "Are you sure? Do you want to save it?",
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonColor: "#DD6B55",
+									confirmButtonText: "Yes",
+									cancelButtonText: "No",
+									closeOnConfirm: false,
+									closeOnCancel: false
+								},
+									function (isConfirm) {
+										if (isConfirm) {
+
+											setTimeout(function () {
+												swal({
+													title: "",
+													text: "Successful",
+													type: "success"
+												},
+													function () {
+														AutoGenTable();
+													});
+											}, 500);
+										}
+										else {
+											swal("", "Cancelled", "error");
+										}
+									});
+
+							}
+							else {
+								//Alert_Error("Alert", "Can't save did. Please Try agean !");
+								Alert_Error("", "It can't be saved. Please try again.");
+							}
+
+						}
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+            else {
+				//Alert_Error("Alert Message !!!", "Please input Revise Hand Over Date !");
+                Alert_Error("", "Please input Revise Hand Over Date.");
+
+            }
+
+
+        }
+        else {
+
+			//Alert_Error("Alert Message !!!", "Please you select a SaleOrder !");
+            Alert_Error("", "Please you select a Sale Order.");
+        }
+
+		//swal({
+		//	title: "",
+		//	text: "Do you want to save ?",
+		//	type: "warning",
+		//	showCancelButton: true,
+		//	confirmButtonColor: "#DD6B55",
+		//	confirmButtonText: "Yes",
+		//	cancelButtonText: "No",
+		//	closeOnConfirm: false,
+		//	closeOnCancel: false
+		//},
+		//	function (isConfirm)
+		//	{
+		//		if (isConfirm)
+		//		{
+		//			if (Seleted != "" && Seleted != null) {
+
+		//				if (Date != "" && Date != null) {
+		//					$.ajax({
+		//						type: "POST",
+		//						url: "/HD_ReviseHO/Save_By_SaleOrder",
+		//						data: { saleorder: Seleted, ReviceDate: Date },
+		//						dataType: "json",
+		//						success: function (response)
+		//						{
+		//							if (response) {
+		//								setTimeout(function () {
+		//									swal({
+		//										title: "success",
+		//										text: "success",
+		//										type: "success"
+		//									},
+		//										function ()
+		//										{
+		//											AutoGenTable();
+		//										});
+		//								}, 500);
+
+		//		                    }
+		//							else
+		//							{
+		//								Alert_Error("Alert", "Can't save did. Please Try agean !");
+		//		                    }
+		//						},
+		//						failure: function (response) {
+		//							alert(response.responseText);
+		//						},
+		//						error: function (response) {
+		//							alert(response.responseText);
+		//						}
+		//					});
+		//				}
+		//				else {
+		//					Alert_Error("Alert Message !!!", "Please input Revise Hand Over Date !");
+
+		//				}
+
+
+		//			}
+		//			else {
+
+		//				Alert_Error("Alert Message !!!", "Please you select a SaleOrder !");
+		//			}
+		//		}
+		//		else {
+		//			swal("Cancelled", "", "error");
+		//		}
+		//	});
+
+
+	}
+
+        </script>
+

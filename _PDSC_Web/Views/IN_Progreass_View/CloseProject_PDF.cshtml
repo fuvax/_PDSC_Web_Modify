@@ -1,0 +1,199 @@
+﻿
+@{
+	ViewBag.Title = "CloseProject_PDF";
+}
+
+@if ((ViewBag.GetRoles == "Role_IN11") && (ViewBag.GetMNRoles == "PDSCPAGE004"))
+{
+	<div class="card">
+		<div class="card-header">
+
+		</div>
+		<div class="card-body">
+
+			<div class="col-md-12">
+				<div class="form-group row">
+					<div class="col-sm-2">
+
+					</div>
+					<div class="col-sm-7">
+
+
+
+						<div id="DIV_PDF_0" hidden>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+									</span>
+									<div class="text-center" style="border:1px dashed grey;width:300px;margin-left:2px;">
+										<a id="filenamePDF_0" href=""
+										   style="font-weight:bold;color:black;font-size:20px;" download></a>
+										<input id="file_0" name="file_0" type="text" hidden />
+										<input id="filename_0" name="filename_0" type="text" hidden />
+									</div>
+
+								</div>
+								<div style="border:0px solid black;width:40px;">
+								</div>
+							</div>
+						</div><br />
+						<div id="DIV_PDF_1" hidden>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+									</span>
+									<div class="text-center" style="border:1px dashed grey;width:300px;margin-left:2px;">
+										<a id="filenamePDF_1" href=""
+										   style="font-weight:bold;color:black;font-size:20px;" download></a>
+										<input id="file_1" name="file_1" type="text" hidden />
+										<input id="filename_1" name="filename_1" type="text" hidden />
+									</div>
+
+								</div>
+								<div style="border:0px solid black;width:40px;">
+								</div>
+							</div>
+						</div><br />
+						<div id="DIV_PDF_2" hidden>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+									</span>
+									<div class="text-center" style="border:1px dashed grey;width:300px;margin-left:2px;">
+										<a id="filenamePDF_2" href=""
+										   style="font-weight:bold;color:black;font-size:20px;" download></a>
+										<input id="file_2" name="file_2" type="text" hidden />
+										<input id="filename_2" name="filename_2" type="text" hidden />
+									</div>
+
+								</div>
+								<div style="border:0px solid black;width:40px;">
+								</div>
+							</div>
+						</div><br />
+						<div id="DIV_PDF_3" hidden>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+									</span>
+									<div class="text-center" style="border:1px dashed grey;width:300px;margin-left:2px;">
+										<a id="filenamePDF_3" href=""
+										   style="font-weight:bold;color:black;font-size:20px;" download></a>
+										<input id="file_3" name="file_3" type="text" hidden />
+										<input id="filename_3" name="filename_3" type="text" hidden />
+									</div>
+
+								</div>
+								<div style="border:0px solid black;width:40px;">
+
+								</div>
+							</div>
+						</div><br />
+						<div id="DIV_PDF_4" hidden>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<img src="~/ThridParty/icon/pdf_icon.png" style="width:auto;height:25px;" />
+									</span>
+									<div class="text-center" style="border:1px dashed grey;max-height:50px;width:300px;margin-left:2px;">
+										<a id="filenamePDF_4" href=""
+										   style="font-weight:bold;color:black;font-size:20px;" download></a>
+										<input id="file_4" name="file_4" type="text" hidden />
+										<input id="filename_4" name="filename_4" type="text" hidden />
+									</div>
+
+								</div>
+								<div style="border:0px solid black;width:40px;">
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-3">
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+}
+<a href="@Url.Action("CloseProject_Transaction", "IN_Progreass_View")" class="float pointer" style="color:white;">
+	<i class="fas fa-arrow-left B-icon"></i>
+</a>
+
+
+<script src="~/ThridParty/Theam/ArchitectUI-Pro/assets/core/jquery.min.js" type="text/javascript"></script>
+<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+<script src="~/lib/select2/js/select2.min.js"></script>
+<script src="~/lib/moment.js/moment.min.js"></script>
+<script>
+
+
+	$(document).ready(() =>
+	{
+        On_Loading();
+		GetFileData();
+	});
+
+	function GetFileData()
+	{
+		var TT_Code = '@Session["TT_Code"]';
+		$.ajax({
+			type: "POST",
+			url: "/IN_Progreass_View/Edit_GetFile",
+			data: JSON.stringify({ 'TransectionCode': TT_Code }),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response)
+			{
+				if ((response != null && response != "")) {
+
+					for (var i = 0; i < response.length; i++)
+					{
+							var file = "file_" + i;
+							var filename = `filename_` + i;
+
+							var fileID = `fileID_`+i;
+
+							var filenamePDF = "filenamePDF_" + i;
+
+							$('#DIV_PDF_' + i).removeAttr('hidden');
+
+							document.getElementById(filenamePDF).href = response[i].ImgT_FileData;
+						   document.getElementById(filenamePDF).innerHTML = response[i].ImgT_FileName;
+						   $('#filenamePDF_'+i).attr('download', response[i].ImgT_FileName);
+
+
+
+
+							document.getElementById(fileID).value = response[i].ImgT_Code;
+
+					}
+
+
+
+				}
+                Off_Loading();
+			},
+			failure: function (response) {
+                Off_Loading();
+				//console.log("failure" + response.responseText);
+			},
+			error: function (response) {
+                Off_Loading();
+				//console.log("error" + response.responseText);
+			}
+		});
+		
+
+	}
+
+
+</script>
+
+

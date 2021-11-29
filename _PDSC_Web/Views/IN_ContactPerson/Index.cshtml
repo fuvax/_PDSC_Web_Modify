@@ -1,0 +1,383 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<!-- test -->
+@if ((ViewBag.GetRoles != "") && (ViewBag.GetMNRoles != null))
+{
+    if ((ViewBag.GetRoles == "Role_IN11") && (ViewBag.GetMNRoles == "PDSCPAGE004"))
+    {
+        <div class="card-hover-shadow-2x card-border card" style="margin-bottom:35px;margin-top:35px;">
+            <div class="card-header-tab card-header">
+                <ul class="nav">
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-0" class="active nav-link">HET</a></li>
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-1" class="nav-link">Customer</a></li>
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-2" class="nav-link">Supplier</a></li>
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-3" class="nav-link">Sub Contact </a></li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-eg5-0" role="tabpanel">
+
+                        <h3 style="color:black;">HET Contact</h3>
+
+                        <table id="table_HET" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Phone</th>
+                                    <th>E-mail</th>
+                                    <th>Line ID</th>
+                                    <th>Note</th>
+									<th>Employee Picture</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-1" role="tabpanel">
+
+                        <h3 style="color:black;">Customer Contact</h3>
+
+                        <table id="table_customer" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>Phone</th>
+                                    <th>E-mail</th>
+                                    <th>Line ID</th>
+                                    <th>Note</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-2" role="tabpanel">
+
+                        <h3 style="color:black;">Supplier Contact</h3>
+
+                        <table id="table_supplier" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>Phone</th>
+                                    <th>E-mail</th>
+                                    <th>Line ID</th>
+                                    <th>Group</th>
+                                    <th>Note</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-3" role="tabpanel">
+
+                        <h3 style="color:black;">Sub Contact</h3>
+
+                        <table id="table_sub_con" class="table table-striped table-bordered table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Company</th>
+                                    <th>Phone</th>
+                                    <th>E-mail</th>
+                                    <th>Line ID</th>
+                                    <th>Group</th>
+                                    <th>Note</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="@Url.Action("Index", "ProjectInformation")" class="float pointer" style="color:white;">
+            <i class="fas fa-arrow-left B-icon"></i>
+        </a>
+    }
+}
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                On_Loading();
+                load_HET();
+                load_customer();
+                load_supplier();
+                load_sub_con();
+            });
+
+            $('a[data-toggle="tab"]').click(function () {
+
+                $('#table_customer').DataTable().destroy();
+                load_customer();
+                $('#table_supplier').DataTable().destroy();
+                load_supplier();
+                $('#table_sub_con').DataTable().destroy();
+                load_sub_con();
+            });
+
+            function load_HET() {
+                $.ajax({
+                    type: "POST",
+                    url: "/IN_ContactPerson/Load_Table_HET",
+                    data: "",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess_HET,
+                    failure: function (response) {
+                    },
+                    error: function (response) {
+                    }
+                });
+            }
+
+            function load_customer() {
+                $.ajax({
+                    type: "POST",
+                    url: "/IN_ContactPerson/Load_Table_Customer",
+                    data: "",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess_customer,
+                    failure: function (response) {
+                    },
+                    error: function (response) {
+                    }
+                });
+            }
+
+            function load_supplier() {
+                $.ajax({
+                    type: "POST",
+                    url: "/IN_ContactPerson/Load_Table_Supplier",
+                    data: "",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess_supplier,
+                    failure: function (response) {
+                    },
+                    error: function (response) {
+                    }
+                });
+            }
+
+            function load_sub_con() {
+                $.ajax({
+                    type: "POST",
+                    url: "/IN_ContactPerson/Load_Table_Sub_Con",
+                    data: "",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: OnSuccess_employee,
+                    failure: function (response) {
+                    },
+                    error: function (response) {
+                    }
+                });
+            }
+
+
+
+            function OnSuccess_HET(response) {
+                On_Loading();
+                var table = $("#table_HET").DataTable(
+                    {
+						retrieve: true,
+						fixedColumns: {
+							leftColumns: 5,
+							rightColumns: 1
+						},
+						scrollX: true,                      
+                        searching: false,
+                        info: true,
+                        paging: true,
+
+                        data: response,
+                        columns: [
+
+
+                            {
+                                'data': 'id',
+                                render: function (data, type, row, meta) {
+                                    return meta.row + meta.settings._iDisplayStart + 1;
+                                }
+                            },
+                            { 'data': 'Employee_Name' },
+                            { 'data': 'Position_Code' },
+                            { 'data': 'Phone' },
+                            { 'data': 'Email' },
+                            { 'data': 'LineID' },
+                            { 'data': 'Note' },
+                            {
+                                data: null,
+                                render: function (data, type, row) {
+                                    return '<center>' +
+                                        '<button  onclick="PictureProfile(\'' + data.ContactP_Code + '\'\,\'' + data.Link_Image + '\');" class="mb-2 mr-2 btn-icon btn-icon-only btn-shadow btn-outline-2x btn btn-outline-info">' +
+                                        '<i class="fas fa-portrait"></i>' +
+                                        '</button>' +
+                                        '</center>'
+                                        ;
+                                }
+                            },
+
+                        ]
+                    });
+                Off_Loading();
+            }
+
+            function OnSuccess_customer(response) {
+                On_Loading();
+                var table = $("#table_customer").DataTable(
+                    {
+						retrieve: true,
+						fixedColumns: {
+							leftColumns: 5
+							
+						},
+                        scrollX: true,
+                        searching: false,
+                        info: true,
+                        paging: true,
+
+                        data: response,
+                        columns: [
+
+
+                            { 'data': null },
+                            { 'data': 'Contact_Name' },
+                            { 'data': 'Position_Code' },
+                            { 'data': 'Company_Name' },
+                            { 'data': 'Phone' },
+                            { 'data': 'Email' },
+                            { 'data': 'LineID' },
+                            {
+                                'data': 'Note'
+                            },
+                        ]
+                    });
+                table.on('order.dt search.dt', function () {
+                    table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                }).draw();
+                Off_Loading();
+            }
+
+            function OnSuccess_supplier(response) {
+                On_Loading();
+                var table = $("#table_supplier").DataTable(
+                    {
+						retrieve: true,
+						fixedColumns: {
+							leftColumns: 5
+
+						},
+                        scrollX: true,
+                        searching: false,
+                        info: true,
+                        paging: true,
+
+                        data: response,
+                        columns: [
+
+
+                            { 'data': null },
+                            { 'data': 'Contact_Name' },
+                            { 'data': 'Position_Code' },
+                            { 'data': 'Company_Name' },
+                            { 'data': 'Phone' },
+                            { 'data': 'Email' },
+                            { 'data': 'LineID' },
+                            { 'data': 'CG_Name' },
+                            { 'data': 'Note' },
+                        ]
+                    });
+                table.on('order.dt search.dt', function () {
+                    table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                }).draw();
+                Off_Loading();
+            }
+
+            function OnSuccess_employee(response) {
+                On_Loading();
+                var table = $("#table_sub_con").DataTable(
+                    {
+						retrieve: true,
+						fixedColumns: {
+							leftColumns: 5
+
+						},
+                        scrollX: true,
+                        searching: false,
+                        info: true,
+                        paging: true,
+
+                        data: response,
+                        columns: [
+
+
+                            { 'data': null },
+                            { 'data': 'Contact_Name' },
+                            { 'data': 'Position_Code' },
+                            { 'data': 'Company_Name' },
+                            { 'data': 'Phone' },
+                            { 'data': 'Email' },
+                            { 'data': 'LineID' },
+                            { 'data': 'CG_Name' },
+                            { 'data': 'Note' },
+                        ]
+                    });
+                table.on('order.dt search.dt', function () {
+                    table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                }).draw();
+                Off_Loading();
+            }
+
+            function PictureProfile(id, url) {
+                var ResoreUrl;
+
+                if (url == null || url == "" || url == "null") {
+                    ResoreUrl = "/Resoure/Picture/_NoImg.png";
+                }
+                else {
+                    ResoreUrl = url;
+                }
+
+                $('#ProfileImg').attr('src', ResoreUrl);
+                $('#ConteactPicture').modal('show');
+            }
+            function CloseModal() {
+                $('#ConteactPicture').modal('hide');
+            }
+        </script>

@@ -1,0 +1,1220 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@if ((ViewBag.GetRoles != "") && (ViewBag.GetMNRoles != null))
+{
+    if ((ViewBag.GetRoles == "Role_IN11") && (ViewBag.GetMNRoles == "PDSCPAGE004"))
+    {
+        <div class="card-hover-shadow-2x card-border card" style="margin-top:35px;margin-bottom:35px;">
+            <div class="card-header-tab card-header">
+
+                <ul class="nav">
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-0" class="active nav-link">Prepare</a></li>
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-1" class="nav-link">Delivery</a></li>
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-2" class="nav-link">Install</a></li>
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-3" class="nav-link">Power Supply</a></li>
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-4" class="nav-link">Testing</a></li>
+                    <li class="nav-item"><a data-toggle="tab" href="#tab-eg5-5" class="nav-link">QC</a></li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-eg5-0" role="tabpanel">
+                        <h3 style="color:black;">Prepare</h3><br />
+
+
+                        <table id="Table-Prepare" class="table-sm table-bordered table-striped" width="100%">
+                            <thead>
+                                <tr>
+                                    <th rowspan="3">No.</th>
+                                    <th rowspan="3">SO No.</th>
+                                    <th rowspan="3">MFG No.</th>
+                                    <th rowspan="3">EQ. No.</th>
+                                    <th rowspan="3">MFG Description</th>
+                                    <th rowspan="3">type</th>
+                                    <th rowspan="3">Work Approve Limit</th>
+                                    <th colspan="3" class="text-center">Prepare</th>
+                                    <th rowspan="3">Hand Over Date</th>
+                                    <th rowspan="3">Revise Hand Over</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">Plan</th>
+                                    <th colspan="2" class="text-center">Actual</th>
+                                </tr>
+                                <tr>
+                                    <th>Start Date</th>
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-1" role="tabpanel">
+                        <h3 style="color:black;">Delivery</h3><br />
+
+                        <table id="Table-Delivery" class="table-sm table-bordered table-striped" width="100%">
+                            <thead>
+                                <tr>
+                                    <th rowspan="3">No.</th>
+                                    <th rowspan="3">SO No.</th>
+                                    <th rowspan="3">MFG No.</th>
+                                    <th rowspan="3">EQ. No.</th>
+                                    <th rowspan="3">MFG Description</th>
+                                    <th rowspan="3">type</th>
+                                    <th rowspan="3">Work Approve Limit</th>
+                                    <th colspan="4">Delivery</th>
+                                    <th rowspan="3">Hand Over Date</th>
+                                    <th rowspan="3">Revise Hand Over</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">Plan</th>
+                                    <th colspan="2">Actual</th>
+                                </tr>
+                                <tr>
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-2" role="tabpanel">
+                        <h3 style="color:black;">Install</h3><br />
+
+                        <table id="Table-Install" class="table-sm table-bordered table-striped" width="100%">
+                            <thead>
+                                <tr>
+                                    <th rowspan="3">No.</th>
+                                    <th rowspan="3">SO No.</th>
+                                    <th rowspan="3">MFG No.</th>
+                                    <th rowspan="3">EQ. No.</th>
+                                    <th rowspan="3">MFG Description</th>
+                                    <th rowspan="3">type</th>
+                                    <th rowspan="3">Work Approve Limit</th>
+                                    <th colspan="5">Install</th>
+                                    <th rowspan="3">Hand Over Date</th>
+                                    <th rowspan="3">Revise Hand Over</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">Plan</th>
+                                    <th colspan="3" class="text-center">Actual</th>
+                                </tr>
+                                <tr>
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+                                    <th>% Progress</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-3" role="tabpanel">
+                        <h3 style="color:black;">Power Supply</h3><br />
+						 
+                        <table id="Table-Power" class="table-sm table-bordered table-striped" width="100%">
+                            <thead>
+                                <tr>
+                                    <th rowspan="3">No.</th>
+                                    <th rowspan="3">SO No.</th>
+                                    <th rowspan="3">MFG No.</th>
+                                    <th rowspan="3">EQ. No.</th>
+                                    <th rowspan="3">MFG Description</th>
+                                    <th rowspan="3">type</th>
+                                    <th rowspan="3">Work Approve Limit</th>
+                                    <th colspan="4">Power Supply</th>
+                                    <th rowspan="3">Hand Over Date</th>
+                                    <th rowspan="3">Revise Hand Over</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">Plan</th>
+                                    <th colspan="2">Actual</th>
+                                </tr>
+                                <tr>
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-4" role="tabpanel">
+                        <h3 style="color:black;">Testing</h3><br />
+
+                        <table id="Table-Testing" class="table-sm table-bordered table-striped" width="100%">
+                            <thead>
+                                <tr>
+                                    <th rowspan="3">No.</th>
+                                    <th rowspan="3">SO No.</th>
+                                    <th rowspan="3">MFG No.</th>
+                                    <th rowspan="3">EQ. No.</th>
+                                    <th rowspan="3">MFG Description</th>
+                                    <th rowspan="3">type</th>
+                                    <th rowspan="3">Work Approve Limit</th>
+                                    <th colspan="4">Testing</th>
+                                    <th rowspan="3">Hand Over Date</th>
+                                    <th rowspan="3">Revise Hand Over</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="1">Plan</th>
+                                    <th colspan="3">Actual</th>
+                                </tr>
+                                <tr>
+                                    <th>Start Date</th>                                  
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+                                    <th>% Progress</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                    <div class="tab-pane" id="tab-eg5-5" role="tabpanel">
+                        <h3 style="color:black;">QC</h3><br />
+
+                        <table id="Table-QC" class="table-sm table-bordered table-striped" width="100%">
+                            <thead>
+                                <tr>
+                                    <th rowspan="3">No.</th>
+                                    <th rowspan="3">SO No.</th>
+                                    <th rowspan="3">MFG No.</th>
+                                    <th rowspan="3">EQ. No.</th>
+                                    <th rowspan="3">MFG Description</th>
+                                    <th rowspan="3">type</th>
+                                    <th rowspan="3">Work Approve Limit</th>
+                                    <th colspan="5">QC</th>
+                                    <th rowspan="3">Hand Over Date</th>
+                                    <th rowspan="3">Revise Hand Over</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">Plan</th>
+                                    <th colspan="3">Actual</th>
+                                </tr>
+                                <tr>
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+                                    <th>Start Date</th>
+                                    <th>Finish Date</th>
+                                    <th>% Progress</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="@Url.Action("Index", "ProjectInformation")" class="float pointer" style="color:white;">
+            <i class="fas fa-arrow-left B-icon"></i>
+        </a>
+    }
+}
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="~/lib/moment.js/moment.min.js"></script>
+        <script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+        <script type="text/javascript">
+
+	$(document).ready(function ()
+	{
+		On_Loading();
+		RenderTable();
+
+	});
+
+	@*$('a[data-toggle="tab"]').click(function ()
+	{
+		if ($.fn.dataTable.isDataTable('#Table-Prepare'))
+		{
+			$('#Table-Prepare').DataTable().destroy();
+			RenderTable(response);
+
+		}
+
+
+
+
+		$('#Table-Delivery').DataTable().destroy();
+		$('#Table-Install').DataTable().destroy();
+		$('#Table-Power').DataTable().destroy();
+		$('#Table-Testing').DataTable().destroy();
+		$('#Table-QC').DataTable().destroy();
+		RenderTable();
+
+
+	});*@
+
+	function RenderTable()
+	{
+
+		for (var i = 1 ; i < 7;i++)
+		{
+
+			var j = i;
+			$.ajax({
+				type: "POST",
+				url: "/IN_ViewPlan/LoadTable",
+				data: { Stage: j },
+				dataType: "json",
+				success: function (response)
+				{
+					//response.ListViewPlan
+					//
+					if (response.StageNo == 1)
+					{
+						Stage1(response.ListViewPlan);
+					}
+					else if (response.StageNo == 2)
+					{
+						Stage2(response.ListViewPlan);
+					}
+					else if (response.StageNo == 3)
+					{
+						Stage3(response.ListViewPlan);
+					}
+					else if (response.StageNo == 4)
+					{
+						Stage4(response.ListViewPlan);
+					}
+					else if (response.StageNo == 5)
+					{
+						Stage5(response.ListViewPlan);
+					}
+					else if (response.StageNo == 6)
+					{
+						Stage6(response.ListViewPlan);
+					}
+                    Off_Loading();
+				},
+				failure: function (response) {
+                    Off_Loading();
+					},
+				error: function (response) {
+                    Off_Loading();
+			}
+		});
+		}
+        
+	}
+
+	function Stage1(response)
+	{
+		var table = $("#Table-Prepare").DataTable(
+			{
+
+				searching: true,
+				info: true,
+				paging: true,
+
+				data: response,
+				columns: [
+
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Sale_Order' },
+					{ 'data': 'MFG' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{ 'data': 'Model_Type' },
+					{ 'data': 'WorkApproveLimit' },
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Plan_Start_Date).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '';
+							}
+							else
+							{
+								return moment(data.Plan_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Plan_Start_Date).format("DD-MM-YYYY") == "01-01-9999")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Plan_Start_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+
+							@*if (moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '';
+							}
+							else
+							{
+								return moment(data.Actual_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Start_Date).format("DD-MM-YYYY") == "01-01-9999")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MMM-YYYY");
+							}
+
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MM-YYYY");
+							}
+							*@
+
+							if (moment(data.Actual_Finish_Date).format("DD-MM-YYYY") == "01-01-9999")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MMM-YYYY");
+							}
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Handover_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Handover_Date).format("DD-MM-YYYY") == "01-01-9999")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '';
+							}
+							else
+							{
+								return moment(data.RHO_Revise_Handover).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.RHO_Revise_Handover).format("DD-MM-YYYY") == "01-01-9999")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+				]
+			});
+
+	}
+	function Stage2(response) {
+		var table = $("#Table-Delivery").DataTable(
+			{
+				
+				searching: true,
+				info: true,
+				paging: true,
+
+				data: response,
+				columns: [
+
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Sale_Order' },
+					{ 'data': 'MFG' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{ 'data': 'Model_Type' },
+					{ 'data': 'WorkApproveLimit' },
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Plan_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Plan_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Plan_Start_Date).format("DD-MM-YYYY") == "01-01-9999")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Plan_Start_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Finish_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+
+							@*if (moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Start_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MMM-YYYY");
+							}
+
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+						@*	if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Finish_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.Handover_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Handover_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+						@*	if (moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.RHO_Revise_Handover).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+				]
+			});
+
+	}
+	function Stage3(response) {
+		var table = $("#Table-Install").DataTable(
+			{
+				@* fixedColumns: {
+			leftColumns: 5,
+					//rightColumns: 1
+				},
+		scrollX: true,*@
+				searching: true,
+				info: true,
+				paging: true,
+
+				data: response,
+				columns: [
+
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Sale_Order' },
+					{ 'data': 'MFG' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{ 'data': 'Model_Type' },
+					{ 'data': 'WorkApproveLimit' },
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Plan_Start_Date).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '';
+							}
+							else
+							{
+								return moment(data.Plan_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Plan_Start_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Plan_Start_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Plan_Finish_Date).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '';
+							}
+							else {
+								return moment(data.Plan_Finish_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Plan_Finish_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Plan_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '';
+							}
+							else
+							{
+								return moment(data.Actual_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Start_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Finish_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{ 'data': 'Percent_Progress' },
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Handover_Date).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '';
+							}
+							else
+							{
+								return moment(data.Handover_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Handover_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '';
+							}
+							else
+							{
+								return moment(data.RHO_Revise_Handover).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.RHO_Revise_Handover).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+				]
+			});
+
+	}
+	function Stage4(response) {
+		var table = $("#Table-Power").DataTable(
+			{
+				@* fixedColumns: {
+			leftColumns: 5,
+					//rightColumns: 1
+				},
+		scrollX: true,*@
+				searching: true,
+				info: true,
+				paging: true,
+
+				data: response,
+				columns: [
+
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Sale_Order' },
+					{ 'data': 'MFG' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{ 'data': 'Model_Type' },
+					{ 'data': 'WorkApproveLimit' },
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Plan_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Plan_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Plan_Start_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Plan_Start_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							@*if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MM-YYYY");
+							}*@
+
+
+							if (moment(data.Actual_Finish_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+
+							@*if (moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Start_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MMM-YYYY");
+							}
+
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Finish_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.Handover_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Handover_Date).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.RHO_Revise_Handover).format("DD-MM-YYYY") == "01-01-9999") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+				]
+			});
+
+	}
+	function Stage5(response) {
+		var table = $("#Table-Testing").DataTable(
+			{
+				@* fixedColumns: {
+			leftColumns: 5,
+					//rightColumns: 1
+				},
+		scrollX: true,*@
+				searching: true,
+				info: true,
+				paging: true,
+
+				data: response,
+				columns: [
+
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Sale_Order' },
+					{ 'data': 'MFG' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{ 'data': 'Model_Type' },
+					{ 'data': 'WorkApproveLimit' },
+					{
+						data: null,
+						render: function (data, type, row)
+						{
+							if (moment(data.Plan_Start_Date).format("YYYY-MM-DD") == "9999-01-01" || moment(data.Plan_Start_Date).format("YYYY-MM-DD") == "8888-01-01")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else
+							{
+								return moment(data.Plan_Start_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+				@*	{
+						data: null,
+						render: function (data, type, row) {
+							
+
+							if (moment(data.Plan_Finish_Date).format("YYYY-MM-DD") == "9999-01-01" || moment(data.Plan_Finish_Date).format("YYYY-MM-DD") == "8888-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Plan_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},*@
+
+					{
+						data: null,
+						render: function (data, type, row) {
+						@*	if (moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "9999-01-01" || moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "8888-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "9999-01-01" || moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "8888-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01" || moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "8888-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01" || moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "8888-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{ 'data': 'Percent_Progress' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.Handover_Date).format("YYYY-MM-DD") == "9999-01-01" || moment(data.Handover_Date).format("YYYY-MM-DD") == "8888-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Handover_Date).format("YYYY-MM-DD") == "9999-01-01" || moment(data.Handover_Date).format("YYYY-MM-DD") == "8888-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+						@*	if (moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "9999-01-01" || moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "8888-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "9999-01-01" || moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "8888-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+				]
+			});
+
+	}
+	function Stage6(response) {
+		var table = $("#Table-QC").DataTable(
+			{
+				@* fixedColumns: {
+			leftColumns: 5,
+					//rightColumns: 1
+				},
+		scrollX: true,*@
+				searching: true,
+				info: true,
+				paging: true,
+
+				data: response,
+				columns: [
+
+
+					{
+						'data': 'id',
+						render: function (data, type, row, meta) {
+							return meta.row + meta.settings._iDisplayStart + 1;
+						}
+					},
+					{ 'data': 'Sale_Order' },
+					{ 'data': 'MFG' },
+					{ 'data': 'EQ_No' },
+					{ 'data': 'Item_Description' },
+					{ 'data': 'Model_Type' },
+					{ 'data': 'WorkApproveLimit' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							if (moment(data.Plan_Start_Date).format("YYYY-MM-DD") == "9999-01-01")
+							{
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Plan_Start_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.Plan_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Plan_Finish_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Plan_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Plan_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Start_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Start_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Actual_Finish_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Actual_Finish_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{ 'data': 'Percent_Progress' },
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.Handover_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.Handover_Date).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.Handover_Date).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+					{
+						data: null,
+						render: function (data, type, row) {
+							@*if (moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "9999-01-01") {
+								return '';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MM-YYYY");
+							}*@
+
+							if (moment(data.RHO_Revise_Handover).format("YYYY-MM-DD") == "9999-01-01") {
+								return '<lable class="text-font-13" style="font-weight:bold">N/A</lable>';
+							}
+							else {
+								return moment(data.RHO_Revise_Handover).format("DD-MMM-YYYY");
+							}
+
+						}
+					},
+				]
+			});
+
+	}
+
+
+        </script>
+
+
+
